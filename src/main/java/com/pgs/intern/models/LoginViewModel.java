@@ -8,9 +8,7 @@ import javax.validation.constraints.Size;
  * Created by kmichalik on 7/12/2016.
  */
 public class LoginViewModel {
-
     @NotEmpty
-
     public String email;
 
     @NotEmpty
