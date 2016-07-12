@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
@@ -16,8 +17,8 @@ import javax.validation.Valid;
 @Controller
 public class RegistrationController {
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String register(){
-        return "unauthorised/register";
+    public ModelAndView register(){
+        return new ModelAndView("unauthorized/register","model",new RegistrationViewModel());
     }
 
     @ResponseBody
