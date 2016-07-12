@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class RegistrationController {
-
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String register(){
         return "unauthorised/register";
