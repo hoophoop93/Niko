@@ -22,9 +22,11 @@ public class User {
     @Column(name = "display_name")
     private String displayName;
 
+    @NotEmpty
     @Column(name = "email")
     private String email;
 
+    @NotEmpty
     @Column(name = "password_hash")
     private String passwordHash;
 
