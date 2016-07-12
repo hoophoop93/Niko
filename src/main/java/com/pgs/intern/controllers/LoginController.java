@@ -19,7 +19,7 @@ import javax.validation.Valid;
 public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView register() {
+    public ModelAndView login() {
         return new ModelAndView("unauthorised/login", "model", new LoginViewModel());
     }
 
