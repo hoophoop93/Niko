@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  * Created by kmichalik on 7/12/2016.
@@ -14,6 +15,7 @@ import javax.persistence.EntityManager;
 @Transactional(propagation = Propagation.REQUIRED)
 public class UserDaoImpl implements UserDao {
 
+    @PersistenceContext
     private EntityManager entityManager;
 
     public EntityManager getEntityManager() {
