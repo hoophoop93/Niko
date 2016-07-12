@@ -26,11 +26,10 @@ public class RegistrationController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView registerPost(@Valid @ModelAttribute RegistrationViewModel model, final BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
-        if (result.hasErrors()) {
-            return new ModelAndView("unauthorised/register","model",model);
-        }
         List<String> errorMessages = new ArrayList<>();
         modelAndView.addObject("model",model);
+        modelAndView.addObject("errors",errorMessages);
+
         if(model.getDisplayName().length() > 32)
             errorMessages.add("Display name is too long");
         if(!model.getPassword().equals(model.getPasswordRepeat()))
@@ -38,12 +37,15 @@ public class RegistrationController {
         if(model.getPassword().length() < 8)
             errorMessages.add("Password is too short (minimum 8 characters).");
 
-        modelAndView.addObject("errors",errorMessages);
         if(!errorMessages.isEmpty()){
             modelAndView.setViewName("unauthorised/register");
             return modelAndView;
         }
 
+        if (result.hasErrors()) {
+            modelAndView.setViewName("unauthorised/register");
+            return modelAndView;
+        }
         // TODO: register
 
         modelAndView.setViewName("unauthorised/register");
