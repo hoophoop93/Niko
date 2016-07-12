@@ -9,23 +9,23 @@ import javax.validation.constraints.Size;
  * Created by kmichalik on 7/12/2016.
  */
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userid")
+    @Column(name = "user_id")
     private long idUser;
 
     @NotEmpty
     @Size(max = 32)
-    @Column(name = "displayName")
+    @Column(name = "display_name")
     private String displayName;
 
     @Column(name = "email")
     private String email;
 
-    @Column(name = "passwordHash")
+    @Column(name = "password_hash")
     private String passwordHash;
 
     public long getIdUser() {
