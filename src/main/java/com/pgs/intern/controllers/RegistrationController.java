@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Maciej Rosa on 7/12/2016 12:42 PM.
@@ -21,13 +23,31 @@ public class RegistrationController {
         return new ModelAndView("unauthorised/register","model",new RegistrationViewModel());
     }
 
-    @ResponseBody
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public RegistrationViewModel registerPost(@Valid @ModelAttribute RegistrationViewModel model, final BindingResult result) {
+    public ModelAndView registerPost(@Valid @ModelAttribute RegistrationViewModel model, final BindingResult result) {
+        ModelAndView modelAndView = new ModelAndView();
         if (result.hasErrors()) {
-            return null;
+            return new ModelAndView("unauthorised/register","model",model);
+        }
+        List<String> errorMessages = new ArrayList<>();
+        modelAndView.addObject("model",model);
+        if(model.getDisplayName().length() > 32)
+            errorMessages.add("Display name is too long");
+        if(!model.getPassword().equals(model.getPasswordRepeat()))
+            errorMessages.add("Passwords do not match.");
+        if(model.getPassword().length() < 8)
+            errorMessages.add("Password is too short (minimum 8 characters).");
+
+        modelAndView.addObject("errors",errorMessages);
+        if(!errorMessages.isEmpty()){
+            modelAndView.setViewName("unauthorised/register");
+            return modelAndView;
         }
 
-        return model;
+        // TODO: register
+
+        modelAndView.setViewName("unauthorised/register");
+
+        return modelAndView;
     }
 }
