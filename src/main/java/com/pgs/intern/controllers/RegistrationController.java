@@ -19,25 +19,32 @@ import java.util.List;
 @Controller
 public class RegistrationController {
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public ModelAndView register(){
-        return new ModelAndView("unauthorised/register","model",new RegistrationViewModel());
+    public ModelAndView register() {
+        return new ModelAndView("unauthorised/register", "model", new RegistrationViewModel());
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView registerPost(@Valid @ModelAttribute RegistrationViewModel model, final BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
         List<String> errorMessages = new ArrayList<>();
-        modelAndView.addObject("model",model);
-        modelAndView.addObject("errors",errorMessages);
+        modelAndView.addObject("model", model);
+        modelAndView.addObject("errors", errorMessages);
 
-        if(model.getDisplayName().length() > 32)
-            errorMessages.add("Display name is too long");
-        if(!model.getPassword().equals(model.getPasswordRepeat()))
+
+        if (model.getEmail().isEmpty())
+            errorMessages.add("E-mail is empty.");
+        if (model.getDisplayName().isEmpty())
+            errorMessages.add("Display name is empty.");
+        if (model.getDisplayName().length() > 32)
+            errorMessages.add("Display name is too long.");
+        if (!model.getPassword().equals(model.getPasswordRepeat()))
             errorMessages.add("Passwords do not match.");
-        if(model.getPassword().length() < 8)
+        if (model.getPassword().length() < 8)
             errorMessages.add("Password is too short (minimum 8 characters).");
 
-        if(!errorMessages.isEmpty()){
+
+        modelAndView.addObject("errors", errorMessages);
+        if (!errorMessages.isEmpty()) {
             modelAndView.setViewName("unauthorised/register");
             return modelAndView;
         }
