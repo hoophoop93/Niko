@@ -10,9 +10,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class HomeController {
-    @ResponseBody
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String home() {
-        return "Hello Niko!";
+    @RequestMapping("/")
+    public String index() {
+        return "unauthorised/index";
+    }
+
+    // For testing only; TODO REMOVE ME LATER
+    @RequestMapping("/niko")
+    public String niko() {
+        return "authorised/index";
     }
 }
