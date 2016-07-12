@@ -10,18 +10,18 @@ import javax.validation.constraints.Size;
 public class LoginViewModel {
 
     @NotEmpty
-    @Size(max = 32)
-    public String displayName;
+
+    public String email;
 
     @NotEmpty
     public String password;
 
-    public String getDisplayName() {
-        return displayName;
+    public String getEmail() {
+        return email;
     }
 
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
