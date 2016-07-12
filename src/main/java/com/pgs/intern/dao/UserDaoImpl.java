@@ -32,7 +32,7 @@ public class UserDaoImpl implements UserDao {
         entityManager.persist(user);
     }
 
-    public boolean findByEmail(String email) {
+    public boolean checkByEmail(String email) {
 //        String queryString = "SELECT count(o.email) FROM User o where o.email = :email";
         String queryString = "SELECT count(o.email) FROM User o where o.email = :email";
         Query query = getEntityManager().createQuery(queryString);
