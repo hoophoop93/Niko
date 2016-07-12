@@ -18,7 +18,7 @@ import javax.validation.Valid;
 public class RegistrationController {
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView register(){
-        return new ModelAndView("unauthorized/register","model",new RegistrationViewModel());
+        return new ModelAndView("unauthorised/register","model",new RegistrationViewModel());
     }
 
     @ResponseBody
