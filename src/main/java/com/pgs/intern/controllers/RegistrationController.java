@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ModelAndView registerPost(@Valid @ModelAttribute RegistrationViewModel model, final BindingResult result) {
+    public ModelAndView registerPost(@Valid @ModelAttribute RegistrationViewModel model, final BindingResult result, final RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView();
         List<String> errorMessages = new ArrayList<>();
         modelAndView.addObject("model", model);
@@ -67,17 +68,20 @@ public class RegistrationController {
         }
 
         User user = new User();
+
         user.setEmail(model.getEmail());
         user.setDisplayName(model.getDisplayName());
         user.setPasswordHash(AccountUtils.getHashFor(model.getPassword()));
+
         userDao.save(user);
+
+        // Registration successful;
+        modelAndView = new ModelAndView("redirect:/login");
 
         List<String> infoMessages = new ArrayList<>();
         infoMessages.add("Registration was successful! Now, you can login.");
 
-        modelAndView.addObject("infos", infoMessages);
-
-        modelAndView.setViewName("unauthorised/login");
+        redirectAttributes.addFlashAttribute("infos", infoMessages);
 
         return modelAndView;
     }

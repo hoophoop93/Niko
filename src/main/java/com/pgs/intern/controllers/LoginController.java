@@ -29,8 +29,17 @@ public class LoginController {
     private UserDao userDao;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView login() {
-        return new ModelAndView("unauthorised/login", "model", new LoginViewModel());
+    public ModelAndView login(@ModelAttribute("infos") final ArrayList<String> infos,
+                              final BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView("unauthorised/login");
+
+        if ((infos != null) && (!bindingResult.hasErrors())) {
+            modelAndView.addObject("infos", infos);
+        }
+
+        modelAndView.addObject("model", new LoginViewModel());
+
+        return modelAndView;
     }
 
     @ResponseBody
@@ -54,13 +63,11 @@ public class LoginController {
             User user = userDao.findUser(model.getEmail());
 
             if (user != null) {
-                if(AccountUtils.validatePassword(model.getPassword(), user.getPasswordHash())) {
+                if (AccountUtils.validatePassword(model.getPassword(), user.getPasswordHash())) {
                     // Valid login details;
 
 
-
                     // TODO: Store session for this user;
-
 
 
                 } else {
