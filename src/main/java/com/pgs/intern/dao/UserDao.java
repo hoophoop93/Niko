@@ -7,7 +7,7 @@ import com.pgs.intern.models.User;
  */
 public interface UserDao {
 
-
+    public User findUser(String email);
     public boolean checkByEmail(String email);
     void save(User user);
 

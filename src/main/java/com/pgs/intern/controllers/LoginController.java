@@ -1,8 +1,11 @@
 package com.pgs.intern.controllers;
 
+import com.pgs.intern.dao.UserDao;
 import com.pgs.intern.models.LoginViewModel;
 import com.pgs.intern.models.RegistrationViewModel;
+import com.pgs.intern.models.User;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +23,9 @@ import java.util.List;
  */
 @Controller
 public class LoginController {
+
+    @Autowired
+    private UserDao userDao;;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login() {
@@ -53,8 +59,18 @@ public class LoginController {
             return modelAndView;
         }
 
-        modelAndView.setViewName("authorised/index");
-        return modelAndView;
+
+        User user = userDao.findUser(model.getEmail());
+
+        System.out.println(user);
+
+        if(user == null){
+            System.out.println("bład");
+        }
+
+
+            modelAndView.setViewName("authorised/index");
+            return modelAndView;
 
 
     }

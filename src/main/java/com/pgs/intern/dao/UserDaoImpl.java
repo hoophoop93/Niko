@@ -43,10 +43,26 @@ public class UserDaoImpl implements UserDao {
 
         if (firstElement > 0) {
             return true;
-        }else {
+        } else {
             return false;
         }
 
+    }
+
+    public User findUser(String email) {
+        User result = null;
+        String queryString = "Select o from User o where o.email = :email ";
+        System.out.println(queryString);
+        Query query = getEntityManager().createQuery(queryString);
+        query.setParameter("email", email);
+        try {
+            result = (User) query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+
+
+        return result;
     }
 
 }
