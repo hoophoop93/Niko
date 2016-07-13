@@ -42,8 +42,8 @@ public class RegistrationController {
         if (model.getPassword().length() < 8)
             errorMessages.add("Password is too short (minimum 8 characters).");
 
-
         modelAndView.addObject("errors", errorMessages);
+
         if (!errorMessages.isEmpty()) {
             modelAndView.setViewName("unauthorised/register");
             return modelAndView;
@@ -55,7 +55,12 @@ public class RegistrationController {
         }
         // TODO: register
 
-        modelAndView.setViewName("unauthorised/register");
+        List<String> infoMessages = new ArrayList<>();
+        infoMessages.add("Registration was successful! Now, you can login.");
+
+        modelAndView.addObject("infos", infoMessages);
+
+        modelAndView.setViewName("unauthorised/login");
 
         return modelAndView;
     }
