@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class CurrentUser {
-
     private User user;
 
     public User getUser() {
@@ -20,5 +19,13 @@ public class CurrentUser {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public boolean isAuthenticated() {
+        return (user != null);
+    }
+
+    public void logOut() {
+        user = null;
     }
 }
