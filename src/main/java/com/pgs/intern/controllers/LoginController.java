@@ -2,8 +2,8 @@ package com.pgs.intern.controllers;
 
 import com.pgs.intern.dao.UserDao;
 import com.pgs.intern.models.LoginViewModel;
-import com.pgs.intern.models.RegistrationViewModel;
 import com.pgs.intern.models.User;
+import com.pgs.intern.services.CurrentUser;
 import com.pgs.intern.utils.AccountUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,9 @@ public class LoginController {
 
     @Autowired
     private UserDao userDao;
+
+    @Inject
+    private CurrentUser currentUser;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login(@ModelAttribute("infos") final ArrayList<String> infos,
@@ -66,9 +70,7 @@ public class LoginController {
                 if (AccountUtils.validatePassword(model.getPassword(), user.getPasswordHash())) {
                     // Valid login details;
 
-
-                    // TODO: Store session for this user;
-
+                    currentUser.setUser(user);
 
                 } else {
                     errorMessages.add("Incorrect e-mail or password.");
