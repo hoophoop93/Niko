@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kmichalik on 7/12/2016.
@@ -25,11 +27,39 @@ public class LoginController {
 
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public LoginViewModel loginPost(@Valid @ModelAttribute LoginViewModel model, final BindingResult result) {
-        if (result.hasErrors()) {
-            return null;
+    public ModelAndView loginPost(@Valid @ModelAttribute LoginViewModel model, final BindingResult result) {
+        ModelAndView modelAndView = new ModelAndView();
+        List<String> errorMessages = new ArrayList<>();
+        modelAndView.addObject("model", model);
+        modelAndView.addObject("errors", errorMessages);
+
+        if (model.getEmail().isEmpty()) {
+            errorMessages.add("E-mail is empty.");
+        }
+        if (model.getPassword().isEmpty()) {
+            errorMessages.add("Password is empty.");
+        }else if (!model.getEmail().isEmpty() && model.getPassword().length() < 8) {
+            errorMessages.add("Password is too short (minimum 8 characters).");
+        }else if (model.getEmail().isEmpty() && model.getPassword().length() < 8) {
+            errorMessages.add("Password is too short (minimum 8 characters).");
         }
 
-        return model;
+
+
+        modelAndView.addObject("errors", errorMessages);
+        if (!errorMessages.isEmpty()) {
+            modelAndView.setViewName("unauthorised/login");
+            return modelAndView;
+        }
+        if (result.hasErrors()) {
+            modelAndView.setViewName("unauthorised/login");
+            return modelAndView;
+        }
+
+
+        modelAndView.setViewName("unauthorised/login");
+        return modelAndView;
+
+
     }
 }
