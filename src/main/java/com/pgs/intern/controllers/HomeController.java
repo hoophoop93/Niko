@@ -21,19 +21,4 @@ public class HomeController {
     public String niko() {
         return "authorised/index";
     }
-
-    // For testing only; TODO REMOVE ME LATER
-    @ResponseBody
-    @RequestMapping("/test")
-    public String test() {
-        // Register
-        String test = "http://localhost:8080/register";
-        String hash = AccountUtils.getHashFor(test);
-
-        // From login form and db
-        String testIn = "http://localhost:8080/register";
-        String hashIn = hash;
-
-        return test + " -> " + hash + "<br/>" + testIn + " -> " + AccountUtils.validatePassword(testIn, hashIn);
-    }
 }
