@@ -2,6 +2,7 @@ package com.pgs.intern.controllers;
 
 import com.pgs.intern.models.LoginViewModel;
 import com.pgs.intern.models.RegistrationViewModel;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,15 +36,11 @@ public class LoginController {
 
         if (model.getEmail().isEmpty()) {
             errorMessages.add("E-mail is empty.");
-        }
+        } else if (!EmailValidator.getInstance().isValid(model.getEmail()))
+            errorMessages.add("E-mail is invalid.");
         if (model.getPassword().isEmpty()) {
             errorMessages.add("Password is empty.");
-        }else if (!model.getEmail().isEmpty() && model.getPassword().length() < 8) {
-            errorMessages.add("Password is too short (minimum 8 characters).");
-        }else if (model.getEmail().isEmpty() && model.getPassword().length() < 8) {
-            errorMessages.add("Password is too short (minimum 8 characters).");
         }
-
 
 
         modelAndView.addObject("errors", errorMessages);
@@ -56,8 +53,7 @@ public class LoginController {
             return modelAndView;
         }
 
-
-        modelAndView.setViewName("unauthorised/login");
+        modelAndView.setViewName("authorised/index");
         return modelAndView;
 
 
