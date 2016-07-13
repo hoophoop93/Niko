@@ -52,7 +52,7 @@ public class UserDaoImpl implements UserDao {
     public User findUser(String email) {
         User result = null;
         String queryString = "Select o from User o where o.email = :email ";
-        System.out.println(queryString);
+
         Query query = getEntityManager().createQuery(queryString);
         query.setParameter("email", email);
         try {
@@ -60,7 +60,6 @@ public class UserDaoImpl implements UserDao {
         } catch (Exception e) {
             return null;
         }
-
 
         return result;
     }

@@ -4,6 +4,7 @@ import com.pgs.intern.dao.UserDao;
 import com.pgs.intern.models.LoginViewModel;
 import com.pgs.intern.models.RegistrationViewModel;
 import com.pgs.intern.models.User;
+import com.pgs.intern.utils.AccountUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,7 @@ import java.util.List;
 public class LoginController {
 
     @Autowired
-    private UserDao userDao;;
+    private UserDao userDao;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login() {
@@ -48,6 +49,27 @@ public class LoginController {
             errorMessages.add("Password is empty.");
         }
 
+        // Logging in;
+        if (errorMessages.isEmpty()) {
+            User user = userDao.findUser(model.getEmail());
+
+            if (user != null) {
+                if(AccountUtils.validatePassword(model.getPassword(), user.getPasswordHash())) {
+                    // Valid login details;
+
+
+
+                    // TODO: Store session for this user;
+
+
+
+                } else {
+                    errorMessages.add("Incorrect e-mail or password.");
+                }
+            } else {
+                errorMessages.add("Incorrect e-mail or password.");
+            }
+        }
 
         modelAndView.addObject("errors", errorMessages);
         if (!errorMessages.isEmpty()) {
@@ -59,19 +81,7 @@ public class LoginController {
             return modelAndView;
         }
 
-
-        User user = userDao.findUser(model.getEmail());
-
-        System.out.println(user);
-
-        if(user == null){
-            System.out.println("bład");
-        }
-
-
-            modelAndView.setViewName("authorised/index");
-            return modelAndView;
-
-
+        modelAndView.setViewName("redirect:/");
+        return modelAndView;
     }
 }
