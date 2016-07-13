@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 /**
  * Created by kmichalik on 7/12/2016.
@@ -29,6 +30,9 @@ public class User {
     @NotEmpty
     @Column(name = "password_hash")
     private String passwordHash;
+
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Project> ownedProjects;
 
     public long getIdUser() {
         return idUser;
