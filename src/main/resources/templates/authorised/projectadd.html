@@ -1,0 +1,34 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org" lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/><title th:replace="/fragments/title :: title"></title></head><body><nav th:replace="/authorised/fragments/nav :: nav"></nav><div class="container">
+
+   <h2>Add new project</h2>
+
+   <div class="alert alert-danger alert-dismissible fade in" role="alert" th:if="${not #lists.isEmpty(errors)}">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+      </button>
+      <strong>There were errors in form!</strong><br/>
+      <div th:each="e : ${errors}">
+         <li th:text="${e}"></li>
+      </div>
+   </div>
+
+   <hr/>
+
+   <form action="#" th:action="@{/project/add}" th:object="${model}" class="form-horizontal" role="form" method="POST">
+
+      <div class="form-group">
+         <label class="control-label col-sm-2">Project title</label><div class="col-sm-10">
+         <input class="form-control" type="text" placeholder="Enter project title" th:field="*{title}"/>
+      </div></div>
+
+      <hr/>
+
+      <div class="form-group">
+         <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default btn-lg">Add  <span class="glyphicon glyphicon-plus"></span></button>
+         </div>
+      </div>
+
+   </form>
+
+<footer th:replace="/fragments/footer :: footer"></footer></div><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script><script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script></body></html>

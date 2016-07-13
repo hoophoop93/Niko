@@ -19,15 +19,17 @@ public class ProjectController {
     CurrentUser currentUser;
 
     @RequestMapping(value = "/project/add", method = RequestMethod.GET)
-    public ModelAndView addProject(){
+    public ModelAndView addProject() {
         ModelAndView modelAndView = new ModelAndView();
 
-        if(currentUser.isAuthenticated()) {
+        if (!currentUser.isAuthenticated()) {
             modelAndView.setViewName("redirect:/login");
             return modelAndView;
         }
+
         modelAndView.setViewName("authorised/projectadd");
-        modelAndView.addObject("model",new ProjectViewModel());
+        modelAndView.addObject("model", new ProjectViewModel());
+
         return modelAndView;
     }
 }
