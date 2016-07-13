@@ -5,6 +5,6 @@ package com.pgs.intern.utils;
  */
 public class AccountUtils {
     public static String getHashFor(String text) {
-        return "";
+        return text;
     }
 }

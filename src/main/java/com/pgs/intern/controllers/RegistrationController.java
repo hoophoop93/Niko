@@ -3,6 +3,7 @@ package com.pgs.intern.controllers;
 import com.pgs.intern.dao.UserDao;
 import com.pgs.intern.models.RegistrationViewModel;
 import com.pgs.intern.models.User;
+import com.pgs.intern.utils.AccountUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -64,7 +65,12 @@ public class RegistrationController {
             modelAndView.setViewName("unauthorised/register");
             return modelAndView;
         }
-        // TODO: register
+
+        User user = new User();
+        user.setEmail(model.getEmail());
+        user.setDisplayName(model.getDisplayName());
+        user.setPasswordHash(AccountUtils.getHashFor(model.getPassword()));
+        userDao.save(user);
 
         List<String> infoMessages = new ArrayList<>();
         infoMessages.add("Registration was successful! Now, you can login.");
