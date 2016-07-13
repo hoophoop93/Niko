@@ -93,4 +93,11 @@ public class LoginController {
         modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout() {
+        currentUser.logOut();
+
+        return "redirect:/";
+    }
 }
