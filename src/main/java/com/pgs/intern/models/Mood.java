@@ -11,7 +11,7 @@ import java.util.Date;
  * Created by kmichalik on 7/14/2016.
  */
 @Entity
-@Table(name = "mods")
+@Table(name = "moods")
 public class Mood {
 
     @Id
