@@ -35,7 +35,7 @@ public class User {
     private List<Project> ownedProjects;
 
     @OneToMany(mappedBy ="userId",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Mood> user;
+    private List<Mood> moodList;
 
     public long getIdUser() {
         return idUser;
@@ -68,6 +68,22 @@ public class User {
 
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
+    }
+
+    public List<Project> getOwnedProjects() {
+        return ownedProjects;
+    }
+
+    public void setOwnedProjects(List<Project> ownedProjects) {
+        this.ownedProjects = ownedProjects;
+    }
+
+    public List<Mood> getMoodList() {
+        return moodList;
+    }
+
+    public void setMoodList(List<Mood> moodList) {
+        this.moodList = moodList;
     }
 
     @Override

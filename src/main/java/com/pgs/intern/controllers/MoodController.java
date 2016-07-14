@@ -26,9 +26,13 @@ public class MoodController {
 
     @RequestMapping(value = "/mood/add", method = RequestMethod.GET)
     public ModelAndView addMood() {
+        ModelAndView modelAndView = new ModelAndView("authorised/moodadd", "model", new MoodViewModel());
         if(!currentUser.isAuthenticated())
             return new ModelAndView("redirect:/login");
-        return new ModelAndView("authorised/moodadd", "model", new MoodViewModel());
+
+        modelAndView.addObject("ownedProjects", currentUser.getUser().getOwnedProjects());
+
+        return modelAndView;
     }
 
     @ResponseBody
