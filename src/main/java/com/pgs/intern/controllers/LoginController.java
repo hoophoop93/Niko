@@ -55,12 +55,12 @@ public class LoginController {
         // Logging in;
         User user = userDao.findUser(model.getEmail());
 
-
-
-        if(user == null){
-            result.reject("error.loginError","Incorrect e-mail or password.");
-        }else if(!AccountUtils.validatePassword(model.getPassword(), user.getPasswordHash())){
-            result.reject("error.loginError","Incorrect e-mail or password.");
+        if (!result.hasErrors()) {
+            if (user == null) {
+                result.reject("error.loginError", "Incorrect e-mail or password.");
+            } else if (!AccountUtils.validatePassword(model.getPassword(), user.getPasswordHash())) {
+                result.reject("error.loginError", "Incorrect e-mail or password.");
+            }
         }
 
         if (result.hasErrors()) {
