@@ -27,6 +27,9 @@ public class RegistrationController {
     @Autowired
     private UserDao userDao;
 
+    private final EmailValidator emailValidator = EmailValidator.getInstance();
+
+
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView register() {
         return new ModelAndView("unauthorised/register", "model", new RegistrationViewModel());
@@ -42,7 +45,7 @@ public class RegistrationController {
 
         if (model.getEmail().isEmpty())
             errorMessages.add("E-mail is empty.");
-        else if(!EmailValidator.getInstance().isValid(model.getEmail()))
+        else if(!emailValidator.isValid(model.getEmail()))
             errorMessages.add("E-mail is invalid.");
         if (model.getDisplayName().isEmpty())
             errorMessages.add("Display name is empty.");
