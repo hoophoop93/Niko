@@ -36,7 +36,7 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ModelAndView registerPost(@Valid @ModelAttribute RegistrationViewModel model, final BindingResult result, final RedirectAttributes redirectAttributes) {
+    public ModelAndView registerPost(@Valid @ModelAttribute("model") RegistrationViewModel model, final BindingResult result, final RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView();
         List<String> errorMessages = new ArrayList<>();
         modelAndView.addObject("model", model);
