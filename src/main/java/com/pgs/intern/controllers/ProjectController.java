@@ -12,6 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Maciej Rosa on 7/13/2016 3:26 PM.
@@ -37,12 +39,32 @@ public class ProjectController {
         return modelAndView;
     }
 
-    @ResponseBody
     @RequestMapping(value = "/project/add", method = RequestMethod.POST)
-    public ProjectViewModel addProjectPost(@Valid @ModelAttribute ProjectViewModel projectViewModel,
+    public ModelAndView addProjectPost(@Valid @ModelAttribute ProjectViewModel model,
                                            final BindingResult result){
-        if(result.hasErrors())
-            return null;
-        return projectViewModel;
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("model", model);
+        List<String> errorMessages = new ArrayList<>();
+        if(!currentUser.isAuthenticated()){
+            modelAndView.setViewName("redirect:/login");
+            return modelAndView;
+        }
+        if(model.getTitle().isEmpty())
+            errorMessages.add("Title is empty.");
+
+        if(!errorMessages.isEmpty()){
+            modelAndView.setViewName("authorised/projectadd");
+            modelAndView.addObject("errors", errorMessages);
+            return modelAndView;
+        }
+
+        if(result.hasErrors()){
+            modelAndView.setViewName("authorised/projectadd");
+            return modelAndView;
+        }
+
+        modelAndView.setViewName("authorised/projectadd");
+
+        return modelAndView;
     }
 }
