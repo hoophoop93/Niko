@@ -1,7 +1,10 @@
 package com.pgs.intern.controllers;
 
+import com.pgs.intern.dao.ProjectDao;
+import com.pgs.intern.models.Project;
 import com.pgs.intern.models.ProjectViewModel;
 import com.pgs.intern.services.CurrentUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +23,9 @@ import java.util.List;
  */
 @Controller
 public class ProjectController {
+
+    @Autowired
+    private ProjectDao projectDao;
 
     @Inject
     CurrentUser currentUser;
@@ -56,7 +62,10 @@ public class ProjectController {
             return modelAndView;
         }
 
-        // TODO: ...
+        Project project = new Project();
+        project.setTitle(model.getTitle());
+        project.setOwner(currentUser.getUser());
+        projectDao.save(project);
 
         modelAndView.setViewName("redirect:/");
         return modelAndView;
