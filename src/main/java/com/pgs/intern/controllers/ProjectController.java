@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -47,7 +48,7 @@ public class ProjectController {
 
     @RequestMapping(value = "/project/add", method = RequestMethod.POST)
     public ModelAndView addProjectPost(@Valid @ModelAttribute("model") ProjectViewModel model,
-                                           final BindingResult result){
+                                           final BindingResult result, final RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView();
 
         modelAndView.addObject("model", model);
@@ -67,7 +68,13 @@ public class ProjectController {
         project.setOwner(currentUser.getUser());
         projectDao.save(project);
 
-        modelAndView.setViewName("redirect:/");
+        modelAndView = new ModelAndView("redirect:/");
+
+        List<String> infoMessages = new ArrayList<>();
+        infoMessages.add("Added project '" + project.getTitle() + "' successfully!");
+
+        redirectAttributes.addFlashAttribute("infos", infoMessages);
+
         return modelAndView;
     }
 }
