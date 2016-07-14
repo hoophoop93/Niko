@@ -2,17 +2,12 @@ package com.pgs.intern.models;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 
 import javax.validation.constraints.Size;
 
 /**
  * Created by lschiffer on 7/12/2016.
  */
-@Configuration
-@ConfigurationProperties(locations = "classpath:/resources/messages.properties")
 public class RegistrationViewModel {
 
     @NotEmpty(message = "Display name is empty.")
