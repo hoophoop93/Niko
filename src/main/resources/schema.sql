@@ -10,3 +10,11 @@ CREATE TABLE IF NOT EXISTS projects (
     title text NOT NULL,
     project_owner integer references users(user_id) NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS moods (
+    mood_id SERIAL PRIMARY KEY,
+    mood INTEGER NOT NULL,
+    dateAdd DATE NOT NULL,
+    user_id INTEGER references users(user_id) NOT NULL,
+    project_id INTEGER references projects(project_id) NOT NULL
+);
