@@ -2,8 +2,7 @@ package com.pgs.intern.controllers;
 
 import com.pgs.intern.dao.UserDao;
 import com.pgs.intern.models.RegistrationViewModel;
-import com.pgs.intern.models.User;
-import com.pgs.intern.utils.AccountUtils;
+import com.pgs.intern.services.RegistrationService;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +25,9 @@ public class RegistrationController {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private RegistrationService registrationService;
 
     private final EmailValidator emailValidator = EmailValidator.getInstance();
 
@@ -51,13 +53,7 @@ public class RegistrationController {
             return modelAndView;
         }
 
-        User user = new User();
-
-        user.setEmail(model.getEmail());
-        user.setDisplayName(model.getDisplayName());
-        user.setPasswordHash(AccountUtils.getHashFor(model.getPassword()));
-
-        userDao.save(user);
+        registrationService.registration(model);
 
         // Registration successful;
         modelAndView = new ModelAndView("redirect:/login");

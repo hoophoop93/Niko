@@ -1,7 +1,5 @@
 package com.pgs.intern.controllers;
 
-import com.pgs.intern.dao.ProjectDao;
-import com.pgs.intern.models.Project;
 import com.pgs.intern.models.ProjectViewModel;
 import com.pgs.intern.services.CurrentUser;
 import com.pgs.intern.services.ProjectAdder;
@@ -11,7 +9,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -25,9 +22,6 @@ import java.util.List;
  */
 @Controller
 public class ProjectController {
-
-    @Autowired
-    private ProjectDao projectDao;
 
     @Autowired
     private ProjectAdder projectAdder;
@@ -66,7 +60,7 @@ public class ProjectController {
             modelAndView.setViewName("authorised/projectadd");
             return modelAndView;
         }
-        
+
         projectAdder.addProject(model);
 
 
