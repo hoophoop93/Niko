@@ -20,13 +20,14 @@ import javax.validation.Valid;
 public class MoodController {
 
     @RequestMapping(value = "/mood/add", method = RequestMethod.GET)
-    public ModelAndView addMood(){
-        return new ModelAndView("authorised/moodadd","model",new MoodViewModel());
+    public ModelAndView addMood() {
+        return new ModelAndView("authorised/moodadd", "model", new MoodViewModel());
     }
 
     @ResponseBody
+    @RequestMapping(value = "/mood/add", method = RequestMethod.POST)
     public MoodViewModel addMoodPost(@Valid @ModelAttribute("model") MoodViewModel model,
-                                     final BindingResult result, final RedirectAttributes redirectAttributes){
+                                     final BindingResult result, final RedirectAttributes redirectAttributes) {
         return model;
     }
 
