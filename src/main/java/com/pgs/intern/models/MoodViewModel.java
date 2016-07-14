@@ -15,4 +15,28 @@ public class MoodViewModel {
 
     @NotNull(message = "Choose project.")
     private Project projectId;
+
+    public MoodType getMoodType() {
+        return moodType;
+    }
+
+    public void setMoodType(MoodType moodType) {
+        this.moodType = moodType;
+    }
+
+    public Date getDateAdd() {
+        return dateAdd;
+    }
+
+    public void setDateAdd(Date dateAdd) {
+        this.dateAdd = dateAdd;
+    }
+
+    public Project getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Project projectId) {
+        this.projectId = projectId;
+    }
 }
