@@ -2,6 +2,7 @@ package com.pgs.intern.controllers;
 
 import com.pgs.intern.dao.UserDao;
 import com.pgs.intern.models.RegistrationViewModel;
+import com.pgs.intern.services.CurrentUser;
 import com.pgs.intern.services.RegistrationService;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,9 @@ public class RegistrationController {
     @Autowired
     private UserDao userDao;
 
+    @Inject
+    private CurrentUser currentUser;
+
     @Autowired
     private RegistrationService registrationService;
 
@@ -34,6 +39,9 @@ public class RegistrationController {
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView register() {
+        if(currentUser.isAuthenticated())
+            return new ModelAndView("redirect:/");
+
         return new ModelAndView("unauthorised/register", "model", new RegistrationViewModel());
     }
 
@@ -41,6 +49,9 @@ public class RegistrationController {
     public ModelAndView registerPost(@Valid @ModelAttribute("model") RegistrationViewModel model, final BindingResult result, final RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("model", model);
+
+        if(currentUser.isAuthenticated())
+            return new ModelAndView("redirect:/");
 
         if(userDao.checkByEmail(model.getEmail()))
             result.reject("error.registrationError","E-mail already taken.");
