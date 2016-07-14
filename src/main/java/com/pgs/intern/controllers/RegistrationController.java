@@ -38,32 +38,13 @@ public class RegistrationController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView registerPost(@Valid @ModelAttribute("model") RegistrationViewModel model, final BindingResult result, final RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView();
-        List<String> errorMessages = new ArrayList<>();
         modelAndView.addObject("model", model);
-        modelAndView.addObject("errors", errorMessages);
 
-
-        if (model.getEmail().isEmpty())
-            errorMessages.add("E-mail is empty.");
-        else if(!emailValidator.isValid(model.getEmail()))
-            errorMessages.add("E-mail is invalid.");
-        if (model.getDisplayName().isEmpty())
-            errorMessages.add("Display name is empty.");
         if(userDao.checkByEmail(model.getEmail()))
-            errorMessages.add("E-mail already taken.");
-        if (model.getDisplayName().length() > 32)
-            errorMessages.add("Display name is too long.");
+            result.reject("error.registrationError","E-mail already taken.");
         if (!model.getPassword().equals(model.getPasswordRepeat()))
-            errorMessages.add("Passwords do not match.");
-        if (model.getPassword().length() < 8)
-            errorMessages.add("Password is too short (minimum 8 characters).");
+            result.reject("error.registrationError","Passwords do not match.");
 
-        modelAndView.addObject("errors", errorMessages);
-
-        if (!errorMessages.isEmpty()) {
-            modelAndView.setViewName("unauthorised/register");
-            return modelAndView;
-        }
 
         if (result.hasErrors()) {
             modelAndView.setViewName("unauthorised/register");
