@@ -1,24 +1,33 @@
 package com.pgs.intern.models;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 import javax.validation.constraints.Size;
 
 /**
  * Created by lschiffer on 7/12/2016.
  */
+@Configuration
+@ConfigurationProperties(locations = "classpath:/resources/messages.properties")
 public class RegistrationViewModel {
-    @NotEmpty
-    @Size(max = 32)
+
+    @NotEmpty(message = "Display name is empty.")
+    @Size(max = 32, message = "Display name is too long. You can use maximum 32 characters.")
     private String displayName;
 
-    @NotEmpty
+    @NotEmpty(message = "E-mail is empty")
+    @Email(message = "E-mail is invalid.")
     private String email;
 
     @NotEmpty
+    @Size(min = 8, message = "Password is too short. You should use minimum 8 characters")
     private String password;
 
-    @NotEmpty
+    @NotEmpty(message = "Reapeated password is empty")
     private String passwordRepeat;
 
     public String getDisplayName() {
