@@ -34,6 +34,9 @@ public class User {
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Project> ownedProjects;
 
+    @OneToMany(mappedBy ="userId",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Mood> user;
+
     public long getIdUser() {
         return idUser;
     }

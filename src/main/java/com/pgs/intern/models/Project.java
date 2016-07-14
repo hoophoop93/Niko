@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 /**
  * Created by mzalucka on 7/13/2016.
@@ -26,6 +27,9 @@ public class Project {
     @JoinColumn(name = "project_owner")
     @JsonIgnore
     private User owner;
+
+    @OneToMany(mappedBy ="projectId",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Mood> project;
 
     public long getProjectId() {
         return projectId;
