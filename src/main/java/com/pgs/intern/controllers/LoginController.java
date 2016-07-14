@@ -48,47 +48,27 @@ public class LoginController {
 
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView loginPost(@Valid @ModelAttribute LoginViewModel model, final BindingResult result) {
+    public ModelAndView loginPost(@Valid @ModelAttribute("model") LoginViewModel model, final BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
-        List<String> errorMessages = new ArrayList<>();
         modelAndView.addObject("model", model);
-        modelAndView.addObject("errors", errorMessages);
-
-        if (model.getEmail().isEmpty()) {
-            errorMessages.add("E-mail is empty.");
-        } else if (!EmailValidator.getInstance().isValid(model.getEmail()))
-            errorMessages.add("E-mail is invalid.");
-        if (model.getPassword().isEmpty()) {
-            errorMessages.add("Password is empty.");
-        }
 
         // Logging in;
-        if (errorMessages.isEmpty()) {
-            User user = userDao.findUser(model.getEmail());
+        User user = userDao.findUser(model.getEmail());
 
-            if (user != null) {
-                if (AccountUtils.validatePassword(model.getPassword(), user.getPasswordHash())) {
-                    // Valid login details;
 
-                    currentUser.setUser(user);
 
-                } else {
-                    errorMessages.add("Incorrect e-mail or password.");
-                }
-            } else {
-                errorMessages.add("Incorrect e-mail or password.");
-            }
+        if(user == null){
+            result.reject("error.loginError","Incorrect e-mail or password.");
+        }else if(!AccountUtils.validatePassword(model.getPassword(), user.getPasswordHash())){
+            result.reject("error.loginError","Incorrect e-mail or password.");
         }
 
-        modelAndView.addObject("errors", errorMessages);
-        if (!errorMessages.isEmpty()) {
-            modelAndView.setViewName("unauthorised/login");
-            return modelAndView;
-        }
         if (result.hasErrors()) {
             modelAndView.setViewName("unauthorised/login");
             return modelAndView;
         }
+
+        currentUser.setUser(user);
 
         modelAndView.setViewName("redirect:/");
         return modelAndView;
@@ -97,7 +77,6 @@ public class LoginController {
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout() {
         currentUser.logOut();
-
         return "redirect:/";
     }
 }
