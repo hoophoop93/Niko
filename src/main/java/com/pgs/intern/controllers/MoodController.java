@@ -1,6 +1,7 @@
 package com.pgs.intern.controllers;
 
 import com.pgs.intern.models.MoodViewModel;
+import com.pgs.intern.services.CurrentUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 
 /**
@@ -19,8 +21,13 @@ import javax.validation.Valid;
 @Controller
 public class MoodController {
 
+    @Inject
+    CurrentUser currentUser;
+
     @RequestMapping(value = "/mood/add", method = RequestMethod.GET)
     public ModelAndView addMood() {
+        if(!currentUser.isAuthenticated())
+            return new ModelAndView("redirect:/login");
         return new ModelAndView("authorised/moodadd", "model", new MoodViewModel());
     }
 
