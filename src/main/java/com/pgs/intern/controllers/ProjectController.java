@@ -40,31 +40,25 @@ public class ProjectController {
     }
 
     @RequestMapping(value = "/project/add", method = RequestMethod.POST)
-    public ModelAndView addProjectPost(@Valid @ModelAttribute ProjectViewModel model,
+    public ModelAndView addProjectPost(@Valid @ModelAttribute("model") ProjectViewModel model,
                                            final BindingResult result){
         ModelAndView modelAndView = new ModelAndView();
+
         modelAndView.addObject("model", model);
-        List<String> errorMessages = new ArrayList<>();
+
         if(!currentUser.isAuthenticated()){
             modelAndView.setViewName("redirect:/login");
             return modelAndView;
         }
-        if(model.getTitle().isEmpty())
-            errorMessages.add("Title is empty.");
 
-        if(!errorMessages.isEmpty()){
-            modelAndView.setViewName("authorised/projectadd");
-            modelAndView.addObject("errors", errorMessages);
-            return modelAndView;
-        }
-
-        if(result.hasErrors()){
+        if(result.hasErrors()) {
             modelAndView.setViewName("authorised/projectadd");
             return modelAndView;
         }
 
-        modelAndView.setViewName("authorised/projectadd");
+        // TODO: ...
 
+        modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
 }

@@ -19,6 +19,7 @@
       <div class="form-group">
          <label class="control-label col-sm-2">Project title</label><div class="col-sm-10">
          <input class="form-control" type="text" placeholder="Enter project title" th:field="*{title}"/>
+         <span class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
       </div></div>
 
       <hr/>
