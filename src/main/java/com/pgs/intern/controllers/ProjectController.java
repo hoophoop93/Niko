@@ -4,6 +4,7 @@ import com.pgs.intern.dao.ProjectDao;
 import com.pgs.intern.models.Project;
 import com.pgs.intern.models.ProjectViewModel;
 import com.pgs.intern.services.CurrentUser;
+import com.pgs.intern.services.ProjectAdder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -27,6 +28,9 @@ public class ProjectController {
 
     @Autowired
     private ProjectDao projectDao;
+
+    @Autowired
+    private ProjectAdder projectAdder;
 
     @Inject
     CurrentUser currentUser;
@@ -62,16 +66,14 @@ public class ProjectController {
             modelAndView.setViewName("authorised/projectadd");
             return modelAndView;
         }
+        
+        projectAdder.addProject(model);
 
-        Project project = new Project();
-        project.setTitle(model.getTitle());
-        project.setOwner(currentUser.getUser());
-        projectDao.save(project);
 
         modelAndView = new ModelAndView("redirect:/");
 
         List<String> infoMessages = new ArrayList<>();
-        infoMessages.add("Added project '" + project.getTitle() + "' successfully!");
+        infoMessages.add("Added project '" + model.getTitle() + "' successfully!");
 
         redirectAttributes.addFlashAttribute("infos", infoMessages);
 
