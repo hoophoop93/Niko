@@ -5,7 +5,6 @@ import com.pgs.intern.models.LoginViewModel;
 import com.pgs.intern.models.User;
 import com.pgs.intern.services.CurrentUser;
 import com.pgs.intern.utils.AccountUtils;
-import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by kmichalik on 7/12/2016.
@@ -36,7 +34,8 @@ public class LoginController {
     public ModelAndView login(@ModelAttribute("infos") final ArrayList<String> infos,
                               final BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView("unauthorised/login");
-
+        if(currentUser.isAuthenticated())
+            return new ModelAndView("redirect:/");
         if ((infos != null) && (!bindingResult.hasErrors())) {
             modelAndView.addObject("infos", infos);
         }
@@ -51,9 +50,11 @@ public class LoginController {
     public ModelAndView loginPost(@Valid @ModelAttribute("model") LoginViewModel model, final BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("model", model);
-
+        if(currentUser.isAuthenticated())
+            return new ModelAndView("redirect:/");
         // Logging in;
         User user = userDao.findUser(model.getEmail());
+
 
         if (!result.hasErrors()) {
             if (user == null) {

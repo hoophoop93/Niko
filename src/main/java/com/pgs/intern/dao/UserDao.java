@@ -34,9 +34,9 @@ public class UserDao {
     }
 
     public boolean checkByEmail(String email) {
-        String queryString = "SELECT count(o.email) FROM User o where o.email = :email";
+        String queryString = "SELECT count(o.email) FROM User o where LOWER(o.email) = :email";
         Query query = getEntityManager().createQuery(queryString);
-        query.setParameter("email", email);
+        query.setParameter("email", email.toLowerCase());
 
         List result = query.getResultList();
         long firstElement = (long) result.get(0);
@@ -46,10 +46,10 @@ public class UserDao {
 
     public User findUser(String email) {
         User result = null;
-        String queryString = "Select o from User o where o.email = :email ";
+        String queryString = "Select o from User o where LOWER(o.email) = :email ";
 
         Query query = getEntityManager().createQuery(queryString);
-        query.setParameter("email", email);
+        query.setParameter("email", email.toLowerCase());
         try {
             result = (User) query.getSingleResult();
         } catch (Exception e) {
