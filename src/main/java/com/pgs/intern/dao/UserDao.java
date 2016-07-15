@@ -58,4 +58,8 @@ public class UserDao {
         return result;
     }
 
+    public User findById(Long id) {
+        return entityManager.find(User.class, id);
+    }
+
 }
