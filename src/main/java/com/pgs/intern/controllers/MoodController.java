@@ -39,11 +39,16 @@ public class MoodController {
         return modelAndView;
     }
 
-    @ResponseBody
     @RequestMapping(value = "/mood/add", method = RequestMethod.POST)
-    public MoodViewModel addMoodPost(@Valid @ModelAttribute("model") MoodViewModel model,
+    public ModelAndView addMoodPost(@Valid @ModelAttribute("model") MoodViewModel model,
                                      final BindingResult result, final RedirectAttributes redirectAttributes) {
-        return model;
+        if(!currentUser.isAuthenticated())
+            return new ModelAndView("redirect:/login");
+
+        if(result.hasErrors())
+            return new ModelAndView("authorised/moodadd","model",model);
+
+        return new ModelAndView("authorised/moodadd","model",model);
     }
 
 }
