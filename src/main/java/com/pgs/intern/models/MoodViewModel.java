@@ -21,8 +21,8 @@ public class MoodViewModel {
 
     private Project project;
 
-    @NotNull(message = "{NotNull.mood}")
-    @Min(value = 1, message = "{Choose.project")
+    @NotNull(message = "{Choose.project}")
+    @Min(value = 1, message = "{Choose.project}")
     private long projectId;
 
     public MoodType getMoodType() {
