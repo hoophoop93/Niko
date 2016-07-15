@@ -1,5 +1,6 @@
 package com.pgs.intern.controllers;
 
+import com.pgs.intern.dao.MoodDao;
 import com.pgs.intern.dao.ProjectDao;
 import com.pgs.intern.models.MoodViewModel;
 import com.pgs.intern.models.Project;
@@ -37,6 +38,9 @@ public class MoodController {
     @Autowired
     private MoodAdder moodAdder;
 
+    @Autowired
+    private MoodDao moodDao;
+
 
     @RequestMapping(value = "/mood/add", method = RequestMethod.GET)
     public ModelAndView addMood() {
@@ -59,22 +63,14 @@ public class MoodController {
             return new ModelAndView("redirect:/login");
         }
 
-        /*
-            Valid:
-           - if project exists - done
-           - if user is owner - done
-           - if mood's day of current user in current project was already registered.
-         */
-
         Project project = projectDao.findById(model.getProjectId());
         if(project == null)
             result.rejectValue("projectId", "error.wrongProjectId", "Choose project.");
         else{
             if(!project.getOwner().equals(currentUser.getUser()))
                 result.reject("error.projectNotOwned", "You are not a project owner.");
-            //if()
-            //TODO: if(moodDao.checkDayMood(currentUser.getUser(), model.getDateAdd(),project))
-            //  result.reject("error.moodAlreadyAdded","You have already added mood that day.");
+            if(moodDao.checkDayMood(model.getDateAdd(), currentUser.getUser(),project))
+                result.reject("error.moodAlreadyAdded","You have already added mood that day.");
         }
 
 
