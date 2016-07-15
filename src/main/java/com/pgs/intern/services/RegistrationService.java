@@ -24,7 +24,7 @@ public class RegistrationService {
     public void registration(RegistrationViewModel registrationViewModel){
         User user = new User();
         user.setEmail(registrationViewModel.getEmail());
-        user.setDisplayName(registrationViewModel.getDisplayName());
+        user.setDisplayName(registrationViewModel.getDisplayName().trim());
         user.setPasswordHash(AccountUtils.getHashFor(registrationViewModel.getPassword()));
 
         userDao.save(user);
