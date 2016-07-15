@@ -31,4 +31,9 @@ public class ProjectDao {
     public void save(Project project) {
         entityManager.persist(project);
     }
+
+    public Project findById(Long id) {
+        return entityManager.find(Project.class, id);
+    }
+
 }
