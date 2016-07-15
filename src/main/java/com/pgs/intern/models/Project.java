@@ -28,7 +28,7 @@ public class Project {
     @JsonIgnore
     private User owner;
 
-    @OneToMany(mappedBy ="projectId",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy ="project",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Mood> project;
 
     public long getProjectId() {

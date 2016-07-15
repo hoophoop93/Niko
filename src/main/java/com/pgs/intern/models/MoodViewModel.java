@@ -4,23 +4,25 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.util.Date;
 
 /**
  * Created by lschiffer on 7/14/2016.
  */
 public class MoodViewModel {
-    @NotNull(message = "Choose mood.")
+    @NotNull(message = "{Choose.mood}")
     private MoodType moodType;
 
-    @NotNull(message = "Choose date.")
+    @NotNull(message = "{Choose.date}")
+    @Past(message = "{Past.date}")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateAdd;
 
     private Project project;
 
-    @NotNull(message = "Choose project.")
-    @Min(value = 1, message = "Choose project.")
+    @NotNull(message = "{Choose.project}")
+    @Min(value = 1, message = "{Choose.project}")
     private long projectId;
 
     public MoodType getMoodType() {

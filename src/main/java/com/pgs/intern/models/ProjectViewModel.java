@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * Created by lschiffer on 7/13/2016.
  */
 public class ProjectViewModel {
-    @NotEmpty(message = "Title is empty.")
+    @NotEmpty(message = "{NotEmpty.message}")
     public String title;
 
     public String getTitle() {
