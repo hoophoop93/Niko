@@ -36,11 +36,11 @@ public class MoodDao {
     }
 
     public boolean checkDayMood(Date dateAdd, User user, Project project) {
-        String queryString = "SELECT count(o.dateAdd) FROM Mood o where (u.idUser) =:idUser and (p.projectId)=:projectId and (o.dateAdd) = :dateAdd";
+        String queryString = "SELECT count(o.dateAdd) FROM Mood o where (o.user) =:user and (o.project)=:project and (o.dateAdd) = :dateAdd";
         Query query = getEntityManager().createQuery(queryString);
         query.setParameter("dateAdd", dateAdd);
-        query.setParameter("user", user.getIdUser());
-        query.setParameter("project", project.getProjectId());
+        query.setParameter("user", user);
+        query.setParameter("project", project);
 
         List result = query.getResultList();
         long firstElement = (long) result.get(0);
