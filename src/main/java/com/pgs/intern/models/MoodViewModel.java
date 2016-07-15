@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.util.Date;
 
 /**
@@ -14,6 +15,7 @@ public class MoodViewModel {
     private MoodType moodType;
 
     @NotNull(message = "Choose date.")
+    @Past(message = "Choose date from today or past.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateAdd;
 
