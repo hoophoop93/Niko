@@ -10,19 +10,18 @@ import javax.validation.constraints.Size;
  */
 public class RegistrationViewModel {
 
-    @NotEmpty(message = "Display name is empty.")
-    @Size(max = 32, message = "Display name is too long. You can use maximum 32 characters.")
+    @NotEmpty(message = "{NotEmpty.message}")
+    @Size(max = 32, message = "{Size.displayName}")
     private String displayName;
 
-    @NotEmpty(message = "E-mail is empty")
-    @Email(message = "E-mail is invalid.")
+    @NotEmpty(message = "{NotEmpty.message}")
+    @Email(message = "{Email.invalidEmail}")
     private String email;
 
-    @NotEmpty
-    @Size(min = 8, message = "Password is too short. You should use minimum 8 characters")
+    @Size(min = 8, message = "{Size.password}")
     private String password;
 
-    @NotEmpty(message = "Reapeated password is empty")
+    @NotEmpty(message = "{NotEmpty.repeatedPassword}")
     private String passwordRepeat;
 
     public String getDisplayName() {
