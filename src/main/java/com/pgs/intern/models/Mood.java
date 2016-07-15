@@ -30,12 +30,12 @@ public class Mood {
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
-    private User userId;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "project_id")
     @JsonIgnore
-    private Project projectId;
+    private Project project;
 
     public long getMoodId() {
 
@@ -61,4 +61,21 @@ public class Mood {
     public void setMoodType(MoodType moodType) {
         this.moodType = moodType;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
 }
