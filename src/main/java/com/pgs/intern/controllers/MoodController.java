@@ -31,24 +31,26 @@ public class MoodController {
         mood.setDateAdd(new Date());
 
         ModelAndView modelAndView = new ModelAndView("authorised/moodadd", "model", mood);
-        if(!currentUser.isAuthenticated())
-            return new ModelAndView("redirect:/login");
 
-        modelAndView.addObject("ownedProjects", currentUser.getUser().getOwnedProjects());
+        if (!currentUser.isAuthenticated()) {
+            return new ModelAndView("redirect:/login");
+        }
 
         return modelAndView;
     }
 
     @RequestMapping(value = "/mood/add", method = RequestMethod.POST)
     public ModelAndView addMoodPost(@Valid @ModelAttribute("model") MoodViewModel model,
-                                     final BindingResult result, final RedirectAttributes redirectAttributes) {
-        if(!currentUser.isAuthenticated())
+                                    final BindingResult result, final RedirectAttributes redirectAttributes) {
+        if (!currentUser.isAuthenticated()) {
             return new ModelAndView("redirect:/login");
+        }
 
-        if(result.hasErrors())
-            return new ModelAndView("authorised/moodadd","model",model);
+        if (result.hasErrors()) {
+            return new ModelAndView("authorised/moodadd", "model", model);
+        }
 
-        return new ModelAndView("authorised/moodadd","model",model);
+        return new ModelAndView("redirect:/");
     }
 
 }

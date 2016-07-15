@@ -1,6 +1,8 @@
 package com.pgs.intern.services;
 
+import com.pgs.intern.dao.UserDao;
 import com.pgs.intern.models.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
@@ -13,7 +15,14 @@ import org.springframework.stereotype.Component;
 public class CurrentUser {
     private User user;
 
+    @Autowired
+    private UserDao userDao;
+
     public User getUser() {
+        if(user != null) {
+            user = userDao.findById(user.getIdUser());
+        }
+
         return user;
     }
 

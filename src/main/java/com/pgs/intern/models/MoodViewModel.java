@@ -2,6 +2,7 @@ package com.pgs.intern.models;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -16,9 +17,10 @@ public class MoodViewModel {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateAdd;
 
-    @NotNull(message = "Choose project.")
     private Project project;
 
+    @NotNull(message = "Choose project.")
+    @Min(value = 1, message = "Choose project.")
     private long projectId;
 
     public MoodType getMoodType() {
