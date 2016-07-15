@@ -1,13 +1,16 @@
 package com.pgs.intern.controllers;
 
+import com.pgs.intern.dao.ProjectDao;
 import com.pgs.intern.models.MoodViewModel;
+import com.pgs.intern.models.Project;
 import com.pgs.intern.services.CurrentUser;
+import com.pgs.intern.services.MoodAdder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -23,7 +26,14 @@ import java.util.Date;
 public class MoodController {
 
     @Inject
-    CurrentUser currentUser;
+    private CurrentUser currentUser;
+
+    @Autowired
+    private ProjectDao projectDao;
+
+    @Autowired
+    private MoodAdder moodAdder;
+
 
     @RequestMapping(value = "/mood/add", method = RequestMethod.GET)
     public ModelAndView addMood() {
@@ -46,9 +56,33 @@ public class MoodController {
             return new ModelAndView("redirect:/login");
         }
 
+        /*
+            Valid:
+           - if project exists - done
+           - if user is owner - done
+           - if mood's day of current user in current project was already registered.
+         */
+
+        Project project = projectDao.findById(model.getProjectId());
+        if(project == null)
+            result.rejectValue("projectId", "error.wrongProjectId", "Choose project.");
+        else{
+            if(!project.getOwner().equals(currentUser.getUser()))
+                result.reject("error.projectNotOwned", "You are not a project owner.");
+            //if()
+            //TODO: if(moodDao.checkDayMood(currentUser.getUser(), model.getDateAdd(),project))
+            //  result.reject("error.moodAlreadyAdded","You have already added mood that day.");
+        }
+
+
         if (result.hasErrors()) {
             return new ModelAndView("authorised/moodadd", "model", model);
         }
+
+        model.setProject(project);
+
+        moodAdder.addMood(model);
+
 
         return new ModelAndView("redirect:/");
     }
