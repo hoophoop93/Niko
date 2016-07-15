@@ -9,11 +9,11 @@ import javax.validation.constraints.Size;
  * Created by kmichalik on 7/12/2016.
  */
 public class LoginViewModel {
-    @NotEmpty(message = "E-mail is empty.")
-    @Email(message = "E-mail is invalid.")
+    @NotEmpty(message = "{NotEmpty.message}")
+    @Email(message = "{Email.invalidEmail}")
     public String email;
 
-    @NotEmpty(message = "Password is empty.")
+    @NotEmpty(message = "{NotEmpty.message}")
     public String password;
 
     public String getEmail() {
