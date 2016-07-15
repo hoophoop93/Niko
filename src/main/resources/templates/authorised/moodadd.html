@@ -4,7 +4,7 @@
 
    <hr/>
 
-   <!--<div th:if="${not #lists.isEmpty(infos)}">-->
+   <div th:if="${not #lists.isEmpty(beans.currentUser.user.ownedProjects)}">
 
    <form action="#" th:action="@{/mood/add}" th:object="${model}" class="form-horizontal" role="form" method="POST">
 
@@ -51,5 +51,11 @@
       </div>
 
    </form>
+
+   </div>
+
+   <div th:if="${#lists.isEmpty(beans.currentUser.user.ownedProjects)}">
+      <p>You don't have any projects. Please, add new project first.</p>
+   </div>
 
 <footer th:replace="/fragments/footer :: footer"></footer></div><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script><script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script></body></html>
