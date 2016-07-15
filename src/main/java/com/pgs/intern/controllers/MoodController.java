@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import java.util.Date;
 
 /**
  * Created by Maciej Rosa on 7/14/2016 1:48 PM.
@@ -26,7 +27,10 @@ public class MoodController {
 
     @RequestMapping(value = "/mood/add", method = RequestMethod.GET)
     public ModelAndView addMood() {
-        ModelAndView modelAndView = new ModelAndView("authorised/moodadd", "model", new MoodViewModel());
+        MoodViewModel mood = new MoodViewModel();
+        mood.setDateAdd(new Date());
+
+        ModelAndView modelAndView = new ModelAndView("authorised/moodadd", "model", mood);
         if(!currentUser.isAuthenticated())
             return new ModelAndView("redirect:/login");
 
