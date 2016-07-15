@@ -16,7 +16,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Maciej Rosa on 7/14/2016 1:48 PM.
@@ -80,9 +83,14 @@ public class MoodController {
         }
 
         model.setProject(project);
-
         moodAdder.addMood(model);
 
+        // Mood adding successful.
+        List<String> infoMessages = new ArrayList<>();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        infoMessages.add("Added mood '" + model.getMoodType() + "' for project '" + model.getProject().getTitle() + "' for " + simpleDateFormat.format(model.getDateAdd()) + " successfully!");
+
+        redirectAttributes.addFlashAttribute("infos", infoMessages);
 
         return new ModelAndView("redirect:/");
     }
