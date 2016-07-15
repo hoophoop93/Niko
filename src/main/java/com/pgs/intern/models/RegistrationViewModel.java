@@ -3,6 +3,7 @@ package com.pgs.intern.models;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
@@ -15,7 +16,7 @@ public class RegistrationViewModel {
     private String displayName;
 
     @NotEmpty(message = "{NotEmpty.message}")
-    @Email(message = "{Email.invalidEmail}")
+    @Pattern(regexp="^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message="{Email.invalidEmail}")
     private String email;
 
     @Size(min = 8, message = "{Size.password}")
