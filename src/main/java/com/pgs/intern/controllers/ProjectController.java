@@ -59,7 +59,7 @@ public class ProjectController {
             modelAndView.setViewName("redirect:/login");
             return modelAndView;
         }
-        if(projectDao.checkProjectName(model.getTitle())) {
+        if(projectDao.checkProjectTitle(model.getTitle())) {
             result.reject("error.projectAlreadyAdded","This project name was taken.");
             modelAndView.setViewName("authorised/projectadd");
             return modelAndView;
