@@ -42,10 +42,7 @@ public class MoodDao {
         query.setParameter("user", user);
         query.setParameter("project", project);
 
-        List result = query.getResultList();
-        long firstElement = (long) result.get(0);
-        System.out.println(firstElement);
+        return (long)query.getSingleResult() >0;
 
-        return (firstElement > 0);
     }
 }
