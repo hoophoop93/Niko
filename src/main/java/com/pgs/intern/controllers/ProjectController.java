@@ -1,5 +1,6 @@
 package com.pgs.intern.controllers;
 
+import com.pgs.intern.dao.ProjectDao;
 import com.pgs.intern.models.ProjectViewModel;
 import com.pgs.intern.services.CurrentUser;
 import com.pgs.intern.services.ProjectAdder;
@@ -25,6 +26,9 @@ public class ProjectController {
 
     @Autowired
     private ProjectAdder projectAdder;
+
+    @Autowired
+    private ProjectDao projectDao;
 
     @Inject
     CurrentUser currentUser;
@@ -53,6 +57,11 @@ public class ProjectController {
 
         if(!currentUser.isAuthenticated()){
             modelAndView.setViewName("redirect:/login");
+            return modelAndView;
+        }
+        if(projectDao.checkProjectName(model.getTitle())) {
+            result.reject("error.projectAlreadyAdded","This project name was taken.");
+            modelAndView.setViewName("authorised/projectadd");
             return modelAndView;
         }
 
