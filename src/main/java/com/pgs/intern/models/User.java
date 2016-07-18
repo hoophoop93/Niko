@@ -31,7 +31,7 @@ public class User {
     @Column(name = "password_hash")
     private String passwordHash;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Project> ownedProjects;
 
     @OneToMany(mappedBy ="user",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -59,7 +59,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-
     }
 
     public String getPasswordHash() {
