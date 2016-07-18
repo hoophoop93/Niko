@@ -31,7 +31,7 @@ public class RegistrationViewModel {
     }
 
     public void setDisplayName(String displayName) {
-        this.displayName = displayName;
+        this.displayName = displayName.trim();
     }
 
     public String getEmail() {
@@ -39,7 +39,7 @@ public class RegistrationViewModel {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email.trim();
     }
 
     public String getPassword() {
