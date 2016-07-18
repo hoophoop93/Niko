@@ -21,14 +21,6 @@ public class ProjectDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public EntityManager getEntityManager() {
-        return entityManager;
-    }
-
-    public void setEntityManager() {
-        this.entityManager = entityManager;
-    }
-
     public void save(Project project) {
         entityManager.persist(project);
     }
