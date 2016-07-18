@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.Date;
 import java.util.List;
 
@@ -28,13 +29,13 @@ public class MoodDao {
     }
 
     public boolean checkDayMood(Date dateAdd, User user, Project project) {
-        String queryString = "SELECT count(o.dateAdd) FROM Mood o where (o.user) =:user and (o.project)=:project and (o.dateAdd) = :dateAdd";
-        Query query = entityManager.createQuery(queryString);
+        String queryString = "SELECT count(o.dateAdd) FROM Mood o WHERE (o.user) =:user AND (o.project)=:project AND (o.dateAdd) = :dateAdd";
+        TypedQuery<Long> query = entityManager.createQuery(queryString,Long.class);
         query.setParameter("dateAdd", dateAdd);
         query.setParameter("user", user);
         query.setParameter("project", project);
 
-        return (long)query.getSingleResult() >0;
+        return query.getSingleResult() > 0;
 
     }
 }
