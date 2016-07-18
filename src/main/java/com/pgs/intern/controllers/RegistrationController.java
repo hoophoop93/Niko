@@ -47,9 +47,6 @@ public class RegistrationController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView registerPost(@Valid @ModelAttribute("model") RegistrationViewModel model, final BindingResult result, final RedirectAttributes redirectAttributes) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("model", model);
-
         if(currentUser.isAuthenticated())
             return new ModelAndView("redirect:/");
 
@@ -60,20 +57,16 @@ public class RegistrationController {
 
 
         if (result.hasErrors()) {
-            modelAndView.setViewName("unauthorised/register");
-            return modelAndView;
+            return new ModelAndView("unauthorised/register","model",model);
         }
 
         registrationService.registration(model);
-
-        // Registration successful;
-        modelAndView = new ModelAndView("redirect:/login");
 
         List<String> infoMessages = new ArrayList<>();
         infoMessages.add("Registration was successful! Now, you can login.");
 
         redirectAttributes.addFlashAttribute("infos", infoMessages);
 
-        return modelAndView;
+        return new ModelAndView("redirect:/login");
     }
 }
