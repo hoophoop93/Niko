@@ -51,8 +51,9 @@ public class LoginController {
     public ModelAndView loginPost(@Valid @ModelAttribute("model") LoginViewModel model, final BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("model", model);
-        if(currentUser.isAuthenticated())
+        if(currentUser.isAuthenticated()){
             return new ModelAndView("redirect:/");
+        }
         // Logging in;
         User user = userDao.findUser(model.getEmail());
 

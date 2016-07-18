@@ -12,7 +12,7 @@ import javax.inject.Inject;
  * Created by Maciej Rosa on 7/15/2016 12:53 PM.
  */
 @Component
-public class MoodAdder {
+public class MoodService {
     @Autowired
     private MoodDao moodDao;
 
