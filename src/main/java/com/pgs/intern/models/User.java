@@ -35,7 +35,7 @@ public class User {
     private List<Project> ownedProjects;
 
     @OneToMany(mappedBy ="user",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Mood> moodList;
+    private List<Mood> userMoods;
 
     public long getIdUser() {
         return idUser;
@@ -78,12 +78,12 @@ public class User {
         this.ownedProjects = ownedProjects;
     }
 
-    public List<Mood> getMoodList() {
-        return moodList;
+    public List<Mood> getUserMoods() {
+        return userMoods;
     }
 
-    public void setMoodList(List<Mood> moodList) {
-        this.moodList = moodList;
+    public void setUserMoods(List<Mood> userMoods) {
+        this.userMoods = userMoods;
     }
 
     @Override
