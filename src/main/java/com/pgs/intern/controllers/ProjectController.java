@@ -2,7 +2,7 @@ package com.pgs.intern.controllers;
 
 import com.pgs.intern.models.ProjectViewModel;
 import com.pgs.intern.services.CurrentUser;
-import com.pgs.intern.services.ProjectAdder;
+import com.pgs.intern.services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -24,7 +24,7 @@ import java.util.List;
 public class ProjectController {
 
     @Autowired
-    private ProjectAdder projectAdder;
+    private ProjectService projectService;
 
     @Inject
     CurrentUser currentUser;
@@ -61,7 +61,7 @@ public class ProjectController {
             return modelAndView;
         }
 
-        projectAdder.addProject(model);
+        projectService.addProject(model);
 
 
         modelAndView = new ModelAndView("redirect:/");

@@ -5,7 +5,7 @@ import com.pgs.intern.dao.ProjectDao;
 import com.pgs.intern.models.MoodViewModel;
 import com.pgs.intern.models.Project;
 import com.pgs.intern.services.CurrentUser;
-import com.pgs.intern.services.MoodAdder;
+import com.pgs.intern.services.MoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -36,7 +36,7 @@ public class MoodController {
     private ProjectDao projectDao;
 
     @Autowired
-    private MoodAdder moodAdder;
+    private MoodService moodService;
 
     @Autowired
     private MoodDao moodDao;
@@ -79,7 +79,7 @@ public class MoodController {
         }
 
         model.setProject(project);
-        moodAdder.addMood(model);
+        moodService.addMood(model);
 
         // Mood adding successful.
         List<String> infoMessages = new ArrayList<>();

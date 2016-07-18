@@ -12,7 +12,7 @@ import javax.inject.Inject;
  * Created by Maciej Rosa on 7/14/2016 12:44 PM.
  */
 @Component
-public class ProjectAdder {
+public class ProjectService {
 
     @Inject
     private CurrentUser currentUser;
