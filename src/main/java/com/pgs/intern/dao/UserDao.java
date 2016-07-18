@@ -21,21 +21,13 @@ public class UserDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public EntityManager getEntityManager() {
-        return entityManager;
-    }
-
-    public void setEntityManager() {
-        this.entityManager = entityManager;
-    }
-
     public void save(User user) {
         entityManager.persist(user);
     }
 
     public boolean checkByEmail(String email) {
         String queryString = "SELECT count(o.email) FROM User o where LOWER(o.email) = :email";
-        Query query = getEntityManager().createQuery(queryString);
+        Query query = entityManager.createQuery(queryString);
         query.setParameter("email", email.toLowerCase());
 
         List result = query.getResultList();
@@ -48,7 +40,7 @@ public class UserDao {
         User result = null;
         String queryString = "Select o from User o where LOWER(o.email) = :email ";
 
-        Query query = getEntityManager().createQuery(queryString);
+        Query query = entityManager.createQuery(queryString);
         query.setParameter("email", email.toLowerCase());
         try {
             result = (User) query.getSingleResult();

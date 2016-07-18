@@ -23,21 +23,13 @@ public class MoodDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public EntityManager getEntityManager() {
-        return entityManager;
-    }
-
-    public void setEntityManager() {
-        this.entityManager = entityManager;
-    }
-
     public void save(Mood mood) {
         entityManager.persist(mood);
     }
 
     public boolean checkDayMood(Date dateAdd, User user, Project project) {
         String queryString = "SELECT count(o.dateAdd) FROM Mood o where (o.user) =:user and (o.project)=:project and (o.dateAdd) = :dateAdd";
-        Query query = getEntityManager().createQuery(queryString);
+        Query query = entityManager.createQuery(queryString);
         query.setParameter("dateAdd", dateAdd);
         query.setParameter("user", user);
         query.setParameter("project", project);
