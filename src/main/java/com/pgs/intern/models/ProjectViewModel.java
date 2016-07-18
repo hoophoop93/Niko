@@ -14,6 +14,6 @@ public class ProjectViewModel {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title = title.trim();
     }
 }
