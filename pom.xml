@@ -67,6 +67,12 @@
 			<artifactId>javax.inject</artifactId>
 			<version>1</version>
 		</dependency>
+
+		<dependency>
+			<groupId>de.malkusch.validation</groupId>
+			<artifactId>validation</artifactId>
+			<version>0.3.0</version>
+		</dependency>
 	</dependencies>
 	
 	<build>

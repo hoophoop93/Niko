@@ -39,7 +39,7 @@ public class RegistrationController {
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView register() {
-        if(currentUser.isAuthenticated())
+        if (currentUser.isAuthenticated())
             return new ModelAndView("redirect:/");
 
         return new ModelAndView("unauthorised/register", "model", new RegistrationViewModel());
@@ -50,14 +50,11 @@ public class RegistrationController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("model", model);
 
-        if(currentUser.isAuthenticated())
+        if (currentUser.isAuthenticated())
             return new ModelAndView("redirect:/");
 
-        if(userDao.checkByEmail(model.getEmail()))
-            result.reject("error.registrationError","E-mail already taken.");
-        if (!model.getPassword().equals(model.getPasswordRepeat()))
-            result.reject("error.registrationError","Passwords do not match.");
-
+        if (userDao.checkByEmail(model.getEmail()))
+            result.reject("error.registrationError", "E-mail already taken.");
 
         if (result.hasErrors()) {
             modelAndView.setViewName("unauthorised/register");
