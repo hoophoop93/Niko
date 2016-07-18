@@ -50,11 +50,12 @@ public class RegistrationController {
         if(currentUser.isAuthenticated())
             return new ModelAndView("redirect:/");
 
-        if(userDao.checkByEmail(model.getEmail()))
+        if(userDao.checkByEmail(model.getEmail())){
             result.reject("error.registrationError","E-mail already taken.");
-        if (!model.getPassword().equals(model.getPasswordRepeat()))
-            result.reject("error.registrationError","Passwords do not match.");
-
+        }
+        if (!model.getPassword().equals(model.getPasswordRepeat())) {
+            result.reject("error.registrationError", "Passwords do not match.");
+        }
 
         if (result.hasErrors()) {
             return new ModelAndView("unauthorised/register","model",model);

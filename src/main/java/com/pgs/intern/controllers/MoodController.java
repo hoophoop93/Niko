@@ -64,9 +64,9 @@ public class MoodController {
         }
 
         Project project = projectDao.findById(model.getProjectId());
-        if(project == null)
+        if(project == null) {
             result.rejectValue("projectId", "error.wrongProjectId", "Choose project.");
-        else{
+        }else{
             if(!project.getOwner().equals(currentUser.getUser()))
                 result.reject("error.projectNotOwned", "You are not a project owner.");
             if(moodDao.checkDayMood(model.getDateAdd(), currentUser.getUser(),project))
