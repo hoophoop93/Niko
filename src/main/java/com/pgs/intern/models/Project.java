@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -29,13 +28,13 @@ public class Project {
     private User owner;
 
     @OneToMany(mappedBy = "project", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Mood> moodList;
+    private List<Mood> projectMoods;
 
-    public List<Mood> getMoodList() {
-        return moodList;
+    public List<Mood> getProjectMoods() {
+        return projectMoods;
     }
-    public void setMoodList(List<Mood> moodList) {
-        this.moodList = moodList;
+    public void setProjectMoods(List<Mood> projectMoods) {
+        this.projectMoods = projectMoods;
     }
 
     public long getProjectId() {
