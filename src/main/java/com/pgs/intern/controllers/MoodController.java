@@ -63,6 +63,10 @@ public class MoodController {
             return new ModelAndView("redirect:/login");
         }
 
+        if(!moodService.isInLast7Days(model.getDateAdd())){
+            result.rejectValue("dateAdd","error.invalidDate","Date must not be earlier than 7 days.");
+        }
+
         Project project = projectDao.findById(model.getProjectId());
         if(project == null) {
             result.rejectValue("projectId", "error.wrongProjectId", "Choose project.");
