@@ -1,5 +1,6 @@
 package com.pgs.intern.dao;
 
+import com.pgs.intern.models.Mood;
 import com.pgs.intern.models.Project;
 import com.pgs.intern.models.User;
 import org.springframework.stereotype.Repository;
@@ -33,8 +34,8 @@ public class ProjectDao {
 
     public boolean checkProjectTitle(String title) {
         String queryString = "SELECT count(o.title) FROM Project o where LOWER(o.title) = :title";
-        TypedQuery<Long> query = entityManager.createQuery(queryString,Long.class);
-        query.setParameter("title",title.toLowerCase());
+        TypedQuery<Long> query = entityManager.createQuery(queryString, Long.class);
+        query.setParameter("title", title.toLowerCase());
 
         return query.getSingleResult() > 0;
 
@@ -42,11 +43,19 @@ public class ProjectDao {
 
     public List<Project> getSortedOwnedProjects(User owner) {
         String queryString = "SELECT o FROM Project o WHERE o.owner = :owner ORDER BY o.title ASC";
-        TypedQuery<Project> query = entityManager.createQuery(queryString,Project.class);
-        query.setParameter("owner",owner);
+        TypedQuery<Project> query = entityManager.createQuery(queryString, Project.class);
+        query.setParameter("owner", owner);
         System.out.println(query.getResultList());
 
         return query.getResultList();
     }
 
+    public List<Mood> getMoodList(User user, Project project) {
+        String queryString = "SELECT o FROM Mood o WHERE o.user = :user AND o.project = :project";
+        TypedQuery<Mood> query = entityManager.createQuery(queryString, Mood.class);
+        query.setParameter("user", user);
+        query.setParameter("project", project);
+
+        return query.getResultList();
+    }
 }
