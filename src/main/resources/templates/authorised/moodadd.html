@@ -5,7 +5,10 @@
 <script>
 $( function() {
   $( "#datepicker" ).datepicker({
-     dateFormat: "yy-mm-dd"
+     dateFormat: "yy-mm-dd",
+     minDate: '-1w',
+     maxDate: 0,
+     firstDay: 1
    });
 } );
 </script>
