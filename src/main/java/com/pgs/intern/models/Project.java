@@ -30,12 +30,27 @@ public class Project {
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Mood> moodList;
 
-    public List<Mood> getProject() {
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="project_user", joinColumns = @JoinColumn(name="joined_project"),
+            inverseJoinColumns = @JoinColumn(name="joined_user"))
+    private List<User> joinedUsers;
+
+    public List<User> getJoinedUsers() {
+        return joinedUsers;
+    }
+
+    public void setJoinedUsers(List<User> joinedUsers) {
+        this.joinedUsers = joinedUsers;
+    }
+
+    public List<Mood> getMoodList() {
         return moodList;
     }
-    public void setProject(List<Mood> moodList) {
+    public void setMoodList(List<Mood> moodList) {
         this.moodList = moodList;
     }
+
 
     public long getProjectId() {
         return projectId;

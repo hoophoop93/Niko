@@ -37,6 +37,17 @@ public class User {
     @OneToMany(mappedBy ="user",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Mood> moodList;
 
+    @ManyToMany(cascade=CascadeType.ALL,mappedBy = "joinedUsers")
+    private List<Project> joinedProjects;
+
+    public List<Project> getJoinedProjects() {
+        return joinedProjects;
+    }
+
+    public void setJoinedProjects(List<Project> joinedProjects) {
+        this.joinedProjects = joinedProjects;
+    }
+
     public long getIdUser() {
         return idUser;
     }
@@ -87,7 +98,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "Id_user: " + idUser + "DispayName: " + displayName + "E-mail: " + email;
+        return "Id_user: " + idUser + "DisplayName: " + displayName + "E-mail: " + email;
     }
 
 

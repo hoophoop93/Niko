@@ -28,6 +28,8 @@ public class ProjectDao {
         entityManager.persist(project);
     }
 
+    public void update(Project project) { entityManager.merge(project); }
+
     public Project findById(Long id) {
         return entityManager.find(Project.class, id);
     }
