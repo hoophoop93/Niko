@@ -17,7 +17,6 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by Maciej Rosa on 7/13/2016 3:26 PM.
@@ -90,13 +89,6 @@ public class ProjectController {
             return new ModelAndView("redirect:/login");
         }
 
-        return new ModelAndView("authorised/projects", "projects", currentUser.getUser()
-                .getOwnedProjects()
-                .stream()
-                .sorted(
-                        (a, b) -> a.getTitle().toUpperCase().compareTo(b.getTitle().toUpperCase())
-                )
-                .collect(Collectors.toList())
-        );
+        return new ModelAndView("authorised/projects", "projects", projectDao.getSortedOwnedProjects(currentUser.getUser()));
     }
 }
