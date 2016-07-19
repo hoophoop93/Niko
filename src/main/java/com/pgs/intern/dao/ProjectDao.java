@@ -40,10 +40,11 @@ public class ProjectDao {
 
     }
 
-    public List<Project> showAllProject(String email) {
-        String queryString = "SELECT o FROM Project o WHERE (o.email) = :email ASC";
+    public List<Project> getSortedOwnedProjects(User owner) {
+        String queryString = "SELECT o FROM Project o WHERE o.owner = :owner ORDER BY o.title ASC";
         TypedQuery<Project> query = entityManager.createQuery(queryString,Project.class);
-        query.setParameter("email",email);
+        query.setParameter("owner",owner);
+        System.out.println(query.getResultList());
 
         return query.getResultList();
     }
