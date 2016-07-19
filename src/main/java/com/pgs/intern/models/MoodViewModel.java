@@ -6,6 +6,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lschiffer on 7/14/2016.
@@ -24,6 +26,10 @@ public class MoodViewModel {
     @NotNull(message = "{Choose.project}")
     @Min(value = 1, message = "{Choose.project}")
     private long projectId;
+
+    private List<Project> projects;
+
+    private Map<Long, String> blockedDatesInProjects;
 
     public MoodType getMoodType() {
         return moodType;
@@ -55,5 +61,21 @@ public class MoodViewModel {
 
     public void setProjectId(long projectId) {
         this.projectId = projectId;
+    }
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
+    }
+
+    public Map<Long, String> getBlockedDatesInProjects() {
+        return blockedDatesInProjects;
+    }
+
+    public void setBlockedDatesInProjects(Map<Long, String> blockedDatesInProjects) {
+        this.blockedDatesInProjects = blockedDatesInProjects;
     }
 }

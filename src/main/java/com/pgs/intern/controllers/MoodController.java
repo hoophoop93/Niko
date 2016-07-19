@@ -6,6 +6,7 @@ import com.pgs.intern.models.MoodViewModel;
 import com.pgs.intern.models.Project;
 import com.pgs.intern.services.CurrentUser;
 import com.pgs.intern.services.MoodService;
+import com.pgs.intern.services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -25,10 +26,8 @@ import java.util.List;
 /**
  * Created by Maciej Rosa on 7/14/2016 1:48 PM.
  */
-
 @Controller
 public class MoodController {
-
     @Inject
     private CurrentUser currentUser;
 
@@ -39,21 +38,25 @@ public class MoodController {
     private MoodService moodService;
 
     @Autowired
+    private ProjectService projectService;
+
+    @Autowired
     private MoodDao moodDao;
 
 
     @RequestMapping(value = "/mood/add", method = RequestMethod.GET)
     public ModelAndView addMood() {
         MoodViewModel mood = new MoodViewModel();
-        mood.setDateAdd(new Date());
 
-        ModelAndView modelAndView = new ModelAndView("authorised/moodadd", "model", mood);
+        mood.setDateAdd(new Date());
+        mood.setProjects(projectService.getProjectsOfCurrentUser());
+        mood.setBlockedDatesInProjects(projectService.getBlockedDatesInProjects());
 
         if (!currentUser.isAuthenticated()) {
             return new ModelAndView("redirect:/login");
         }
 
-        return modelAndView;
+        return new ModelAndView("authorised/moodadd", "model", mood);
     }
 
     @RequestMapping(value = "/mood/add", method = RequestMethod.POST)
@@ -63,18 +66,23 @@ public class MoodController {
             return new ModelAndView("redirect:/login");
         }
 
-        if(!moodService.isInLast7Days(model.getDateAdd())){
-            result.rejectValue("dateAdd","error.invalidDate","Date must not be earlier than 7 days.");
+        model.setProjects(projectService.getProjectsOfCurrentUser());
+        model.setBlockedDatesInProjects(projectService.getBlockedDatesInProjects());
+
+        if(model.getDateAdd() != null) {
+            if (!moodService.isInLast7Days(model.getDateAdd())) {
+                result.rejectValue("dateAdd", "error.invalidDate", "Date must not be earlier than 7 days.");
+            }
         }
 
         Project project = projectDao.findById(model.getProjectId());
-        if(project == null) {
+        if (project == null) {
             result.rejectValue("projectId", "error.wrongProjectId", "Choose project.");
-        }else{
-            if(!project.getOwner().equals(currentUser.getUser()))
+        } else {
+            if (!project.getOwner().equals(currentUser.getUser()))
                 result.reject("error.projectNotOwned", "You are not a project owner.");
-            if(moodDao.checkDayMood(model.getDateAdd(), currentUser.getUser(),project))
-                result.reject("error.moodAlreadyAdded","You have already added mood that day.");
+            if (moodDao.checkDayMood(model.getDateAdd(), currentUser.getUser(), project))
+                result.reject("error.moodAlreadyAdded", "You have already added mood that day.");
         }
 
 
