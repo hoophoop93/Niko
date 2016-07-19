@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 /**
  * Created by mzalucka on 7/13/2016.
@@ -37,6 +38,14 @@ public class ProjectDao {
 
         return query.getSingleResult() > 0;
 
+    }
+
+    public List<Project> showAllProject(String email) {
+        String queryString = "SELECT o FROM Project o WHERE (o.email) = :email ASC";
+        TypedQuery<Project> query = entityManager.createQuery(queryString,Project.class);
+        query.setParameter("email",email);
+
+        return query.getResultList();
     }
 
 }
