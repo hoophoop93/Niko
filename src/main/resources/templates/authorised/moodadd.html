@@ -57,13 +57,13 @@ $( function() {
       <div class="form-group">
          <label class="control-label col-sm-2">Mood</label><div class="col-sm-10">
          <div data-toggle="buttons" >
-            <label class="btn btn-danger btn-lg">
+            <label class="btn btn-danger btn-xxlg">
             <input type="radio"  th:field="*{moodType}" th:value="Bad" th:text="${T(com.pgs.intern.models.MoodType).Bad}"/>
             </label> 
-            <label class="btn btn-warning btn-lg">
+            <label class="btn btn-warning btn-xxlg">
                <input type="radio"  th:field="*{moodType}" th:value="Neutral" th:text="${T(com.pgs.intern.models.MoodType).Neutral}"/><br/>
             </label> 
-            <label class="btn btn-success btn-lg">
+            <label class="btn btn-success btn-xxlg">
                <input type="radio"  th:field="*{moodType}" th:value="Happy" th:text="${T(com.pgs.intern.models.MoodType).Happy}"/>
             </label>
          </div>
