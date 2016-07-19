@@ -82,4 +82,17 @@ public class ProjectController {
 
         return modelAndView;
     }
+
+    @RequestMapping(value = "/project", method = RequestMethod.GET)
+    public ModelAndView viewProjects() {
+        ModelAndView modelAndView = new ModelAndView("authorised/projects");
+
+        if (!currentUser.isAuthenticated()) {
+            return new ModelAndView("redirect:/login");
+        }
+
+        modelAndView.addObject("projects", currentUser.getUser().getOwnedProjects());
+
+        return modelAndView;
+    }
 }
