@@ -8,7 +8,7 @@
       <li class="list-group-item" th:each="p : ${projects}" th:text="${p.title}"></li>
    </ul>
 
-   <div th:if="${#lists.isEmpty(beans.currentUser.user.ownedProjects)}">
+   <div th:if="${#lists.isEmpty(projects)}">
       <p>You don't have any projects. Please, add new project first.</p>
    </div>
 
