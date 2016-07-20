@@ -65,7 +65,7 @@ public class ProjectDao {
     }
 
     public List<User> getNoneJoinedUsers(Project project) {
-        String queryString = "SELECT u FROM User u, Project p WHERE p = :project AND u not in elements( p.joinedUsers ) and u <> p.owner";
+        String queryString = "SELECT u FROM User u, Project p WHERE p = :project AND u not in elements( p.joinedUsersList ) and u <> p.owner";
         TypedQuery<User> query = entityManager.createQuery(queryString, User.class);
         query.setParameter("project", project);
 
@@ -73,7 +73,7 @@ public class ProjectDao {
     }
 
     public List<User> getNoneJoinedUsersById(Long projectId) {
-        String queryString = "SELECT u FROM User u, Project p WHERE p.projectId = :projectId AND u not in elements( p.joinedUsers ) and u <> p.owner";
+        String queryString = "SELECT u FROM User u, Project p WHERE p.projectId = :projectId AND u not in elements( p.joinedUsersList ) and u <> p.owner";
         TypedQuery<User> query = entityManager.createQuery(queryString, User.class);
         query.setParameter("projectId", projectId);
 
