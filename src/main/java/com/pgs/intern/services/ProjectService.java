@@ -38,7 +38,7 @@ public class ProjectService {
     }
 
     public List<Project> getProjectsOfCurrentUser() {
-        return projectDao.getSortedOwnedProjects(currentUser.getUser());
+        return projectDao.getUserProjects(currentUser.getUser());
     }
 
     public Map<Long, String> getBlockedDatesInProjects() {
@@ -72,11 +72,17 @@ public class ProjectService {
         Project project = projectDao.findById(projectId);
         User user = userDao.findById(idUser);
 
-        if(project == null){return false;}
-        if(user == null){return false;}
-        if(project.getJoinedUsersList().contains(user)){return false;}
+        if (project == null) {
+            return false;
+        }
+        if (user == null) {
+            return false;
+        }
+        if (project.getJoinedUsersList().contains(user)) {
+            return false;
+        }
 
         project.getJoinedUsersList().add(user);
-      return true;
+        return true;
     }
 }
