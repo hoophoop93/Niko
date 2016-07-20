@@ -79,8 +79,8 @@ public class MoodController {
         if (project == null) {
             result.rejectValue("projectId", "error.wrongProjectId", "Choose project.");
         } else {
-            if (!project.getOwner().equals(currentUser.getUser()))
-                result.reject("error.projectNotOwned", "You are not a project owner.");
+            if (!(project.getOwner().equals(currentUser.getUser()) || project.getJoinedUsersList().contains(currentUser.getUser())))
+                result.reject("error.notProjectMember", "You are not a project member.");
             if (moodDao.checkDayMood(model.getDateAdd(), currentUser.getUser(), project))
                 result.reject("error.moodAlreadyAdded", "You have already added mood that day.");
         }
