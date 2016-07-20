@@ -68,11 +68,15 @@ public class ProjectService {
     }
 
     @Transactional
-    public void addUserForProject(Long idUser, Long projectId) {
-
+    public boolean addUserForProject(Long idUser, Long projectId) {
         Project project = projectDao.findById(projectId);
         User user = userDao.findById(idUser);
-        project.getJoinedUsersList().add(user);
 
+        if(project == null){return false;}
+        if(user == null){return false;}
+        if(project.getJoinedUsersList().contains(user)){return false;}
+
+        project.getJoinedUsersList().add(user);
+      return true;
     }
 }
