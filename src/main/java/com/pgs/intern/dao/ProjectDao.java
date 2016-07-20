@@ -28,7 +28,9 @@ public class ProjectDao {
         entityManager.persist(project);
     }
 
-    public void update(Project project) { entityManager.merge(project); }
+    public void update(Project project) {
+        entityManager.merge(project);
+    }
 
     public Project findById(Long id) {
         return entityManager.find(Project.class, id);
@@ -56,6 +58,15 @@ public class ProjectDao {
         String queryString = "SELECT o FROM Mood o WHERE o.user = :user AND o.project = :project";
         TypedQuery<Mood> query = entityManager.createQuery(queryString, Mood.class);
         query.setParameter("user", user);
+        query.setParameter("project", project);
+
+        return query.getResultList();
+
+    }
+
+    public List<User> getNoneJoinedUsers(Project project) {
+        String queryString = "SELECT u FROM User u, Project p WHERE p = :project AND u not in elements( p.joinedUsers ) and u <> p.owner";
+        TypedQuery<User> query = entityManager.createQuery(queryString, User.class);
         query.setParameter("project", project);
 
         return query.getResultList();
