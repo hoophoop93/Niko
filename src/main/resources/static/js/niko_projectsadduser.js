@@ -44,6 +44,7 @@ function popoverOpenLoad(projectId, data) {
 function popoverOpenSend(projectId, userId) {
     $.ajax({
         url: "/project/" + projectId + "/addusertoproject/" + userId,
+        error: function(data) { popoverOpenSendFailed(projectId, data) },
         success: function(data) { popoverOpenSendDone(projectId, data) }
     });
 }
@@ -52,4 +53,10 @@ function popoverOpenSendDone(projectId, data) {
     clickOnButton(projectId);
 
     $("#projectInfo" + projectId).text(data);
+}
+
+function popoverOpenSendFailed(projectId, data) {
+    clickOnButton(projectId);
+
+    $("#projectInfo" + projectId).text("Error has occured.");
 }
