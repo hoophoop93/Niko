@@ -1,22 +1,26 @@
 package com.pgs.intern.controllers;
 
 import com.pgs.intern.dao.ProjectDao;
+import com.pgs.intern.dao.UserDao;
+import com.pgs.intern.models.Mood;
+import com.pgs.intern.models.Project;
 import com.pgs.intern.models.ProjectViewModel;
+import com.pgs.intern.models.User;
 import com.pgs.intern.services.CurrentUser;
 import com.pgs.intern.services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Maciej Rosa on 7/13/2016 3:26 PM.
@@ -29,6 +33,9 @@ public class ProjectController {
 
     @Autowired
     private ProjectDao projectDao;
+
+    @Autowired
+    private UserDao userDao;
 
     @Inject
     CurrentUser currentUser;
@@ -91,4 +98,26 @@ public class ProjectController {
 
         return new ModelAndView("authorised/projects", "projects", projectDao.getSortedOwnedProjects(currentUser.getUser()));
     }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/project/{projectid}/getavailableusers", method = RequestMethod.GET)
+    public Map<Long, String> getAvailableUsersByProjectId(@PathVariable long projectid) {
+        Map<Long, String> availableUsers = new HashMap<>();
+        for (User u : projectDao.getNoneJoinedUsersById(projectid)) {
+            availableUsers.put(u.getIdUser(), u.getDisplayName());
+        }
+        return availableUsers;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/project/{projectid}/addusertoproject/{userid}", method = RequestMethod.GET)
+    public String addAvailableUserToProject(@PathVariable long projectid, @PathVariable long userid) {
+        Project project = projectDao.findById(projectid);
+        User user = userDao.findById(userid);
+//        return "Successfully added!";
+        return "Project: " + projectid + ", User: " + userid;
+    }
+
+
 }
