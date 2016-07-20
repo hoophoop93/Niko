@@ -16,7 +16,7 @@
                <div class="hover-btn">
                <button type="button" class="btn btn-success pull-right" data-container="body" data-toggle="popover" data-placement="bottom" th:id="'popoverOpenButton' + ${p.projectId}"
                        th:onclick="'popoverOpen(' + ${p.projectId} + ')'"
-                       th:title="'Add user to ' + ${p.title} + '   &lt;a href=&quot;#&quot; class=&quot;close&quot;' + ' onclick=clickOnButton(' + ${p.projectId} + ') ' + 'data-dismiss=&quot;alert&quot; aria-label=&quot;Close&quot;&gt;&lt;span aria-hidden=&quot;true&quot;&gt;&amp;times;&lt;/span&gt;&lt;/a&gt;'"
+                       th:title="'Add user to ' + ${p.title} + '   &lt;a href=&quot;#&quot; class=&quot;close&quot;' + ' onclick=hidePopover(' + ${p.projectId} + ') ' + 'data-dismiss=&quot;alert&quot; aria-label=&quot;Close&quot;&gt;&lt;span aria-hidden=&quot;true&quot;&gt;&amp;times;&lt;/span&gt;&lt;/a&gt;'"
                        th:attr="data-content=${'&lt;div id=&quot;popoverContent' + p.projectId + '&quot;&gt;&lt;center&gt;&lt;i class=&quot;fa fa-spinner fa-spin&quot; style=&quot;font-size:24px&quot;&gt;&lt;/i&gt;&lt;/center&gt;&lt;/div&gt;'}"
                >Add user</button>
                </div>

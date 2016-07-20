@@ -3,8 +3,8 @@
  * Adding user to project
  */
 
-function clickOnButton(projectId) {
-    $("#popoverOpenButton" + projectId).click();
+function hidePopover(projectId) {
+    $("#popoverOpenButton" + projectId).popover('hide');
 }
 
 function popoverOpen(projectId) {
@@ -50,13 +50,13 @@ function popoverOpenSend(projectId, userId) {
 }
 
 function popoverOpenSendDone(projectId, data) {
-    clickOnButton(projectId);
+    hidePopover(projectId);
 
     $("#projectInfo" + projectId).text(data);
 }
 
 function popoverOpenSendFailed(projectId, data) {
-    clickOnButton(projectId);
+    hidePopover(projectId);
 
     $("#projectInfo" + projectId).text("Error has occured.");
 }

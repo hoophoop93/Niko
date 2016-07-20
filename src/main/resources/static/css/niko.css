@@ -32,6 +32,11 @@
     font-size: larger;
 }
 
+.list-group-item:hover {
+    background-color: rgb(250, 250, 250);
+   opacity: 1.0;
+}
+
 .hover-btn-text {
     padding-top: 8px;
 }
