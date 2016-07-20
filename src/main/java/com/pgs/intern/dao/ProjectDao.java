@@ -79,4 +79,12 @@ public class ProjectDao {
 
         return query.getResultList();
     }
+
+    public List<Project> getUserProjects(User user) {
+        String queryString = "SELECT p FROM Project p, User u WHERE u = :user AND (u = p.owner OR p in elements(u.joinedProjectsList)) ORDER BY p.title ASC";
+        TypedQuery<Project> query = entityManager.createQuery(queryString, Project.class);
+        query.setParameter("user", user);
+
+        return query.getResultList();
+    }
 }
