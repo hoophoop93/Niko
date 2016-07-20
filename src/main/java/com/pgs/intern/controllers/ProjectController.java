@@ -105,7 +105,7 @@ public class ProjectController {
     public Map<Long, String> getAvailableUsersByProjectId(@PathVariable long projectid) {
         Map<Long, String> availableUsers = new HashMap<>();
         for (User u : projectDao.getNoneJoinedUsersById(projectid)) {
-            availableUsers.put(u.getIdUser(), u.getDisplayName());
+            availableUsers.put(u.getIdUser(), u.getDisplayName() + " (" + u.getEmail() + ")");
         }
         return availableUsers;
     }
