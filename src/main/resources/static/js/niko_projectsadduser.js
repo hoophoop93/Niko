@@ -18,21 +18,27 @@ function popoverOpen(projectId) {
 }
 
 function popoverOpenLoad(projectId, data) {
-    $("#popoverContent" + projectId).html('<select id="popoverContentSelect' + projectId + '" class="form-control"></select>');
+    if(!jQuery.isEmptyObject(data)) {
 
-    for (var key in data) {
-      if (data.hasOwnProperty(key)) {
-        var option = $('<option></option>').attr({ 'value' : key }).text(data[key]);
-        $("#popoverContentSelect" + projectId).append(option);
-      }
+        $("#popoverContent" + projectId).html('<select id="popoverContentSelect' + projectId + '" class="form-control"></select>');
+
+        for (var key in data) {
+          if (data.hasOwnProperty(key)) {
+            var option = $('<option></option>').attr({ 'value' : key }).text(data[key]);
+            $("#popoverContentSelect" + projectId).append(option);
+          }
+        }
+
+        $("#popoverContent" + projectId).append('<br/>');
+
+        var button = $('<button type="button" class="btn btn-warning btn-block">Add</button>')
+            .bind("click", function() { popoverOpenSend(projectId, $("#popoverContentSelect" + projectId).val()) });
+
+        $("#popoverContent" + projectId).append(button);
+
+    } else {
+        $("#popoverContent" + projectId).text('No users available.');
     }
-
-    $("#popoverContent" + projectId).append('<br/>');
-
-    var button = $('<button type="button" class="btn btn-warning btn-block">Add</button>')
-        .bind("click", function() { popoverOpenSend(projectId, $("#popoverContentSelect" + projectId).val()) });
-
-    $("#popoverContent" + projectId).append(button);
 }
 
 function popoverOpenSend(projectId, userId) {
