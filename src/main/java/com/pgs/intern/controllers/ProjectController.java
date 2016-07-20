@@ -57,22 +57,22 @@ public class ProjectController {
 
     @RequestMapping(value = "/project/add", method = RequestMethod.POST)
     public ModelAndView addProjectPost(@Valid @ModelAttribute("model") ProjectViewModel model,
-                                           final BindingResult result, final RedirectAttributes redirectAttributes) {
+                                       final BindingResult result, final RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView();
 
         modelAndView.addObject("model", model);
 
-        if(!currentUser.isAuthenticated()){
+        if (!currentUser.isAuthenticated()) {
             modelAndView.setViewName("redirect:/login");
             return modelAndView;
         }
-        if(projectDao.checkProjectTitle(model.getTitle())) {
-            result.reject("error.projectAlreadyAdded","This project name was taken.");
+        if (projectDao.checkProjectTitle(model.getTitle())) {
+            result.reject("error.projectAlreadyAdded", "This project name was taken.");
             modelAndView.setViewName("authorised/projectadd");
             return modelAndView;
         }
 
-        if(result.hasErrors()) {
+        if (result.hasErrors()) {
             modelAndView.setViewName("authorised/projectadd");
             return modelAndView;
         }
@@ -113,11 +113,17 @@ public class ProjectController {
     @ResponseBody
     @RequestMapping(value = "/project/{projectid}/addusertoproject/{userid}", method = RequestMethod.GET)
     public String addAvailableUserToProject(@PathVariable long projectid, @PathVariable long userid) {
-        Project project = projectDao.findById(projectid);
-        User user = userDao.findById(userid);
-//        return "Successfully added!";
-        return "Project: " + projectid + ", User: " + userid;
+
+        if (false) {
+            return "Error";
+        } else {
+            if (projectService.addUserForProject(userid, projectid)) {
+                return "Successfully added";
+            } else {
+                return "Something went wrong";
+            }
+        }
     }
-
-
 }
+
+
