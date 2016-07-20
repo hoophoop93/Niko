@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by mzalucka on 7/13/2016.
@@ -34,14 +35,15 @@ public class Project {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="project_user", joinColumns = @JoinColumn(name="joined_project"),
             inverseJoinColumns = @JoinColumn(name="joined_user"))
-    private List<User> joinedUsers;
+    private Set<User> joinedUsersList;
 
-    public List<User> getJoinedUsers() {
-        return joinedUsers;
+
+    public Set<User> getJoinedUsersList() {
+        return joinedUsersList;
     }
 
-    public void setJoinedUsers(List<User> joinedUsers) {
-        this.joinedUsers = joinedUsers;
+    public void setJoinedUsersList(Set<User> joinedUsersList) {
+        this.joinedUsersList = joinedUsersList;
     }
 
     public List<Mood> getMoodList() {

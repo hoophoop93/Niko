@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by kmichalik on 7/12/2016.
@@ -37,15 +38,15 @@ public class User {
     @OneToMany(mappedBy ="user",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Mood> moodList;
 
-    @ManyToMany(cascade=CascadeType.ALL,mappedBy = "joinedUsers")
-    private List<Project> joinedProjects;
+    @ManyToMany(cascade=CascadeType.ALL,mappedBy = "joinedUsersList")
+    private Set<Project> joinedProjectsList;
 
-    public List<Project> getJoinedProjects() {
-        return joinedProjects;
+    public Set<Project> getJoinedProjectsList() {
+        return joinedProjectsList;
     }
 
-    public void setJoinedProjects(List<Project> joinedProjects) {
-        this.joinedProjects = joinedProjects;
+    public void setJoinedProjectsList(Set<Project> joinedProjectsList) {
+        this.joinedProjectsList = joinedProjectsList;
     }
 
     public long getIdUser() {
