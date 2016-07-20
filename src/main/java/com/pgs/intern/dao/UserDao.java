@@ -1,5 +1,6 @@
 package com.pgs.intern.dao;
 
+import com.pgs.intern.models.Project;
 import com.pgs.intern.models.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -25,7 +26,10 @@ public class UserDao {
     public void save(User user) {
         entityManager.persist(user);
     }
-    public void update(User user) {entityManager.merge(user);}
+
+    public void update(User user) {
+        entityManager.merge(user);
+    }
 
     public boolean checkByEmail(String email) {
         String queryString = "SELECT count(o.email) FROM User o where LOWER(o.email) = :email";
@@ -44,6 +48,16 @@ public class UserDao {
         } catch (Exception e) {
             return null;
         }
+
+    }
+
+    public boolean searchUserInProject(Long idUser, Long projectId) {
+        String queryString = "SELECT count(u) FROM User u, Project p WHERE u.idUser = :idUser AND p.projectId= :projectId AND u in elements ( p.joinedUsers )";
+        TypedQuery<Long> query = entityManager.createQuery(queryString, Long.class);
+        query.setParameter("projectId", projectId);
+        query.setParameter("idUser", idUser);
+
+        return (query.getSingleResult() > 0);
 
     }
 
