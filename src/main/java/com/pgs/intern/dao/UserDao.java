@@ -25,6 +25,7 @@ public class UserDao {
     public void save(User user) {
         entityManager.persist(user);
     }
+    public void update(User user) {entityManager.merge(user);}
 
     public boolean checkByEmail(String email) {
         String queryString = "SELECT count(o.email) FROM User o where LOWER(o.email) = :email";
