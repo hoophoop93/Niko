@@ -1,15 +1,40 @@
-<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org" lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/><link href="../static/css/niko.css" th:href="@{/css/niko.css}" rel="stylesheet"/><title th:replace="/fragments/title :: title"></title></head><body><nav th:replace="/authorised/fragments/nav :: nav"></nav><div class="container">
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org" lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/><link href="../static/css/niko.css" th:href="@{/css/niko.css}" rel="stylesheet"/>
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"/>
+<title th:replace="/fragments/title :: title"></title></head><body><nav th:replace="/authorised/fragments/nav :: nav"></nav><div class="container">
 
    <h2>My projects</h2>
 
    <hr/>
 
    <ul class="list-group" >
-      <li class="list-group-item" th:each="p : ${projects}" th:text="${p.title}"></li>
+      <li class="list-group-item" th:each="p : ${projects}">
+
+         <div class="row">
+            <div class="col-sm-6"><div class="hover-btn-text" th:text="${p.title}"></div></div>
+            <div class="col-sm-4"><div class="hover-btn-text" th:id="'projectInfo' + ${p.projectId}"></div></div>
+            <div class="col-sm-2">
+               <div class="hover-btn">
+               <button type="button" class="btn btn-success pull-right" data-container="body" data-toggle="popover" data-placement="bottom" th:id="'popoverOpenButton' + ${p.projectId}"
+                       th:onclick="'popoverOpen(' + ${p.projectId} + ')'"
+                       th:title="'Add user to ' + ${p.title} + '   &lt;a href=&quot;#&quot; class=&quot;close&quot;' + ' onclick=clickOnButton(' + ${p.projectId} + ') ' + 'data-dismiss=&quot;alert&quot; aria-label=&quot;Close&quot;&gt;&lt;span aria-hidden=&quot;true&quot;&gt;&amp;times;&lt;/span&gt;&lt;/a&gt;'"
+                       th:attr="data-content=${'&lt;div id=&quot;popoverContent' + p.projectId + '&quot;&gt;&lt;center&gt;&lt;i class=&quot;fa fa-spinner fa-spin&quot; style=&quot;font-size:24px&quot;&gt;&lt;/i&gt;&lt;/center&gt;&lt;/div&gt;'}"
+               >Add user</button>
+               </div>
+            </div>
+         </div>
+
+      </li>
    </ul>
 
    <div th:if="${#lists.isEmpty(projects)}">
       <p>You don't have any projects. Please, add new project first.</p>
    </div>
 
-   <footer th:replace="/fragments/footer :: footer"></footer></div><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script><script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script></body></html>
+<footer th:replace="/fragments/footer :: footer"></footer></div><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script><script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script>
+$(function () {
+   $('[data-toggle="popover"]').popover({ html : true, animation : true})
+})
+</script>
+<script src="../static/js/niko_projectsadduser.js" th:src="@{/js/niko_projectsadduser.js}"></script>
+</body></html>

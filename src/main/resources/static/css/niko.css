@@ -1,5 +1,9 @@
-/*!
+/*
  * Niko CSS
+ */
+
+/*
+ * Mood selection radio buttons
  */
 
 .btn-xlg,
@@ -16,4 +20,35 @@
   font-size: 48px;
   line-height: 1.3333333;
   border-radius: 18px;
+}
+
+/*
+ * Projects list styles
+ */
+
+.row {
+    position: relative;
+    height: 40px;
+    font-size: larger;
+}
+
+.hover-btn-text {
+    padding-top: 8px;
+}
+
+.hover-btn {
+   opacity: 0.4;
+}
+
+.row:hover .hover-btn {
+   opacity: 1.0;
+}
+
+/*
+ * Projects list popover styles
+ */
+
+.popover-title .close{
+    position: relative;
+    bottom: 3px;
 }
