@@ -1,11 +1,14 @@
 package com.pgs.intern.services;
 
 import com.pgs.intern.dao.ProjectDao;
+import com.pgs.intern.dao.UserDao;
 import com.pgs.intern.models.Mood;
 import com.pgs.intern.models.Project;
 import com.pgs.intern.models.ProjectViewModel;
+import com.pgs.intern.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.text.SimpleDateFormat;
@@ -24,8 +27,10 @@ public class ProjectService {
 
     @Autowired
     private ProjectDao projectDao;
+    @Autowired
+    private UserDao userDao;
 
-    public void addProject(ProjectViewModel projectViewModel){
+    public void addProject(ProjectViewModel projectViewModel) {
         Project project = new Project();
         project.setTitle(projectViewModel.getTitle());
         project.setOwner(currentUser.getUser());
@@ -60,5 +65,14 @@ public class ProjectService {
         }
 
         return blockedDatesInProjects;
+    }
+
+    @Transactional
+    public void addUserForProject(Long idUser, Long projectId) {
+
+        Project project = projectDao.findById(projectId);
+        User user = userDao.findById(idUser);
+        project.getJoinedUsersList().add(user);
+
     }
 }
