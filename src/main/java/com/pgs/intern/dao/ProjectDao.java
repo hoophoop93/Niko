@@ -49,8 +49,6 @@ public class ProjectDao {
         String queryString = "SELECT o FROM Project o WHERE o.owner = :owner ORDER BY o.title ASC";
         TypedQuery<Project> query = entityManager.createQuery(queryString, Project.class);
         query.setParameter("owner", owner);
-        System.out.println(query.getResultList());
-
         return query.getResultList();
     }
 
