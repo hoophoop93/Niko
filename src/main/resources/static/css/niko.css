@@ -21,7 +21,25 @@
   line-height: 1.3333333;
   border-radius: 18px;
 }
+.btn-xxlg:hover{
+    color:black;
+}
 
+.btn-danger.active, .open>.dropdown-toggle.btn-danger {
+    color: black;
+    border :2px solid #9C251B;
+    font-weight: bold;
+}
+.btn-warning.active, .open>.dropdown-toggle.btn-warning {
+    color: black;
+    border :2px solid #D0A413;
+    font-weight: bold;
+}
+.btn-success.active, .open>.dropdown-toggle.btn-success {
+    color: black;
+    border :2px solid #2C823A;
+    font-weight: bold;
+}
 /*
  * Projects list styles
  */
