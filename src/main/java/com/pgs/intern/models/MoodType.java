@@ -4,9 +4,10 @@ package com.pgs.intern.models;
  * Created by kmichalik on 7/14/2016.
  */
 public enum MoodType {
-    Happy("\uD83D\uDE0C"),
+    Happy("\uD83D\uDE04"),
     Neutral("\uD83D\uDE10"),
-    Bad("\uD83D\uDE41");
+    Bad("\uD83D\uDE2B");
+
 
     private final String text;
 
