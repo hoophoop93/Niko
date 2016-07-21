@@ -34,7 +34,9 @@ function popoverOpenLoad(projectId, data) {
 
         $("#popoverContent" + projectId).append('<br/>');
 
-        var button = $('<button type="button" onclick="popoverOpenSend(' + projectId + ', ' + $("#popoverContentSelect" + projectId).val() + ')" class="btn btn-default btn-block">Add  <span class="glyphicon glyphicon-plus"></span>');
+        var button = $('<button type="button" class="btn btn-default btn-block">Add  <span class="glyphicon glyphicon-plus"></span>')
+            .bind("click", function() { popoverOpenSend(projectId, $("#popoverContentSelect" + projectId).val()) });
+
 
         $("#popoverContent" + projectId).append(button);
 
