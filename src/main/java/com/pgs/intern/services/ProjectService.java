@@ -68,21 +68,24 @@ public class ProjectService {
     }
 
     @Transactional
-    public boolean addUserForProject(Long idUser, Long projectId) {
+    public void addUserForProject(Long idUser, Long projectId) throws Exception {
         Project project = projectDao.findById(projectId);
         User user = userDao.findById(idUser);
-
+        if (!currentUser.isAuthenticated()) {
+            throw new Exception("You are not logged in.");
+        }
         if (project == null) {
-            return false;
+            throw new Exception("Project not found.");
         }
         if (user == null) {
-            return false;
+            throw new Exception("User not found.");
         }
         if (project.getJoinedUsersList().contains(user)) {
-            return false;
+            throw new Exception("User already added.");
         }
-
+        if (!project.getOwner().equals(currentUser.getUser())) {
+            throw new Exception("You are not project owner.");
+        }
         project.getJoinedUsersList().add(user);
-        return true;
     }
 }

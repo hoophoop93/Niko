@@ -104,6 +104,9 @@ public class ProjectController {
     @RequestMapping(value = "/project/{projectid}/getavailableusers", method = RequestMethod.GET)
     public Map<Long, String> getAvailableUsersByProjectId(@PathVariable long projectid) {
         Map<Long, String> availableUsers = new HashMap<>();
+        if (!currentUser.isAuthenticated()) {
+            return new HashMap<>();
+        }
         for (User u : projectDao.getNoneJoinedUsersById(projectid)) {
             availableUsers.put(u.getIdUser(), u.getDisplayName() + " (" + u.getEmail() + ")");
         }
@@ -111,17 +114,17 @@ public class ProjectController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/project/{projectid}/addusertoproject/{userid}", method = RequestMethod.GET)
-    public String addAvailableUserToProject(@PathVariable long projectid, @PathVariable long userid) {
-
-        if (false) {
-            return "Error";
-        } else {
-            if (projectService.addUserForProject(userid, projectid)) {
-                return "Successfully added";
-            } else {
-                return "Something went wrong";
-            }
+    @RequestMapping(value = "/project/{projectids}/addusertoproject/{userids}", method = RequestMethod.GET)
+    public String addAvailableUserToProject(@PathVariable String projectids, @PathVariable String userids) {
+        try {
+            long userid = Long.parseLong(userids);
+            long projectid = Long.parseLong(projectids);
+            projectService.addUserForProject(userid, projectid);
+            return "Successfully added";
+        } catch (NumberFormatException nfe) {
+            return "Invalid data";
+        } catch (Exception ex) {
+            return ex.getMessage();
         }
     }
 }
