@@ -57,3 +57,23 @@
     position: relative;
     bottom: 3px;
 }
+
+/*
+ * Message box
+ */
+
+.messagefloatingcontainerbox {
+    position:absolute;
+    width:100%;
+}
+
+.messagefloatingcontainer {
+    padding-right: 275px;
+    padding-left: 275px;
+    margin-right: auto;
+    margin-left: auto;
+    position:absolute;
+    top:70px;
+    z-index:512;
+    width: 100%;
+ }

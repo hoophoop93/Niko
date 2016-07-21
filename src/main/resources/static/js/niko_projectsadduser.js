@@ -8,8 +8,6 @@ function hidePopover(projectId) {
 }
 
 function popoverOpen(projectId) {
-    $("#projectInfo" + projectId).text("");
-
     $.ajax({
         url: "/project/" + projectId + "/getavailableusers",
         dataType: "json",
@@ -52,11 +50,49 @@ function popoverOpenSend(projectId, userId) {
 function popoverOpenSendDone(projectId, data) {
     hidePopover(projectId);
 
-    $("#projectInfo" + projectId).text(data);
+    if (data.hasOwnProperty("success")) {
+        addMessageSuccess(data["success"]);
+    }
+
+    if (data.hasOwnProperty("error")) {
+        addMessageError(data["error"]);
+    }
 }
 
 function popoverOpenSendFailed(projectId, data) {
     hidePopover(projectId);
 
-    $("#projectInfo" + projectId).text("Error has occured.");
+    if (data.hasOwnProperty("success")) {
+        addMessageSuccess(data["success"]);
+    }
+
+    if (data.hasOwnProperty("error")) {
+        addMessageError(data["error"]);
+    }
+}
+
+function addMessageSuccess(data) {
+    $("#messageContainer").append(`
+<div id="alert" class="alert alert-block alert-success alert-dismissible fade in" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <strong>Success!</strong> ` + data +
+`</div>
+`);
+
+    setTimeout(function() { $("#alert").alert('close'); }, 7500);
+}
+
+function addMessageError(data) {
+    $("#messageContainer").append(`
+<div id="alert" class="alert alert-block alert-danger alert-dismissible fade in" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <strong>Error!</strong> ` + data +
+`</div>
+`);
+
+    setTimeout(function() { $("#alert").alert('close'); }, 7500);
 }
