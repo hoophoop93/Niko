@@ -11,8 +11,13 @@ function popoverOpen(projectId) {
     $.ajax({
         url: "/project/" + projectId + "/getavailableusers",
         dataType: "json",
+        error: function(data) { popoverOpenLoadFailed(projectId, data) },
         success: function(data) { popoverOpenLoad(projectId, data) }
     });
+}
+
+function popoverOpenLoadFailed(projectId, data) {
+    $("#popoverContent" + projectId).text('Something went wrong :(');
 }
 
 function popoverOpenLoad(projectId, data) {
@@ -50,25 +55,25 @@ function popoverOpenSend(projectId, userId) {
 function popoverOpenSendDone(projectId, data) {
     hidePopover(projectId);
 
-    if (data.hasOwnProperty("success")) {
-        addMessageSuccess(data["success"]);
-    }
+    if(!jQuery.isEmptyObject(data)) {
 
-    if (data.hasOwnProperty("error")) {
-        addMessageError(data["error"]);
+        if (data.hasOwnProperty("success")) {
+            addMessageSuccess(data["success"]);
+        }
+
+        if (data.hasOwnProperty("error")) {
+            addMessageError(data["error"]);
+        }
+
+    } else {
+        addMessageError("An error has occured :(");
     }
 }
 
 function popoverOpenSendFailed(projectId, data) {
     hidePopover(projectId);
 
-    if (data.hasOwnProperty("success")) {
-        addMessageSuccess(data["success"]);
-    }
-
-    if (data.hasOwnProperty("error")) {
-        addMessageError(data["error"]);
-    }
+    addMessageError("An error has occured :(");
 }
 
 function addMessageSuccess(data) {
