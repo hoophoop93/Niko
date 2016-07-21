@@ -115,16 +115,20 @@ public class ProjectController {
 
     @ResponseBody
     @RequestMapping(value = "/project/{projectids}/addusertoproject/{userids}", method = RequestMethod.GET)
-    public String addAvailableUserToProject(@PathVariable String projectids, @PathVariable String userids) {
+    public Map<String, String> addAvailableUserToProject(@PathVariable String projectids, @PathVariable String userids) {
+        Map<String, String> message = new HashMap<>();
         try {
             long userid = Long.parseLong(userids);
             long projectid = Long.parseLong(projectids);
             projectService.addUserForProject(userid, projectid);
-            return "Successfully added";
+            message.put("success","Successfully added");
+            return message;
         } catch (NumberFormatException nfe) {
-            return "Invalid data";
+            message.put("error","Invalid data");
+            return message;
         } catch (Exception ex) {
-            return ex.getMessage();
+            message.put("error",ex.getMessage());
+            return message;
         }
     }
 }
