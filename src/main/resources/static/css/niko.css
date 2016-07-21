@@ -86,17 +86,13 @@
  */
 
 .messagefloatingcontainerbox {
-    position:absolute;
+    position:fixed;
     width:100%;
+    z-index:512;
+    top:70px;
 }
 
 .messagefloatingcontainer {
-    padding-right: 275px;
-    padding-left: 275px;
-    margin-right: auto;
-    margin-left: auto;
-    position:absolute;
-    top:70px;
-    z-index:512;
-    width: 100%;
+    width: 800px;
+    margin: 0 auto;
  }

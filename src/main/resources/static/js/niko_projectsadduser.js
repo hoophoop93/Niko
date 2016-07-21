@@ -76,7 +76,7 @@ function popoverOpenSendFailed(projectId, data) {
 }
 
 function addMessageSuccess(data) {
-    $("#messageContainer").append(`
+    $("#messageContainer").html(`
 <div id="alert" class="alert alert-block alert-success alert-dismissible fade in" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
@@ -84,12 +84,10 @@ function addMessageSuccess(data) {
   <strong>Success!</strong> ` + data +
 `</div>
 `);
-
-    setTimeout(function() { $("#alert").alert('close'); }, 7500);
 }
 
 function addMessageError(data) {
-    $("#messageContainer").append(`
+    $("#messageContainer").html(`
 <div id="alert" class="alert alert-block alert-danger alert-dismissible fade in" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
@@ -97,6 +95,4 @@ function addMessageError(data) {
   <strong>Error!</strong> ` + data +
 `</div>
 `);
-
-    setTimeout(function() { $("#alert").alert('close'); }, 7500);
 }
