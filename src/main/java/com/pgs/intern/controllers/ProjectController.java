@@ -119,9 +119,11 @@ public class ProjectController {
         Map<String, String> message = new HashMap<>();
         try {
             long userid = Long.parseLong(userids);
+            User user = userDao.findById(userid);
             long projectid = Long.parseLong(projectids);
+            Project project = projectDao.findById(projectid);
             projectService.addUserForProject(userid, projectid);
-            message.put("success","Successfully added");
+            message.put("success","Successfully added! " + user.getDisplayName() + " is now in " + project.getTitle() + " project.");
             return message;
         } catch (NumberFormatException nfe) {
             message.put("error","Invalid data");
