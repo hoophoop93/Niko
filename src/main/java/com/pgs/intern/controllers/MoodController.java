@@ -48,13 +48,15 @@ public class MoodController {
     public ModelAndView addMood() {
         MoodViewModel mood = new MoodViewModel();
 
+        if (!currentUser.isAuthenticated()) {
+            return new ModelAndView("redirect:/login");
+        }
+
         mood.setDateAdd(new Date());
         mood.setProjects(projectService.getProjectsOfCurrentUser());
         mood.setBlockedDatesInProjects(projectService.getBlockedDatesInProjects());
 
-        if (!currentUser.isAuthenticated()) {
-            return new ModelAndView("redirect:/login");
-        }
+
 
         return new ModelAndView("authorised/moodadd", "model", mood);
     }
