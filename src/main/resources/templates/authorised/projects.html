@@ -39,6 +39,9 @@ $(function () {
       $(e.target).data("bs.popover").inState.click = false;
    });
 
+   $('[data-toggle="popover"]').on('click', function (e) {
+       $('.btn').not(this).popover('hide');
+   });
 })
 </script>
 <script src="../static/js/niko_projectsadduser.js" th:src="@{/js/niko_projectsadduser.js}"></script>
