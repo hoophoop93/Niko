@@ -20,6 +20,11 @@ $( function() {
 } );
 /*]]>*/
 </script>
+   <script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
 </head><body><nav th:replace="/authorised/fragments/nav :: nav"></nav><div class="container">
 
    <h2>Add mood for project</h2>
@@ -57,13 +62,13 @@ $( function() {
       <div class="form-group">
          <label class="control-label col-sm-2">Mood</label><div class="col-sm-10">
          <div data-toggle="buttons" >
-            <label class="btn btn-danger btn-xxlg">
+            <label class="btn btn-danger btn-xxlg" data-toggle="tooltip" title="Bad" data-placement="bottom">
             <input type="radio"  th:field="*{moodType}" th:value="Bad" th:text="${T(com.pgs.intern.models.MoodType).Bad}"/>
             </label> 
-            <label class="btn btn-warning btn-xxlg">
-               <input type="radio"  th:field="*{moodType}" th:value="Neutral" th:text="${T(com.pgs.intern.models.MoodType).Neutral}"/><br/>
+            <label class="btn btn-warning btn-xxlg" data-toggle="tooltip" title="Neutral" data-placement="bottom">
+               <input type="radio"  th:field="*{moodType}" th:value="Neutral" th:text="${T(com.pgs.intern.models.MoodType).Neutral}" /><br/>
             </label> 
-            <label class="btn btn-success btn-xxlg">
+            <label class="btn btn-success btn-xxlg" data-toggle="tooltip" title="Happy" data-placement="bottom">
                <input type="radio"  th:field="*{moodType}" th:value="Happy" th:text="${T(com.pgs.intern.models.MoodType).Happy}"/>
             </label>
          </div>
