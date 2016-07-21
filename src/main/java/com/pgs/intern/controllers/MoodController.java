@@ -48,13 +48,15 @@ public class MoodController {
     public ModelAndView addMood() {
         MoodViewModel mood = new MoodViewModel();
 
+        if (!currentUser.isAuthenticated()) {
+            return new ModelAndView("redirect:/login");
+        }
+
         mood.setDateAdd(new Date());
         mood.setProjects(projectService.getProjectsOfCurrentUser());
         mood.setBlockedDatesInProjects(projectService.getBlockedDatesInProjects());
 
-        if (!currentUser.isAuthenticated()) {
-            return new ModelAndView("redirect:/login");
-        }
+
 
         return new ModelAndView("authorised/moodadd", "model", mood);
     }
@@ -69,7 +71,7 @@ public class MoodController {
         model.setProjects(projectService.getProjectsOfCurrentUser());
         model.setBlockedDatesInProjects(projectService.getBlockedDatesInProjects());
 
-        if(model.getDateAdd() != null) {
+        if (model.getDateAdd() != null) {
             if (!moodService.isInLast7Days(model.getDateAdd())) {
                 result.rejectValue("dateAdd", "error.invalidDate", "Date must not be earlier than 7 days.");
             }
@@ -85,8 +87,8 @@ public class MoodController {
                 result.reject("error.moodAlreadyAdded", "You have already added mood that day.");
         }
 
-
         if (result.hasErrors()) {
+            model.setMoodType(null);
             return new ModelAndView("authorised/moodadd", "model", model);
         }
 
