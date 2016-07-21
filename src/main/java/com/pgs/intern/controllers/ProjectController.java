@@ -123,10 +123,10 @@ public class ProjectController {
             long projectid = Long.parseLong(projectids);
             Project project = projectDao.findById(projectid);
             projectService.addUserForProject(userid, projectid);
-            message.put("success","Successfully added! " + user.getDisplayName() + " is now in " + project.getTitle() + " project.");
+            message.put("success","User <strong>" + user.getDisplayName() + "</strong> is now in <strong>" + project.getTitle() + "</strong> project.");
             return message;
         } catch (NumberFormatException nfe) {
-            message.put("error","Invalid data");
+            message.put("error","Invalid data.");
             return message;
         } catch (Exception ex) {
             message.put("error",ex.getMessage());
