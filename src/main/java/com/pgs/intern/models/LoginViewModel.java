@@ -10,7 +10,6 @@ import javax.validation.constraints.Size;
  */
 public class LoginViewModel {
     @NotEmpty(message = "{NotEmpty.message}")
-    @Email(message = "{Email.invalidEmail}")
     public String email;
 
     @NotEmpty(message = "{NotEmpty.message}")
