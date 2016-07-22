@@ -23,8 +23,6 @@ public class MoodViewModel {
 
     private Project project;
 
-    @NotNull(message = "{Choose.project}")
-    @Min(value = 1, message = "{Choose.project}")
     private long projectId;
 
     private List<Project> projects;
