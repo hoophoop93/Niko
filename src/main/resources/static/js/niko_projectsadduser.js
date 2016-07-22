@@ -110,3 +110,24 @@ function addMessageError(data) {
 `</div>
 `);
 }
+
+function repositionPopoverOnResize() {
+    var popover_buttons = $("[id^=popoverOpenButton]");
+    var popover_contents = $("[id^=popoverContent]").parent('div').parent('div');
+
+    popover_contents.first().css("left", popover_buttons.first().offset().left - popover_contents.first().width());
+}
+
+window.addEventListener('resize', function() {
+        setTimeout(function () {
+            repositionPopoverOnResize();
+
+            setTimeout(function () {
+                repositionPopoverOnResize();
+
+                setTimeout(function () {
+                    repositionPopoverOnResize();
+                }, 200);
+            }, 200);
+        }, 200);
+    }, true);
