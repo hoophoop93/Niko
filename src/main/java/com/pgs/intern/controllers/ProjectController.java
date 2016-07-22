@@ -58,29 +58,24 @@ public class ProjectController {
     @RequestMapping(value = "/project/add", method = RequestMethod.POST)
     public ModelAndView addProjectPost(@Valid @ModelAttribute("model") ProjectViewModel model,
                                        final BindingResult result, final RedirectAttributes redirectAttributes) {
-        ModelAndView modelAndView = new ModelAndView();
-
-        modelAndView.addObject("model", model);
 
         if (!currentUser.isAuthenticated()) {
-            modelAndView.setViewName("redirect:/login");
-            return modelAndView;
+            return new ModelAndView("redirect:/login");
         }
+
         if (projectDao.checkProjectTitle(model.getTitle())) {
             result.reject("error.projectAlreadyAdded", "This project name was taken.");
-            modelAndView.setViewName("authorised/projectadd");
-            return modelAndView;
+            return new ModelAndView("authorised/projectadd","model",model);
         }
 
         if (result.hasErrors()) {
-            modelAndView.setViewName("authorised/projectadd");
-            return modelAndView;
+            return new ModelAndView("authorised/projectadd","model",model);
         }
 
         projectService.addProject(model);
 
 
-        modelAndView = new ModelAndView("redirect:/");
+        ModelAndView modelAndView = new ModelAndView("redirect:/");
 
         List<String> infoMessages = new ArrayList<>();
         infoMessages.add("Added project '" + model.getTitle() + "' successfully!");
