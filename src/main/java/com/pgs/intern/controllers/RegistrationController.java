@@ -51,13 +51,16 @@ public class RegistrationController {
             return new ModelAndView("redirect:/");
         }
 
-        if(userDao.checkByEmail(model.getEmail())) {
-            result.reject("error.registrationError","E-mail already taken.");
+        if(model.getEmail() != null) {
+            if (userDao.checkByEmail(model.getEmail())) {
+                result.reject("error.registrationError", "E-mail already taken.");
+            }
         }
 
         if (result.hasErrors()) {
             return new ModelAndView("unauthorised/register","model",model);
         }
+
 
         registrationService.registration(model);
 
