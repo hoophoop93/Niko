@@ -18,6 +18,7 @@ public class RegistrationViewModel {
     private String displayName;
 
     @Pattern(regexp = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-+]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "{Email.invalidEmail}")
+    @Size(max = 255, message = "{Size.email}")
     private String email;
 
     @Size(min = 8, message = "{Size.password}")
