@@ -7,7 +7,17 @@ function hidePopover(projectId) {
     $("#popoverOpenButton" + projectId).popover('hide');
 }
 
+function repositionPopover(projectId) {
+    var popover_button = $("#popoverOpenButton" + projectId);
+    var popover_content = $("#popoverContent" + projectId).parent('div').parent('div');
+
+    popover_content.css("left", popover_button.offset().left - popover_content.width());
+    popover_content.css("top", popover_button.offset().top - popover_content.height()/2 + popover_button.height()/2);
+}
+
 function popoverOpen(projectId) {
+    repositionPopover(projectId);
+
     $.ajax({
         url: "/project/" + projectId + "/getavailableusers",
         dataType: "json",
@@ -18,6 +28,8 @@ function popoverOpen(projectId) {
 
 function popoverOpenLoadFailed(projectId, data) {
     $("#popoverContent" + projectId).text('Something went wrong :(');
+
+    repositionPopover(projectId);
 }
 
 function popoverOpenLoad(projectId, data) {
@@ -43,6 +55,8 @@ function popoverOpenLoad(projectId, data) {
     } else {
         $("#popoverContent" + projectId).text('No users available.');
     }
+
+    repositionPopover(projectId);
 }
 
 function popoverOpenSend(projectId, userId) {
@@ -51,11 +65,11 @@ function popoverOpenSend(projectId, userId) {
         error: function(data) { popoverOpenSendFailed(projectId, data) },
         success: function(data) { popoverOpenSendDone(projectId, data) }
     });
+
+    hidePopover(projectId);
 }
 
 function popoverOpenSendDone(projectId, data) {
-    hidePopover(projectId);
-
     if(!jQuery.isEmptyObject(data)) {
 
         if (data.hasOwnProperty("success")) {
@@ -72,8 +86,6 @@ function popoverOpenSendDone(projectId, data) {
 }
 
 function popoverOpenSendFailed(projectId, data) {
-    hidePopover(projectId);
-
     addMessageError("An error has occured :(");
 }
 

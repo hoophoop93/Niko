@@ -86,6 +86,7 @@
  */
 
 .messagefloatingcontainerbox {
+    pointer-events:none;
     position:fixed;
     width:100%;
     z-index:512;
@@ -93,6 +94,7 @@
 }
 
 .messagefloatingcontainer {
+    pointer-events:auto;
     width: 800px;
     margin: 0 auto;
  }
