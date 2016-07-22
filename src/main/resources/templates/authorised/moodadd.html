@@ -21,21 +21,29 @@ $( function() {
      beforeShowDay: function(date){
          var blockedDates = blockedDatesInProjects[$("#projectId").val()];
          var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
-         if (blockedDates == null) { return [ true ]; } else { return [ blockedDates.indexOf(string) == -1 ]; }
+         var result = false;
+
+         if (blockedDates == null) {
+            result = true;
+         } else {
+            result = (blockedDates.indexOf(string) == -1);
+         }
+
+         if (result) {
+            return [true,  "", ""];
+         } else {
+            return [false, "ui-state-already-added", "You have already added mood for that day"];
+         }
      }
    });
 } );
 /*]]>*/
-
-
-    </script>
-    <script>
+</script>
+<script>
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
 });
-
-
-    </script>
+</script>
 </head>
 <body>
 <nav th:replace="/authorised/fragments/nav :: nav"></nav>

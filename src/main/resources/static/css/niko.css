@@ -3,6 +3,16 @@
  */
 
 /*
+ * Mood adding calendar
+ */
+
+.ui-state-already-added span{
+    color:black !important;
+    background:rgb(255,170,170) !important;
+    pointer-events:auto;
+}
+
+/*
  * Mood selection radio buttons
  */
 
