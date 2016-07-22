@@ -63,9 +63,11 @@ public class ProjectController {
             return new ModelAndView("redirect:/login");
         }
 
-        if (projectDao.checkProjectTitle(model.getTitle())) {
-            result.reject("error.projectAlreadyAdded", "This project name was taken.");
-            return new ModelAndView("authorised/projectadd","model",model);
+        if(model.getTitle() != null) {
+            if (projectDao.checkProjectTitle(model.getTitle())) {
+                result.reject("error.projectAlreadyAdded", "This project name was taken.");
+                return new ModelAndView("authorised/projectadd", "model", model);
+            }
         }
 
         if (result.hasErrors()) {
