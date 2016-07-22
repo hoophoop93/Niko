@@ -12,7 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Maciej Rosa on 7/14/2016 12:44 PM.
@@ -59,6 +62,19 @@ public class ProjectService {
         }
 
         return blockedDatesInProjects;
+    }
+
+    public Map<Long, List<String>> getBlockedDatesInProjectsJson() {
+        Map<Long, List<String>> blockedDates = new HashMap<>();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        for (Mood m : currentUser.getUser().getMoodList()) {
+            blockedDates.putIfAbsent(m.getProject().getProjectId(), new ArrayList<>());
+            blockedDates.get(m.getProject().getProjectId()).add(simpleDateFormat.format(m.getDateAdd()));
+        }
+
+        return blockedDates;
     }
 
     @Transactional
