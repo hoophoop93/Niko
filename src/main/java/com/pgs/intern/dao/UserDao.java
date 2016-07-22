@@ -40,10 +40,10 @@ public class UserDao {
     }
 
     public User findUser(String email) {
-        String queryString = "Select o from User o where LOWER(o.email) = :email ";
-        TypedQuery<User> query = entityManager.createQuery(queryString, User.class);
-        query.setParameter("email", email.toLowerCase());
         try {
+            String queryString = "Select o from User o where LOWER(o.email) = :email ";
+            TypedQuery<User> query = entityManager.createQuery(queryString, User.class);
+            query.setParameter("email", email.toLowerCase());
             return query.getSingleResult();
         } catch (Exception e) {
             return null;
