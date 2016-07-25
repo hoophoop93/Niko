@@ -54,7 +54,7 @@ public class MoodController {
 
         mood.setDateAdd(new Date());
         mood.setProjects(projectService.getProjectsOfCurrentUser());
-        mood.setBlockedDatesInProjects(projectService.getBlockedDatesInProjectsJson());
+        mood.setBlockedDatesInProjects(projectService.getBlockedDatesInProjectsJsonStream());
 
 
 
@@ -69,7 +69,7 @@ public class MoodController {
         }
 
         model.setProjects(projectService.getProjectsOfCurrentUser());
-        model.setBlockedDatesInProjects(projectService.getBlockedDatesInProjectsJson());
+        model.setBlockedDatesInProjects(projectService.getBlockedDatesInProjectsJsonStream());
 
         if (model.getDateAdd() != null) {
             if (!moodService.isInLast7Days(model.getDateAdd())) {

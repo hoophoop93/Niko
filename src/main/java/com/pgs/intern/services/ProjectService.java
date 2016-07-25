@@ -2,7 +2,6 @@ package com.pgs.intern.services;
 
 import com.pgs.intern.dao.ProjectDao;
 import com.pgs.intern.dao.UserDao;
-import com.pgs.intern.models.Mood;
 import com.pgs.intern.models.Project;
 import com.pgs.intern.models.ProjectViewModel;
 import com.pgs.intern.models.User;
@@ -12,10 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by Maciej Rosa on 7/14/2016 12:44 PM.
@@ -41,40 +39,18 @@ public class ProjectService {
         return projectDao.getUserProjects(currentUser.getUser());
     }
 
-    public Map<Long, String > getBlockedDatesInProjects(){
-        Map<Long, String >  blockedDatesInProjects = new HashMap<>() ;
-        Map<Long, List<String> >  categorised = new HashMap<>();
-
+    public Map<Long, List<String>> getBlockedDatesInProjectsJsonStream() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        for(Mood m : currentUser.getUser().getMoodList()){
-            categorised.putIfAbsent(m.getProject().getProjectId(), new ArrayList<>());
-            categorised.get(m.getProject().getProjectId())
-                    .add("\"" + simpleDateFormat.format(m.getDateAdd()) + "\"");
-        }
-
-
-        for (Map.Entry<Long, List<String>> longListEntry : categorised.entrySet()) {
-            String blockedDates = "[" +
-                    String.join(",", longListEntry.getValue()) +
-                    "]";
-            blockedDatesInProjects.put(longListEntry.getKey(), blockedDates);
-        }
-
-        return blockedDatesInProjects;
-    }
-
-    public Map<Long, List<String>> getBlockedDatesInProjectsJson() {
-        Map<Long, List<String>> blockedDates = new HashMap<>();
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        for (Mood m : currentUser.getUser().getMoodList()) {
-            blockedDates.putIfAbsent(m.getProject().getProjectId(), new ArrayList<>());
-            blockedDates.get(m.getProject().getProjectId()).add(simpleDateFormat.format(m.getDateAdd()));
-        }
-
-        return blockedDates;
+        return currentUser.getUser().getMoodList()
+                .stream()
+                .collect(
+                        Collectors.groupingBy(m -> m.getProject().getProjectId(),
+                                Collectors.mapping(
+                                        m -> simpleDateFormat.format(m.getDateAdd()),
+                                        Collectors.toList()
+                                )
+                        )
+                );
     }
 
     @Transactional
