@@ -2,6 +2,7 @@ package com.pgs.intern.services;
 
 import com.pgs.intern.dao.ProjectDao;
 import com.pgs.intern.dao.UserDao;
+import com.pgs.intern.dao.UserRepository;
 import com.pgs.intern.models.ProjectViewModel;
 import com.pgs.intern.models.RegistrationViewModel;
 import com.pgs.intern.models.User;
@@ -18,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class RegistrationService {
 
     @Autowired
-    private UserDao userDao;
+    UserRepository userRepository;
 
 
     public void registration(RegistrationViewModel registrationViewModel){
@@ -27,7 +28,7 @@ public class RegistrationService {
         user.setDisplayName(registrationViewModel.getDisplayName());
         user.setPasswordHash(AccountUtils.getHashFor(registrationViewModel.getPassword()));
 
-        userDao.save(user);
+        userRepository.save(user);
     }
 
 

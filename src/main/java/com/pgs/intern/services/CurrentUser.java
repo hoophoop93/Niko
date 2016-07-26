@@ -1,6 +1,7 @@
 package com.pgs.intern.services;
 
 import com.pgs.intern.dao.UserDao;
+import com.pgs.intern.dao.UserRepository;
 import com.pgs.intern.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -16,11 +17,11 @@ public class CurrentUser {
     private User user;
 
     @Autowired
-    private UserDao userDao;
+    UserRepository userRepository;
 
     public User getUser() {
         if(user != null) {
-            user = userDao.findById(user.getIdUser());
+            user = userRepository.findByIdUser(user.getIdUser());
         }
 
         return user;

@@ -1,6 +1,7 @@
 package com.pgs.intern.controllers;
 
 import com.pgs.intern.dao.UserDao;
+import com.pgs.intern.dao.UserRepository;
 import com.pgs.intern.models.RegistrationViewModel;
 import com.pgs.intern.services.CurrentUser;
 import com.pgs.intern.services.RegistrationService;
@@ -26,7 +27,7 @@ import java.util.List;
 public class RegistrationController {
 
     @Autowired
-    private UserDao userDao;
+    UserRepository userRepository;
 
     @Inject
     private CurrentUser currentUser;
@@ -52,7 +53,7 @@ public class RegistrationController {
         }
 
         if(model.getEmail() != null) {
-            if (userDao.checkByEmail(model.getEmail())) {
+            if (userRepository.checkByEmail(model.getEmail())) {
                 result.reject("error.registrationError", "E-mail already taken.");
             }
         }

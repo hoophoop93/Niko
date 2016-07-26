@@ -52,7 +52,7 @@ public class UserDao {
     }
 
     public boolean searchUserInProject(Long idUser, Long projectId) {
-        String queryString = "SELECT count(u) FROM User u, Project p WHERE u.idUser = :idUser AND p.projectId= :projectId AND u in elements ( p.joinedUsers )";
+        String queryString = "SELECT count(u) FROM User u, Project p WHERE u.idUser = :idUser AND p.projectId= :projectId AND u in elements ( p.joinedUsersList )";
         TypedQuery<Long> query = entityManager.createQuery(queryString, Long.class);
         query.setParameter("projectId", projectId);
         query.setParameter("idUser", idUser);

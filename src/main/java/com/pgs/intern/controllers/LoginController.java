@@ -1,6 +1,7 @@
 package com.pgs.intern.controllers;
 
 import com.pgs.intern.dao.UserDao;
+import com.pgs.intern.dao.UserRepository;
 import com.pgs.intern.models.LoginViewModel;
 import com.pgs.intern.models.User;
 import com.pgs.intern.services.CurrentUser;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 public class LoginController {
 
     @Autowired
-    private UserDao userDao;
+    UserRepository userRepository;
 
     @Inject
     private CurrentUser currentUser;
@@ -55,7 +56,7 @@ public class LoginController {
             return new ModelAndView("redirect:/");
         }
         // Logging in;
-        User user = userDao.findUser(model.getEmail());
+        User user = userRepository.findByEmail(model.getEmail());
 
 
         if (!result.hasErrors()) {

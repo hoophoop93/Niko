@@ -2,6 +2,7 @@ package com.pgs.intern.controllers;
 
 import com.pgs.intern.dao.ProjectDao;
 import com.pgs.intern.dao.UserDao;
+import com.pgs.intern.dao.UserRepository;
 import com.pgs.intern.models.Mood;
 import com.pgs.intern.models.Project;
 import com.pgs.intern.models.ProjectViewModel;
@@ -35,7 +36,7 @@ public class ProjectController {
     private ProjectDao projectDao;
 
     @Autowired
-    private UserDao userDao;
+    UserRepository userRepository;
 
     @Inject
     CurrentUser currentUser;
@@ -104,7 +105,7 @@ public class ProjectController {
         Map<String, String> message = new HashMap<>();
         try {
             long userid = Long.parseLong(userids);
-            User user = userDao.findById(userid);
+            User user = userRepository.findByIdUser(userid);
             long projectid = Long.parseLong(projectids);
             Project project = projectDao.findById(projectid);
             projectService.addUserForProject(userid, projectid);

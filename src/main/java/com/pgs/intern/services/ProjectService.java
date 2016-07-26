@@ -3,6 +3,7 @@ package com.pgs.intern.services;
 import com.google.common.collect.ImmutableMap;
 import com.pgs.intern.dao.ProjectDao;
 import com.pgs.intern.dao.UserDao;
+import com.pgs.intern.dao.UserRepository;
 import com.pgs.intern.models.Project;
 import com.pgs.intern.models.ProjectViewModel;
 import com.pgs.intern.models.User;
@@ -27,7 +28,7 @@ public class ProjectService {
     @Autowired
     private ProjectDao projectDao;
     @Autowired
-    private UserDao userDao;
+    UserRepository userRepository;
 
     public void addProject(ProjectViewModel projectViewModel) {
         Project project = new Project();
@@ -61,7 +62,7 @@ public class ProjectService {
     @Transactional
     public void addUserForProject(Long idUser, Long projectId) throws Exception {
         Project project = projectDao.findById(projectId);
-        User user = userDao.findById(idUser);
+        User user = userRepository.findByIdUser(idUser);
         if (!currentUser.isAuthenticated()) {
             throw new Exception("You are not logged in.");
         }
