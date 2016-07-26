@@ -1,6 +1,7 @@
 package com.pgs.intern.services;
 
 import com.pgs.intern.dao.UserDao;
+import com.pgs.intern.dao.UserRepository;
 import com.pgs.intern.models.User;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +19,7 @@ import static org.mockito.Mockito.*;
 public class CurrentUserTest {
 
     @Mock
-    UserDao userDao;
+    UserRepository userRepository;
 
     @InjectMocks
     CurrentUser currentUser;
@@ -35,7 +36,7 @@ public class CurrentUserTest {
     @Test
     public void getUser() throws Exception {
         assertNull("Class without user should return null",currentUser.getUser());
-        when(userDao.findById(anyLong())).thenReturn(user);
+        when(userRepository.findByIdUser(anyLong())).thenReturn(user);
         currentUser.setUser(user);
         assertEquals("Initiated class should return user",user,currentUser.getUser());
     }
