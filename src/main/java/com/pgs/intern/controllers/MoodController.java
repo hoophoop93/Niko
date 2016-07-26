@@ -1,6 +1,6 @@
 package com.pgs.intern.controllers;
 
-import com.pgs.intern.dao.MoodDao;
+import com.pgs.intern.dao.MoodDaoDataJpaInterface;
 import com.pgs.intern.dao.ProjectDao;
 import com.pgs.intern.models.MoodViewModel;
 import com.pgs.intern.models.Project;
@@ -41,7 +41,7 @@ public class MoodController {
     private ProjectService projectService;
 
     @Autowired
-    private MoodDao moodDao;
+    private MoodDaoDataJpaInterface moodDao;
 
 
     @RequestMapping(value = "/mood/add", method = RequestMethod.GET)
@@ -75,7 +75,7 @@ public class MoodController {
         } else {
             if (!(project.getOwner().equals(currentUser.getUser()) || project.getJoinedUsersList().contains(currentUser.getUser())))
                 result.reject("error.notProjectMember", "You are not a project member.");
-            if (moodDao.checkDayMood(model.getDateAdd(), currentUser.getUser(), project))
+            if (moodDao.checkDayMood(currentUser.getUser(), project, model.getDateAdd()))
                 result.reject("error.moodAlreadyAdded", "You have already added mood that day.");
         }
 

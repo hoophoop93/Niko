@@ -1,14 +1,15 @@
 package com.pgs.intern.services;
 
-import com.pgs.intern.dao.MoodDao;
+import com.pgs.intern.dao.MoodDaoDataJpaInterface;
 import com.pgs.intern.models.Mood;
 import com.pgs.intern.models.MoodViewModel;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.apache.commons.lang3.time.DateUtils;
+
 import javax.inject.Inject;
-import java.util.Date;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Maciej Rosa on 7/15/2016 12:53 PM.
@@ -16,7 +17,7 @@ import java.util.Calendar;
 @Component
 public class MoodService {
     @Autowired
-    private MoodDao moodDao;
+    private MoodDaoDataJpaInterface moodDao;
 
     @Inject
     private CurrentUser currentUser;
