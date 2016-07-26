@@ -1,7 +1,9 @@
 package com.pgs.intern.services;
 
 import com.pgs.intern.dao.MoodDao;
+import com.pgs.intern.dao.MoodDaoDataJpaInterface;
 import com.pgs.intern.dao.UserDao;
+import com.pgs.intern.models.Mood;
 import com.pgs.intern.models.MoodViewModel;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Before;
@@ -25,8 +27,11 @@ public class MoodServiceTest {
     @Mock
     CurrentUser currentUser;
 
+ //   @Mock
+  //  MoodDao moodDao;
     @Mock
-    MoodDao moodDao;
+    private MoodDaoDataJpaInterface moodDao;
+
 
     @InjectMocks
     MoodService moodService;
@@ -42,7 +47,7 @@ public class MoodServiceTest {
     public void addMood(){
         MoodViewModel mvm = new MoodViewModel();
         moodService.addMood(mvm);
-        verify(moodDao).save(anyObject());
+        verify(moodDao).save((Mood) anyObject());
     }
 
     @Test
