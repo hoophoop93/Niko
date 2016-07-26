@@ -1,7 +1,9 @@
 package com.pgs.intern.controllers;
 
 import com.pgs.intern.dao.ProjectDao;
+import com.pgs.intern.dao.ProjectDaoJpa;
 import com.pgs.intern.dao.UserDao;
+import com.pgs.intern.dao.UserRepository;
 import com.pgs.intern.models.Mood;
 import com.pgs.intern.models.Project;
 import com.pgs.intern.models.ProjectViewModel;
@@ -35,7 +37,10 @@ public class ProjectController {
     private ProjectDao projectDao;
 
     @Autowired
-    private UserDao userDao;
+    private ProjectDaoJpa projectDaoJpa;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Inject
     CurrentUser currentUser;
@@ -55,7 +60,7 @@ public class ProjectController {
                                        final BindingResult result, final RedirectAttributes redirectAttributes) {
 
         if(model.getTitle() != null) {
-            if (projectDao.checkProjectTitle(model.getTitle())) {
+            if (projectDaoJpa.existsByTitle(model.getTitle())) {
                 result.reject("error.projectAlreadyAdded", "This project name was taken.");
                 return new ModelAndView("authorised/projectadd", "model", model);
             }
@@ -81,7 +86,9 @@ public class ProjectController {
     @RequestMapping(value = "/project", method = RequestMethod.GET)
     public ModelAndView viewProjects() {
 
-        return new ModelAndView("authorised/projects", "projects", projectDao.getSortedOwnedProjects(currentUser.getUser()));
+        return new ModelAndView("authorised/projects", "projects",
+                projectDaoJpa.findByOwnerOrderByTitleAsc(currentUser.getUser())
+        );
     }
 
 
@@ -104,7 +111,7 @@ public class ProjectController {
         Map<String, String> message = new HashMap<>();
         try {
             long userid = Long.parseLong(userids);
-            User user = userDao.findById(userid);
+            User user = userRepository.findByIdUser(userid);
             long projectid = Long.parseLong(projectids);
             Project project = projectDao.findById(projectid);
             projectService.addUserForProject(userid, projectid);
