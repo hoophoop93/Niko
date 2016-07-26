@@ -67,7 +67,7 @@ public class ProjectDaoJpaTest {
         user = userRepository.findByEmail("user1@test.pl");
         project = projectDaoJpa.findByTitle("Test Projekt1");
         assertNotNull("User has some projects.", projectDaoJpa.getUserProjects(user));
-        assertFalse("User belong to Test Projekt1", projectDaoJpa.getUserProjects(user).contains(project));
+        assertTrue("User belong to Test Projekt1", projectDaoJpa.getUserProjects(user).contains(project));
     }
 
     @Test
