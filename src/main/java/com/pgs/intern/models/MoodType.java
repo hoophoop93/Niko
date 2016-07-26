@@ -19,4 +19,20 @@ public enum MoodType {
     public String toString() {
         return text;
     }
+
+    public String getLowerCase() {
+        if (this == MoodType.Happy) {
+            return "happy";
+        }
+
+        if (this == MoodType.Neutral) {
+            return "neutral";
+        }
+
+        if (this == MoodType.Bad) {
+            return "bad";
+        }
+
+        return "";
+    }
 }
