@@ -26,6 +26,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Created by mzalucka on 25-Jul-16.
  */
 
+/*******************************MockMvc_Tests********************/
+
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = NikoApplication.class)
@@ -47,7 +49,7 @@ public class RegistrationControllerTest {
     }
 
     @Test
-    public void registerTest() throws Exception {
+    public void registerTestOK() throws Exception {
 
         mockMvc.perform(
                 post("/register")
@@ -61,7 +63,7 @@ public class RegistrationControllerTest {
     }
 
     @Test
-    public void registerTest1() throws Exception{
+    public void registerTestWrongEmail() throws Exception{
 
         mockMvc.perform(
                 post("/register")
