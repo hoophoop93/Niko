@@ -2,6 +2,7 @@ package com.pgs.intern.mzalucka;
 
 import com.pgs.intern.NikoApplication;
 import com.pgs.intern.dao.ProjectDao;
+import com.pgs.intern.dao.ProjectDaoJpa;
 import com.pgs.intern.dao.UserDao;
 import com.pgs.intern.models.Project;
 import com.pgs.intern.models.ProjectViewModel;
@@ -44,6 +45,9 @@ public class ProjectServiceTest {
     @Mock
     ProjectDao projectDao;
 
+    @Mock
+    ProjectDaoJpa projectDaoJpa;
+
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
@@ -69,7 +73,7 @@ public class ProjectServiceTest {
 
         projectService.addProject(projectViewModel);
 
-        verify(projectDao).save(anyObject());
+        verify(projectDaoJpa).save((Project) anyObject());
     }
 
     @Test

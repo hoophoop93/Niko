@@ -1,6 +1,8 @@
 package com.pgs.intern.lschiffer;
 
 import com.pgs.intern.dao.ProjectDao;
+import com.pgs.intern.dao.ProjectDaoJpa;
+import com.pgs.intern.models.Project;
 import com.pgs.intern.models.ProjectViewModel;
 import com.pgs.intern.models.User;
 import com.pgs.intern.services.CurrentUser;
@@ -55,6 +57,9 @@ public class ProjectServiceMockitoTests {
     @Mock
     CurrentUser currentUser;
 
+    @Mock
+    ProjectDaoJpa projectDaoJpa;
+
     @Before
     public void beforeEach() throws NoSuchFieldException {
 //        projectDao = mock(ProjectDao.class);
@@ -75,6 +80,6 @@ public class ProjectServiceMockitoTests {
         pvm.setTitle("TITLE");
 
         projectService.addProject(pvm);
-        verify(projectDao).save(anyObject());
+        verify(projectDaoJpa).save((Project) anyObject());
     }
 }
