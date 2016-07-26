@@ -2,6 +2,7 @@ package com.pgs.intern.services;
 
 import com.google.common.collect.ImmutableMap;
 import com.pgs.intern.dao.ProjectDao;
+import com.pgs.intern.dao.ProjectDaoJpa;
 import com.pgs.intern.dao.UserDao;
 import com.pgs.intern.dao.UserRepository;
 import com.pgs.intern.models.Project;
@@ -30,11 +31,15 @@ public class ProjectService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    ProjectDaoJpa projectDaoJpa;
+
+
     public void addProject(ProjectViewModel projectViewModel) {
         Project project = new Project();
         project.setTitle(projectViewModel.getTitle());
         project.setOwner(currentUser.getUser());
-        projectDao.save(project);
+        projectDaoJpa.save(project);
     }
 
     public List<Project> getProjectsOfCurrentUser() {

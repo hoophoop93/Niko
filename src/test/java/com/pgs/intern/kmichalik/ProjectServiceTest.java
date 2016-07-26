@@ -1,6 +1,7 @@
 package com.pgs.intern.kmichalik;
 
 import com.pgs.intern.dao.ProjectDao;
+import com.pgs.intern.dao.ProjectDaoJpa;
 import com.pgs.intern.models.Project;
 import com.pgs.intern.models.ProjectViewModel;
 import com.pgs.intern.models.User;
@@ -37,6 +38,8 @@ public class ProjectServiceTest {
     ProjectDao projectDao;
     @Mock
     CurrentUser currentUser;
+    @Mock
+    ProjectDaoJpa projectDaoJpa;
 
     @Before
     public void beforeEach() throws NoSuchFieldException {
@@ -53,7 +56,7 @@ public class ProjectServiceTest {
         ProjectViewModel projectViewModel = new ProjectViewModel();
         projectViewModel.setTitle("ProjektTest");
         projectService.addProject(projectViewModel);
-        verify(projectDao).save(anyObject());
+        verify(projectDaoJpa).save((Project) anyObject());
     }
 
     @Test
