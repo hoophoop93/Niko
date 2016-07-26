@@ -48,10 +48,6 @@ public class MoodController {
     public ModelAndView addMood() {
         MoodViewModel mood = new MoodViewModel();
 
-        if (!currentUser.isAuthenticated()) {
-            return new ModelAndView("redirect:/login");
-        }
-
         mood.setDateAdd(new Date());
         mood.setProjects(projectService.getProjectsOfCurrentUser());
         mood.setBlockedDatesInProjects(projectService.getBlockedDatesInProjectsJsonStream());
@@ -64,10 +60,6 @@ public class MoodController {
     @RequestMapping(value = "/mood/add", method = RequestMethod.POST)
     public ModelAndView addMoodPost(@Valid @ModelAttribute("model") MoodViewModel model,
                                     final BindingResult result, final RedirectAttributes redirectAttributes) {
-        if (!currentUser.isAuthenticated()) {
-            return new ModelAndView("redirect:/login");
-        }
-
         model.setProjects(projectService.getProjectsOfCurrentUser());
         model.setBlockedDatesInProjects(projectService.getBlockedDatesInProjectsJsonStream());
 

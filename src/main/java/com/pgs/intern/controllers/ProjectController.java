@@ -44,11 +44,6 @@ public class ProjectController {
     public ModelAndView addProject() {
         ModelAndView modelAndView = new ModelAndView();
 
-        if (!currentUser.isAuthenticated()) {
-            modelAndView.setViewName("redirect:/login");
-            return modelAndView;
-        }
-
         modelAndView.setViewName("authorised/projectadd");
         modelAndView.addObject("model", new ProjectViewModel());
 
@@ -58,10 +53,6 @@ public class ProjectController {
     @RequestMapping(value = "/project/add", method = RequestMethod.POST)
     public ModelAndView addProjectPost(@Valid @ModelAttribute("model") ProjectViewModel model,
                                        final BindingResult result, final RedirectAttributes redirectAttributes) {
-
-        if (!currentUser.isAuthenticated()) {
-            return new ModelAndView("redirect:/login");
-        }
 
         if(model.getTitle() != null) {
             if (projectDao.checkProjectTitle(model.getTitle())) {
@@ -89,9 +80,6 @@ public class ProjectController {
 
     @RequestMapping(value = "/project", method = RequestMethod.GET)
     public ModelAndView viewProjects() {
-        if (!currentUser.isAuthenticated()) {
-            return new ModelAndView("redirect:/login");
-        }
 
         return new ModelAndView("authorised/projects", "projects", projectDao.getSortedOwnedProjects(currentUser.getUser()));
     }
