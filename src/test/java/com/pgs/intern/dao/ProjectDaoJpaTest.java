@@ -25,13 +25,13 @@ import static org.mockito.Mockito.mock;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = NikoApplication.class)
 @WebAppConfiguration
+@Transactional
 public class ProjectDaoJpaTest {
     @Autowired
     private ProjectDaoJpa projectDaoJpa;
 
     @Autowired
-    private UserDao userDao;
-
+    private UserRepository userRepository;
 
     private Project project;
 
@@ -48,6 +48,16 @@ public class ProjectDaoJpaTest {
     public void checkIfProjectExists(){
         assertTrue("Existing project",projectDaoJpa.existsByTitle("Test Projekt1"));
         assertFalse("Non-existing project",projectDaoJpa.existsByTitle("Non-existing project"));
+    }
+
+    @Test
+    public void checkAddingProject(){
+        Project project = new Project();
+        User owner = userRepository.findByEmail("user1@test.pl");
+        project.setTitle("@@TestProject");
+        project.setOwner(owner);
+        projectDaoJpa.save(project);
+        assertTrue("New added project exists.",projectDaoJpa.existsByTitle("@@TestProject"));
     }
 
 }
