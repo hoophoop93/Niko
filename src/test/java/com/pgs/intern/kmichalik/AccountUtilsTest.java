@@ -1,5 +1,6 @@
 package com.pgs.intern.kmichalik;
 
+import com.pgs.intern.utils.AccountUtils;
 import org.junit.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,13 +15,17 @@ public class AccountUtilsTest {
 
     @Test
     public void getHashFor() throws Exception {
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
         String password = "test123";
         System.out.println("Password: " + password);
-        String hash = passwordEncoder.encode(password);
-        System.out.println("Hash: " + hash);
+        String hash = AccountUtils.getHashFor(password);
+        System.out.println("Hash: "+hash);
 
+        String password2 = "testtest123";
+        String hash2 = AccountUtils.getHashFor(password2);
+        System.out.println("Hash2: "+hash2);
+
+        assertNotEquals(hash,hash2);
         assertNotEquals(password, hash);
         assertTrue(hash != null && hash.length() == 60);
 
@@ -28,12 +33,12 @@ public class AccountUtilsTest {
 
     @Test
     public void validatePassword() throws Exception {
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
 
         String password = "test123";
-        String hash = passwordEncoder.encode(password);
+        String hash = AccountUtils.getHashFor(password);
 
-        assertTrue(passwordEncoder.matches(password, hash));
+        assertTrue(AccountUtils.validatePassword(password, hash));
 
 
     }
