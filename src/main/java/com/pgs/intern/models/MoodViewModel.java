@@ -27,7 +27,7 @@ public class MoodViewModel {
 
     private List<Project> projects;
 
-    private Map<Long, List<String>> blockedDatesInProjects;
+    private Map<Long, List<Map<String, String>>> blockedDatesInProjects;
 
     public MoodType getMoodType() {
         return moodType;
@@ -69,11 +69,11 @@ public class MoodViewModel {
         this.projects = projects;
     }
 
-    public Map<Long, List<String>> getBlockedDatesInProjects() {
+    public Map<Long, List<Map<String, String>>> getBlockedDatesInProjects() {
         return blockedDatesInProjects;
     }
 
-    public void setBlockedDatesInProjects(Map<Long, List<String>> blockedDatesInProjects) {
+    public void setBlockedDatesInProjects(Map<Long, List<Map<String, String>>> blockedDatesInProjects) {
         this.blockedDatesInProjects = blockedDatesInProjects;
     }
 }

@@ -1,5 +1,6 @@
 package com.pgs.intern.services;
 
+import com.google.common.collect.ImmutableMap;
 import com.pgs.intern.dao.ProjectDao;
 import com.pgs.intern.dao.UserDao;
 import com.pgs.intern.models.Project;
@@ -39,14 +40,18 @@ public class ProjectService {
         return projectDao.getUserProjects(currentUser.getUser());
     }
 
-    public Map<Long, List<String>> getBlockedDatesInProjectsJsonStream() {
+    public Map<Long, List<Map<String, String>>> getBlockedDatesInProjectsJsonStream() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
         return currentUser.getUser().getMoodList()
                 .stream()
                 .collect(
                         Collectors.groupingBy(m -> m.getProject().getProjectId(),
                                 Collectors.mapping(
-                                        m -> simpleDateFormat.format(m.getDateAdd()),
+                                        m -> (Map<String, String>) ImmutableMap.of(
+                                                    "date", simpleDateFormat.format(m.getDateAdd()),
+                                                    "mood", m.getMoodType().getLowerCase()
+                                            ),
                                         Collectors.toList()
                                 )
                         )
