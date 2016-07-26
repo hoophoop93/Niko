@@ -27,6 +27,7 @@ import static org.mockito.Mockito.mock;
 @WebAppConfiguration
 @Transactional
 public class ProjectDaoJpaTest {
+
     @Autowired
     private ProjectDaoJpa projectDaoJpa;
 
@@ -34,6 +35,7 @@ public class ProjectDaoJpaTest {
     private UserRepository userRepository;
 
     private Project project;
+    private User user;
 
 
     @Test
@@ -58,6 +60,23 @@ public class ProjectDaoJpaTest {
         project.setOwner(owner);
         projectDaoJpa.save(project);
         assertTrue("New added project exists.",projectDaoJpa.existsByTitle("@@TestProject"));
+    }
+
+    @Test
+    public void getUserProjects(){
+        user = userRepository.findByEmail("user1@test.pl");
+        project = projectDaoJpa.findByTitle("Test Projekt1");
+        assertNotNull("User has some projects.", projectDaoJpa.getUserProjects(user));
+        assertFalse("User belong to Test Projekt1", projectDaoJpa.getUserProjects(user).contains(project));
+    }
+
+    @Test
+    public void getNoneJoinedUsersById(){
+        user = userRepository.findByEmail("user1@test.pl");
+        project = projectDaoJpa.findByTitle("Test Projekt1");
+        Long projectId = project.getProjectId();
+        assertNotNull("Someone belong to this project.", projectDaoJpa.getNoneJoinedUsersById(projectId));
+        assertFalse("User already belong to Test Projekt1.", projectDaoJpa.getNoneJoinedUsersById(projectId).contains(user));
     }
 
 }
