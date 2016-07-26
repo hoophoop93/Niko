@@ -1,6 +1,7 @@
 package com.pgs.intern.controllers;
 
 import com.pgs.intern.dao.ProjectDao;
+import com.pgs.intern.dao.ProjectDaoJpa;
 import com.pgs.intern.dao.UserDao;
 import com.pgs.intern.dao.UserRepository;
 import com.pgs.intern.models.Mood;
@@ -36,6 +37,9 @@ public class ProjectController {
     private ProjectDao projectDao;
 
     @Autowired
+    private ProjectDaoJpa projectDaoJpa;
+
+    @Autowired
     UserRepository userRepository;
 
     @Inject
@@ -56,7 +60,7 @@ public class ProjectController {
                                        final BindingResult result, final RedirectAttributes redirectAttributes) {
 
         if(model.getTitle() != null) {
-            if (projectDao.checkProjectTitle(model.getTitle())) {
+            if (projectDaoJpa.existsByTitle(model.getTitle())) {
                 result.reject("error.projectAlreadyAdded", "This project name was taken.");
                 return new ModelAndView("authorised/projectadd", "model", model);
             }
@@ -82,7 +86,9 @@ public class ProjectController {
     @RequestMapping(value = "/project", method = RequestMethod.GET)
     public ModelAndView viewProjects() {
 
-        return new ModelAndView("authorised/projects", "projects", projectDao.getSortedOwnedProjects(currentUser.getUser()));
+        return new ModelAndView("authorised/projects", "projects",
+                projectDaoJpa.findByOwnerOrderByTitleAsc(currentUser.getUser())
+        );
     }
 
 
