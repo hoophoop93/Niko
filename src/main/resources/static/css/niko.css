@@ -155,9 +155,15 @@ a.ui-button:active,
 
 .btn-mood {
   cursor: default;
-  width: 3.5vw;
-  height: 3.5vw;
-  font-size: 2vw;
-  border-radius: 1.75vw;
+  font-size: 1.75vw;
+  border-radius: 50%;
   margin: 0.1vw;
+}
+
+.th-weekend {
+  background-color: rgb(235, 235, 235);
+}
+
+.td-weekend {
+  background-color: rgb(247, 247, 247);
 }
