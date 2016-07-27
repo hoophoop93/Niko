@@ -3,6 +3,7 @@ package com.pgs.intern.controllers;
 import com.pgs.intern.dao.MoodDaoDataJpaInterface;
 import com.pgs.intern.dao.ProjectDao;
 import com.pgs.intern.models.MoodViewModel;
+import com.pgs.intern.models.MoodsViewModel;
 import com.pgs.intern.models.Project;
 import com.pgs.intern.services.CurrentUser;
 import com.pgs.intern.services.MoodService;
@@ -52,7 +53,6 @@ public class MoodController {
         mood.setProjects(projectService.getProjectsOfCurrentUser());
         mood.setBlockedDatesInProjects(projectService.getBlockedDatesInProjectsJsonStream());
 
-
         return new ModelAndView("authorised/moodadd", "model", mood);
     }
 
@@ -98,12 +98,8 @@ public class MoodController {
 
     @RequestMapping(value = "/mood/overview", method = RequestMethod.GET)
     public ModelAndView moodOverview() {
-        MoodViewModel model = new MoodViewModel();
-
-        model.setProjects(projectDao.getUserProjects(currentUser.getUser()));
+        MoodsViewModel model = new MoodsViewModel();
 
         return new ModelAndView("authorised/moodoverview", "model", model);
     }
-
-
 }
