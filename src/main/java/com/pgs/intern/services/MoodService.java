@@ -83,7 +83,7 @@ public class MoodService {
                 MoodReport moodReport = new MoodReport();
                 moodReport.setMood(mood.getMoodType());
 
-                if (moodDao.checkDisplayNamelUnique(mood.getUser().getDisplayName())) {
+                if (moodDao.checkDisplayNameUnique(mood.getUser().getDisplayName())) {
                     moodReport.setDisplayName(mood.getUser().getDisplayName() + " (" + mood.getUser().getEmail() + ")");
                 } else {
                     moodReport.setDisplayName(mood.getUser().getDisplayName());
