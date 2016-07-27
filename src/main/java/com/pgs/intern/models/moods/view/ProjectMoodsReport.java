@@ -6,7 +6,7 @@ package com.pgs.intern.models.moods.view;
 public class ProjectMoodsReport {
     private String owner;
     private String title;
-    private DailyMoodReport[] dailyMoodReports = new DailyMoodReport[7];
+    private DailyMoodReport[] dailyMoodReports;
 
     public String getOwner() {
         return owner;
