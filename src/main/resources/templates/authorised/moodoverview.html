@@ -22,26 +22,24 @@
 
                 <hr/>
 
-                <table class="table table-bordered">
+
+                <table th:if="${not p.noMoodsReported}" class="table table-bordered">
                     <thead>
                     <tr>
-                        <th th:each="d : ${p.dailyMoodReports}"><center th:text="${d.date}"></center></th>
+                        <th th:class="(${d.weekend} ? 'th-weekend' : '')" style="width:12.5%" th:each="d : ${p.dailyMoodReports}"><center th:text="${d.date}"></center></th>
                     </tr>
                     </thead>
 
                     <tbody>
                     <tr>
-                        <td th:each="d : ${p.dailyMoodReports}">
-                            <!--d.isWeekend-->
-                            <div th:each="m : ${d.moodReports}">
-
-                                <div th:class="${'btn btn-' + m.mood.getStyleClass() + ' btn-mood'}" data-toggle="tooltip" th:title="${m.displayName}" data-placement="bottom" th:text="${m.mood}"></div>
-
-                            </div>
+                        <td th:class="(${d.weekend} ? 'td-weekend' : '')" th:each="d : ${p.dailyMoodReports}">
+                            <div th:each="m : ${d.moodReports}" th:class="${'btn btn-' + m.mood.getStyleClass() + ' btn-mood'}" data-toggle="tooltip" th:title="${m.displayName}" data-placement="bottom" th:text="${m.mood}"></div>
                         </td>
                     </tr>
                     </tbody>
                 </table>
+
+                <p th:if="${p.noMoodsReported}">There were no moods reported for this project in the last 7 days.</p>
 
             </li>
         </ul>
