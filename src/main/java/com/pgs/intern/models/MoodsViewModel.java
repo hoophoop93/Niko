@@ -1,24 +1,23 @@
 package com.pgs.intern.models;
 
-import java.util.Date;
 import java.util.List;
 
 /**
  * Created by kmichalik on 7/27/2016 8:43 AM.
  */
 public class MoodsViewModel {
-    private List<ProjectMoodsRaport> projectMoodsRaportList;
+    private List<ProjectMoodsReport> projectMoodsReportList;
 
-    public List<ProjectMoodsRaport> getProjectMoodsRaportList() {
-        return projectMoodsRaportList;
+    public List<ProjectMoodsReport> getProjectMoodsReportList() {
+        return projectMoodsReportList;
     }
 
-    public void setProjectMoodsRaportList(List<ProjectMoodsRaport> projectMoodsRaportList) {
-        this.projectMoodsRaportList = projectMoodsRaportList;
+    public void setProjectMoodsReportList(List<ProjectMoodsReport> projectMoodsReportList) {
+        this.projectMoodsReportList = projectMoodsReportList;
     }
 
 
-    static class ProjectMoodsRaport {
+    static public class ProjectMoodsReport {
 
         private String owner;
         private String projectTitle;
@@ -49,9 +48,9 @@ public class MoodsViewModel {
         }
 
 
-        static class DailyMoodReport {
+        static public class DailyMoodReport {
             private String date;
-            private List<MoodReport> moodRaports;
+            private List<MoodReport> moodReports;
 
             public String getDate() {
                 return date;
@@ -61,16 +60,16 @@ public class MoodsViewModel {
                 this.date = date;
             }
 
-            public List<MoodReport> getMoodRaports() {
-                return moodRaports;
+            public List<MoodReport> getMoodReports() {
+                return moodReports;
             }
 
-            public void setMoodRaports(List<MoodReport> moodRaports) {
-                this.moodRaports = moodRaports;
+            public void setMoodReports(List<MoodReport> moodReports) {
+                this.moodReports = moodReports;
             }
 
 
-            static class MoodReport {
+            static public class MoodReport {
                 private String mood;
                 private String displayName;
 
