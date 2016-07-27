@@ -58,6 +58,12 @@ public class MoodService {
         return Math.abs(Days.daysBetween(dateTime, new DateTime()).getDays());
     }
 
+    private boolean isWeekend(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        return (dayOfWeek == Calendar.SATURDAY) || (dayOfWeek == Calendar.SUNDAY);
+    }
 
     public MoodsViewModel getMoodsViewModel() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -67,19 +73,25 @@ public class MoodService {
 
 
         List<ProjectMoodsReport> projectMoodsReports = new ArrayList<>();
-        for (Project p : projectDaoJpa.getUserProjects(currentUser.getUser())) {
+        for(Project project : projectDaoJpa.getUserProjects(currentUser.getUser())){
             ProjectMoodsReport report = new ProjectMoodsReport();
-            report.setTitle(p.getTitle());
-            report.setOwner(p.getOwner().getDisplayName());
+            report.setTitle(project.getTitle());
+            if(project.getOwner().getIdUser() == currentUser.getUser().getIdUser()){
+                report.setOwner("<i>(my project)</i>");
+            }
+            else {
+                report.setOwner(project.getOwner().getDisplayName());
+            }
             DailyMoodReport[] dailyReports = new DailyMoodReport[DAYS];
 
             for (int i = 0; i < DAYS; i++) {
+                Date date = DateUtils.addDays(today, i - DAYS + 1);
                 dailyReports[i] = new DailyMoodReport();
                 dailyReports[i].setMoodReports(new ArrayList<>());
-                dailyReports[i].setDate(simpleDateFormat.format(DateUtils.addDays(today, i - DAYS + 1)));
-                dailyReports[i].setWeekend(false);
+                dailyReports[i].setDate(simpleDateFormat.format(date));
+                dailyReports[i].setWeekend(isWeekend(date));
             }
-            for (Mood mood : moodDao.findAllMoodsInProjectAndDate(p, daysAgo, today)) {
+            for(Mood mood : moodDao.findAllMoodsInProjectAndDate(project,daysAgo,today)){
                 MoodReport moodReport = new MoodReport();
                 moodReport.setMood(mood.getMoodType());
 
