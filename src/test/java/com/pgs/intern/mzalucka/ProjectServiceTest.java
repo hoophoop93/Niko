@@ -31,6 +31,8 @@ import static org.mockito.Mockito.when;
  * Created by mzalucka on 25-Jul-16.
  */
 
+/*******************************Mockito_Tests********************/
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = NikoApplication.class)
 @WebAppConfiguration
@@ -41,9 +43,6 @@ public class ProjectServiceTest {
 
     @Mock
     CurrentUser currentUser;
-
-    @Mock
-    ProjectDao projectDao;
 
     @Mock
     ProjectDaoJpa projectDaoJpa;
