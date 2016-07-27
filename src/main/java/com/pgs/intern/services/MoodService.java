@@ -81,7 +81,7 @@ public class MoodService {
             }
             for(Mood mood : moodDao.findAllMoodsInProjectAndDate(p,daysAgo,today)){
                 MoodReport moodReport = new MoodReport();
-                moodReport.setMood(mood.getMoodType().toString());
+                moodReport.setMood(mood.getMoodType());
                 moodReport.setDisplayName(mood.getUser().getDisplayName());
                 int day = DAYS - getDaysAgoCount(mood.getDateAdd()) - 1;
                 if(day >= 0)
