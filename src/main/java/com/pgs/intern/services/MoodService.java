@@ -80,7 +80,7 @@ public class MoodService {
                 report.setOwner("<i>(my project)</i>");
             }
             else {
-                report.setOwner(project.getOwner().getDisplayName());
+                report.setOwner("<strong>" + project.getOwner().getDisplayName() + "</strong>");
             }
             DailyMoodReport[] dailyReports = new DailyMoodReport[DAYS];
 
