@@ -1,18 +1,20 @@
 package com.pgs.intern.models.moods.view;
 
+import com.pgs.intern.models.MoodType;
+
 /**
  * Created by kmichalik on 7/27/2016 9:41 AM.
  */
 public class MoodReport {
-    private String mood;
+    private MoodType mood;
     private String displayName;
 
 
-    public String getMood() {
+    public MoodType getMood() {
         return mood;
     }
 
-    public void setMood(String mood) {
+    public void setMood(MoodType mood) {
         this.mood = mood;
     }
 
