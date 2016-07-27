@@ -2,9 +2,7 @@ package com.pgs.intern.controllers;
 
 import com.pgs.intern.dao.ProjectDao;
 import com.pgs.intern.dao.ProjectDaoJpa;
-import com.pgs.intern.dao.UserDao;
 import com.pgs.intern.dao.UserRepository;
-import com.pgs.intern.models.Mood;
 import com.pgs.intern.models.Project;
 import com.pgs.intern.models.ProjectViewModel;
 import com.pgs.intern.models.User;

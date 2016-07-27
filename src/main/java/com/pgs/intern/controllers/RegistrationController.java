@@ -1,6 +1,5 @@
 package com.pgs.intern.controllers;
 
-import com.pgs.intern.dao.UserDao;
 import com.pgs.intern.dao.UserRepository;
 import com.pgs.intern.models.RegistrationViewModel;
 import com.pgs.intern.services.CurrentUser;

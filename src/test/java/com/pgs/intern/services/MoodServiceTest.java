@@ -1,8 +1,6 @@
 package com.pgs.intern.services;
 
-import com.pgs.intern.dao.MoodDao;
 import com.pgs.intern.dao.MoodDaoDataJpaInterface;
-import com.pgs.intern.dao.UserDao;
 import com.pgs.intern.models.Mood;
 import com.pgs.intern.models.MoodViewModel;
 import org.apache.commons.lang3.time.DateUtils;
@@ -12,7 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import static org.junit.Assert.assertFalse;
@@ -27,8 +24,6 @@ public class MoodServiceTest {
     @Mock
     CurrentUser currentUser;
 
- //   @Mock
-  //  MoodDao moodDao;
     @Mock
     private MoodDaoDataJpaInterface moodDao;
 
