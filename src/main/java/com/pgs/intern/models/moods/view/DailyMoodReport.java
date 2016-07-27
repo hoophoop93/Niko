@@ -10,6 +10,14 @@ public class DailyMoodReport {
     private String date;
     private List<MoodReport> moodReports;
 
+    public boolean isWeekend() {
+        return isWeekend;
+    }
+
+    public void setWeekend(boolean weekend) {
+        isWeekend = weekend;
+    }
+
     public String getDate() {
         return date;
     }
