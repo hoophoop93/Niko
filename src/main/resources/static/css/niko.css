@@ -144,3 +144,20 @@ a.ui-button:active,
     width: 800px;
     margin: 0 auto;
  }
+
+/*
+ * Mood overview
+ */
+
+.project-owner-text {
+    padding-top: 16px;
+}
+
+.btn-mood {
+  cursor: default;
+  width: 3.5vw;
+  height: 3.5vw;
+  font-size: 2vw;
+  border-radius: 1.75vw;
+  margin: 0.1vw;
+}

@@ -35,4 +35,20 @@ public enum MoodType {
 
         return "";
     }
+
+    public String getStyleClass() {
+        if (this == MoodType.Happy) {
+            return "success";
+        }
+
+        if (this == MoodType.Neutral) {
+            return "warning";
+        }
+
+        if (this == MoodType.Bad) {
+            return "danger";
+        }
+
+        return "";
+    }
 }

@@ -4,7 +4,6 @@ import com.pgs.intern.dao.MoodDaoDataJpaInterface;
 import com.pgs.intern.dao.ProjectDao;
 import com.pgs.intern.models.MoodViewModel;
 import com.pgs.intern.models.Project;
-import com.pgs.intern.models.moods.view.MoodsViewModel;
 import com.pgs.intern.services.CurrentUser;
 import com.pgs.intern.services.MoodService;
 import com.pgs.intern.services.ProjectService;
@@ -98,8 +97,6 @@ public class MoodController {
 
     @RequestMapping(value = "/mood/overview", method = RequestMethod.GET)
     public ModelAndView moodOverview() {
-        MoodsViewModel model = new MoodsViewModel();
-
-        return new ModelAndView("authorised/moodoverview", "model", model);
+        return new ModelAndView("authorised/moodoverview", "model", moodService.getMoodsViewModel());
     }
 }

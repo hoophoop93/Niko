@@ -1,0 +1,64 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org" lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/><link href="../static/css/niko.css" th:href="@{/css/niko.css}" rel="stylesheet"/><title th:replace="/fragments/title :: title"></title></head><body><nav th:replace="/authorised/fragments/nav :: nav"></nav><div class="container">
+
+    <h2>Mood overview</h2>
+
+    <hr/>
+
+    <div th:if="${not #lists.isEmpty(model.projectMoodsReportList)}">
+
+        <ul class="list-group" >
+            <li class="list-group-item" th:each="p : ${model.projectMoodsReportList}">
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <h3 th:text="${p.title}"></h3>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="project-owner-text">
+                            <h5 class="text-right" th:utext="${p.owner}"></h5>
+                        </div>
+                    </div>
+                </div>
+
+                <hr/>
+
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th th:each="d : ${p.dailyMoodReports}"><center th:text="${d.date}"></center></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <td th:each="d : ${p.dailyMoodReports}">
+                            <!--d.isWeekend-->
+                            <div th:each="m : ${d.moodReports}">
+
+                                <div th:class="${'btn btn-' + m.mood.getStyleClass() + ' btn-mood'}" data-toggle="tooltip" th:title="${m.displayName}" data-placement="bottom" th:text="${m.mood}"></div>
+
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </li>
+        </ul>
+
+    </div>
+
+
+
+    <div th:if="${#lists.isEmpty(model.projectMoodsReportList)}">
+        <p>You are not a member or owner of any project.</p>
+    </div>
+
+
+<footer th:replace="/fragments/footer :: footer"></footer></div><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script><script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
+</body></html>
