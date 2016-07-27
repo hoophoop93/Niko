@@ -39,7 +39,7 @@ public class MoodService {
     @Inject
     private CurrentUser currentUser;
 
-    public void addMood(MoodViewModel moodViewModel){
+    public void addMood(MoodViewModel moodViewModel) {
         Mood mood = new Mood();
         mood.setDateAdd(moodViewModel.getDateAdd());
         mood.setProject(moodViewModel.getProject());
@@ -48,43 +48,49 @@ public class MoodService {
         moodDao.save(mood);
     }
 
-    public boolean isInLast7Days(Date date){
-        Date sevenDaysAgo = DateUtils.addDays(DateUtils.truncate(new Date(), Calendar.DATE),-7);
-        return sevenDaysAgo.compareTo(DateUtils.truncate(date,Calendar.DATE)) <= 0;
+    public boolean isInLast7Days(Date date) {
+        Date sevenDaysAgo = DateUtils.addDays(DateUtils.truncate(new Date(), Calendar.DATE), -7);
+        return sevenDaysAgo.compareTo(DateUtils.truncate(date, Calendar.DATE)) <= 0;
     }
 
-    private int getDaysAgoCount(Date date){
+    private int getDaysAgoCount(Date date) {
         DateTime dateTime = new DateTime(date);
-        return Math.abs(Days.daysBetween(dateTime,new DateTime()).getDays());
+        return Math.abs(Days.daysBetween(dateTime, new DateTime()).getDays());
     }
 
 
-    public MoodsViewModel getMoodsViewModel(){
+    public MoodsViewModel getMoodsViewModel() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        Date today = DateUtils.truncate(new Date(),Calendar.DATE);
-        Date daysAgo = DateUtils.addDays(today,-7);
+        Date today = DateUtils.truncate(new Date(), Calendar.DATE);
+        Date daysAgo = DateUtils.addDays(today, -7);
 
 
         List<ProjectMoodsReport> projectMoodsReports = new ArrayList<>();
-        for(Project p : projectDaoJpa.getUserProjects(currentUser.getUser())){
+        for (Project p : projectDaoJpa.getUserProjects(currentUser.getUser())) {
             ProjectMoodsReport report = new ProjectMoodsReport();
             report.setTitle(p.getTitle());
             report.setOwner(p.getOwner().getDisplayName());
             DailyMoodReport[] dailyReports = new DailyMoodReport[DAYS];
 
-            for(int i = 0; i < DAYS; i++){
+            for (int i = 0; i < DAYS; i++) {
                 dailyReports[i] = new DailyMoodReport();
                 dailyReports[i].setMoodReports(new ArrayList<>());
-                dailyReports[i].setDate(simpleDateFormat.format(DateUtils.addDays(today,i-DAYS+1)));
+                dailyReports[i].setDate(simpleDateFormat.format(DateUtils.addDays(today, i - DAYS + 1)));
                 dailyReports[i].setWeekend(false);
             }
-            for(Mood mood : moodDao.findAllMoodsInProjectAndDate(p,daysAgo,today)){
+            for (Mood mood : moodDao.findAllMoodsInProjectAndDate(p, daysAgo, today)) {
                 MoodReport moodReport = new MoodReport();
                 moodReport.setMood(mood.getMoodType());
-                moodReport.setDisplayName(mood.getUser().getDisplayName());
+
+                if (moodDao.checkDisplayNamelUnique(mood.getUser().getDisplayName())) {
+                    moodReport.setDisplayName(mood.getUser().getDisplayName() + " (" + mood.getUser().getEmail() + ")");
+                } else {
+                    moodReport.setDisplayName(mood.getUser().getDisplayName());
+                }
+
                 int day = DAYS - getDaysAgoCount(mood.getDateAdd()) - 1;
-                if(day >= 0)
+                if (day >= 0)
                     dailyReports[day].getMoodReports().add(moodReport);
             }
             report.setDailyMoodReports(dailyReports);
