@@ -4,6 +4,13 @@ DELETE FROM moods WHERE  user_id = (select user_id from users where email='user2
 DELETE FROM moods WHERE  user_id = (select user_id from users where email='user3@test.pl');
 DELETE FROM moods WHERE  user_id = (select user_id from users where email='user4@test.pl');
 
+DELETE FROM moods WHERE  project_id = (select project_id from projects where title='Test Projekt1');
+DELETE FROM moods WHERE  project_id = (select project_id from projects where title='Test Projekt2');
+DELETE FROM moods WHERE  project_id = (select project_id from projects where title='Test Projekt3');
+DELETE FROM moods WHERE  project_id = (select project_id from projects where title='Test Projekt4');
+DELETE FROM moods WHERE  project_id = (select project_id from projects where title='Test Projekt5');
+DELETE FROM moods WHERE  project_id = (select project_id from projects where title='Test Projekt6');
+
 DELETE FROM project_user WHERE joined_user = (select user_id from users where email='user1@test.pl');
 DELETE FROM project_user WHERE joined_user = (select user_id from users where email='user2@test.pl');
 DELETE FROM project_user WHERE joined_user = (select user_id from users where email='user3@test.pl');
