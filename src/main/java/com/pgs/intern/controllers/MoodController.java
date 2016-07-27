@@ -53,7 +53,6 @@ public class MoodController {
         mood.setBlockedDatesInProjects(projectService.getBlockedDatesInProjectsJsonStream());
 
 
-
         return new ModelAndView("authorised/moodadd", "model", mood);
     }
 
@@ -96,5 +95,15 @@ public class MoodController {
 
         return new ModelAndView("redirect:/");
     }
+
+    @RequestMapping(value = "/mood/overview", method = RequestMethod.GET)
+    public ModelAndView moodOverview() {
+        MoodViewModel model = new MoodViewModel();
+
+        model.setProjects(projectDao.getUserProjects(currentUser.getUser()));
+
+        return new ModelAndView("authorised/moodoverview", "model", model);
+    }
+
 
 }
