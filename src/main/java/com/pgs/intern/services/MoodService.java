@@ -91,19 +91,24 @@ public class MoodService {
                 dailyReports[i].setDate(simpleDateFormat.format(date));
                 dailyReports[i].setWeekend(isWeekend(date));
             }
-            for(Mood mood : moodDao.findAllMoodsInProjectAndDate(project,daysAgo,today)){
-                MoodReport moodReport = new MoodReport();
-                moodReport.setMood(mood.getMoodType());
+            List<Mood> moodList = moodDao.findAllMoodsInProjectAndDate(project,daysAgo,today);
+            if(!moodList.isEmpty()){
+                report.setNoMoodsReported(false);
+                for(Mood mood : moodDao.findAllMoodsInProjectAndDate(project,daysAgo,today)){
+                    MoodReport moodReport = new MoodReport();
+                    moodReport.setMood(mood.getMoodType());
 
-                if (moodDao.checkDisplayNameUnique(mood.getUser().getDisplayName())) {
-                    moodReport.setDisplayName(mood.getUser().getDisplayName() + " (" + mood.getUser().getEmail() + ")");
-                } else {
-                    moodReport.setDisplayName(mood.getUser().getDisplayName());
+                    if (moodDao.checkDisplayNameUnique(mood.getUser().getDisplayName())) {
+                        moodReport.setDisplayName(mood.getUser().getDisplayName() + " (" + mood.getUser().getEmail() + ")");
+                    } else {
+                        moodReport.setDisplayName(mood.getUser().getDisplayName());
+                    }
+                    int day = DAYS - getDaysAgoCount(mood.getDateAdd()) - 1;
+                    if (day >= 0)
+                        dailyReports[day].getMoodReports().add(moodReport);
                 }
-
-                int day = DAYS - getDaysAgoCount(mood.getDateAdd()) - 1;
-                if (day >= 0)
-                    dailyReports[day].getMoodReports().add(moodReport);
+            }else{
+                report.setNoMoodsReported(true);
             }
             report.setDailyMoodReports(dailyReports);
             projectMoodsReports.add(report);
