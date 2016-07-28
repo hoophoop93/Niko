@@ -28,9 +28,9 @@ public class HomeController {
         }
 
         if(currentUser.isAuthenticated()) {
-            modelAndView.setViewName("authorised/index");
+            modelAndView.setViewName("/authorised/index");
         } else {
-            modelAndView.setViewName("unauthorised/index");
+            modelAndView.setViewName("/unauthorised/index");
         }
 
         return modelAndView;

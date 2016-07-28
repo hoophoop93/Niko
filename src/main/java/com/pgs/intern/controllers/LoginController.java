@@ -34,7 +34,7 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login(@ModelAttribute("infos") final ArrayList<String> infos,
                               final BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView("unauthorised/login");
+        ModelAndView modelAndView = new ModelAndView("/unauthorised/login");
         if(currentUser.isAuthenticated())
             return new ModelAndView("redirect:/");
         if ((infos != null) && (!bindingResult.hasErrors())) {
@@ -67,7 +67,7 @@ public class LoginController {
         }
 
         if (result.hasErrors()) {
-            modelAndView.setViewName("unauthorised/login");
+            modelAndView.setViewName("/unauthorised/login");
             return modelAndView;
         }
 

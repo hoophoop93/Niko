@@ -42,7 +42,7 @@ public class RegistrationController {
         if (currentUser.isAuthenticated())
             return new ModelAndView("redirect:/");
 
-        return new ModelAndView("unauthorised/register", "model", new RegistrationViewModel());
+        return new ModelAndView("/unauthorised/register", "model", new RegistrationViewModel());
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -58,7 +58,7 @@ public class RegistrationController {
         }
 
         if (result.hasErrors()) {
-            return new ModelAndView("unauthorised/register","model",model);
+            return new ModelAndView("/unauthorised/register","model",model);
         }
 
 

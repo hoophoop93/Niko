@@ -47,7 +47,7 @@ public class ProjectController {
     public ModelAndView addProject() {
         ModelAndView modelAndView = new ModelAndView();
 
-        modelAndView.setViewName("authorised/projectadd");
+        modelAndView.setViewName("/authorised/projectadd");
         modelAndView.addObject("model", new ProjectViewModel());
 
         return modelAndView;
@@ -60,12 +60,12 @@ public class ProjectController {
         if(model.getTitle() != null) {
             if (projectDaoJpa.existsByTitle(model.getTitle())) {
                 result.reject("error.projectAlreadyAdded", "This project name was taken.");
-                return new ModelAndView("authorised/projectadd", "model", model);
+                return new ModelAndView("/authorised/projectadd", "model", model);
             }
         }
 
         if (result.hasErrors()) {
-            return new ModelAndView("authorised/projectadd","model",model);
+            return new ModelAndView("/authorised/projectadd","model",model);
         }
 
         projectService.addProject(model);
@@ -84,7 +84,7 @@ public class ProjectController {
     @RequestMapping(value = "/project", method = RequestMethod.GET)
     public ModelAndView viewProjects() {
 
-        return new ModelAndView("authorised/projects", "projects",
+        return new ModelAndView("/authorised/projects", "projects",
                 projectDaoJpa.findByOwnerOrderByTitleAsc(currentUser.getUser())
         );
     }

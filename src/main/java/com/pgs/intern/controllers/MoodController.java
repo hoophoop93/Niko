@@ -52,7 +52,7 @@ public class MoodController {
         mood.setProjects(projectService.getProjectsOfCurrentUser());
         mood.setBlockedDatesInProjects(projectService.getBlockedDatesInProjectsJsonStream());
 
-        return new ModelAndView("authorised/moodadd", "model", mood);
+        return new ModelAndView("/authorised/moodadd", "model", mood);
     }
 
     @RequestMapping(value = "/mood/add", method = RequestMethod.POST)
@@ -79,7 +79,7 @@ public class MoodController {
 
         if (result.hasErrors()) {
             model.setMoodType(null);
-            return new ModelAndView("authorised/moodadd", "model", model);
+            return new ModelAndView("/authorised/moodadd", "model", model);
         }
 
         model.setProject(project);
@@ -97,6 +97,6 @@ public class MoodController {
 
     @RequestMapping(value = "/mood/overview", method = RequestMethod.GET)
     public ModelAndView moodOverview() {
-        return new ModelAndView("authorised/moodoverview", "model", moodService.getMoodsViewModel());
+        return new ModelAndView("/authorised/moodoverview", "model", moodService.getMoodsViewModel());
     }
 }
