@@ -57,7 +57,7 @@ public class RegistrationControllerTest {
         mockMvc.perform(
                 get("/project"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/login"));
+                .andExpect(redirectedUrl("login"));
 
     }
 
@@ -66,7 +66,7 @@ public class RegistrationControllerTest {
         mockMvc.perform(
                 post("/project/add"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/login"));
+                .andExpect(redirectedUrl("login"));
 
     }
 

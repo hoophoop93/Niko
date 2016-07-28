@@ -73,7 +73,7 @@ public class RegistrationControllerTest {
                 .param("passwordRepeated", "PASSWORD")
         )
                 .andExpect(status().isOk())
-                .andExpect(view().name("unauthorised/register"));
+                .andExpect(view().name("/unauthorised/register"));
     }
 
 

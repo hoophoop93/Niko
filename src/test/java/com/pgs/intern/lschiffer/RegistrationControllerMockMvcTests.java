@@ -47,7 +47,7 @@ public class RegistrationControllerMockMvcTests {
                         .param("passwordRepeat", "password")
         )
                 .andExpect(status().isOk())
-                .andExpect(view().name("unauthorised/register")); // Same page with errors displayed.
+                .andExpect(view().name("/unauthorised/register")); // Same page with errors displayed.
     }
 
     @Test
@@ -69,7 +69,7 @@ public class RegistrationControllerMockMvcTests {
                 get("/project/add")
         )
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/login")); // Unauthorised -> redirect to login page.
+                .andExpect(redirectedUrl("login")); // Unauthorised -> redirect to login page.
     }
 
     @Test
@@ -78,6 +78,6 @@ public class RegistrationControllerMockMvcTests {
                 post("/project/add")
         )
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/login")); // Unauthorised -> redirect to login page.
+                .andExpect(redirectedUrl("login")); // Unauthorised -> redirect to login page.
     }
 }
