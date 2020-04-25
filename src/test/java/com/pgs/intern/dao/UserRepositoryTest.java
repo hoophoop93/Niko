@@ -64,15 +64,15 @@ public class UserRepositoryTest {
     public void searchUserInProject() throws Exception {
 
         User user = userRepository.findByEmail("user2@test.pl");
-        Project project = projectDaoJpa.findByTitle("Test Projekt1");
+        Project project = projectDaoJpa.findByTitle("Test Project1");
 
         boolean result = userRepository.searchUserInProject(user.getIdUser(), project.getProjectId());
         assertTrue("If user contains in project return true", result);
 
         User user2 = userRepository.findByEmail("user1@test.pl");
-        Project project2 = projectDaoJpa.findByTitle("Test Projekt1");
+        Project project2 = projectDaoJpa.findByTitle("Test Project1");
         boolean result2 = userRepository.searchUserInProject(user2.getIdUser(), project2.getProjectId());
-        ;
+
         assertFalse("If user not contains in project return false", result2);
 
     }

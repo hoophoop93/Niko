@@ -99,7 +99,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "Id_user: " + idUser + "DisplayName: " + displayName + "E-mail: " + email;
+        return "Id_user: " + idUser +"<br />"+ "DisplayName: " + displayName +"<br />"+ "E-mail: " + email;
     }
 
 

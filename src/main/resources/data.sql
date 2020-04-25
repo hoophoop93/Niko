@@ -4,12 +4,12 @@ DELETE FROM moods WHERE  user_id = (select user_id from users where email='user2
 DELETE FROM moods WHERE  user_id = (select user_id from users where email='user3@test.pl');
 DELETE FROM moods WHERE  user_id = (select user_id from users where email='user4@test.pl');
 
-DELETE FROM moods WHERE  project_id = (select project_id from projects where title='Test Projekt1');
-DELETE FROM moods WHERE  project_id = (select project_id from projects where title='Test Projekt2');
-DELETE FROM moods WHERE  project_id = (select project_id from projects where title='Test Projekt3');
-DELETE FROM moods WHERE  project_id = (select project_id from projects where title='Test Projekt4');
-DELETE FROM moods WHERE  project_id = (select project_id from projects where title='Test Projekt5');
-DELETE FROM moods WHERE  project_id = (select project_id from projects where title='Test Projekt6');
+DELETE FROM moods WHERE  project_id = (select project_id from projects where title='Test Project1');
+DELETE FROM moods WHERE  project_id = (select project_id from projects where title='Test Project2');
+DELETE FROM moods WHERE  project_id = (select project_id from projects where title='Test Project3');
+DELETE FROM moods WHERE  project_id = (select project_id from projects where title='Test Project4');
+DELETE FROM moods WHERE  project_id = (select project_id from projects where title='Test Project5');
+DELETE FROM moods WHERE  project_id = (select project_id from projects where title='Test Project6');
 
 DELETE FROM project_user WHERE joined_user = (select user_id from users where email='user1@test.pl');
 DELETE FROM project_user WHERE joined_user = (select user_id from users where email='user2@test.pl');
@@ -34,19 +34,19 @@ INSERT INTO users(email, password_hash, display_name)
 delete from users where ctid NOT IN (select max(ctid) from users group by email);
 
 
-INSERT INTO projects( title, project_owner ) VALUES ('Test Projekt1',(select user_id from users where email='user1@test.pl'));
-INSERT INTO projects( title, project_owner ) VALUES ('Test Projekt2',(select user_id from users where email='user1@test.pl'));
-INSERT INTO projects( title, project_owner ) VALUES ('Test Projekt3',(select user_id from users where email='user2@test.pl'));
-INSERT INTO projects( title, project_owner ) VALUES ('Test Projekt4',(select user_id from users where email='user3@test.pl'));
-INSERT INTO projects( title, project_owner ) VALUES ('Test Projekt5',(select user_id from users where email='user4@test.pl'));
-INSERT INTO projects( title, project_owner ) VALUES ('Test Projekt6',(select user_id from users where email='user4@test.pl'));
+INSERT INTO projects( title, project_owner ) VALUES ('Test Project1',(select user_id from users where email='user1@test.pl'));
+INSERT INTO projects( title, project_owner ) VALUES ('Test Project2',(select user_id from users where email='user1@test.pl'));
+INSERT INTO projects( title, project_owner ) VALUES ('Test Project3',(select user_id from users where email='user2@test.pl'));
+INSERT INTO projects( title, project_owner ) VALUES ('Test Project4',(select user_id from users where email='user3@test.pl'));
+INSERT INTO projects( title, project_owner ) VALUES ('Test Project5',(select user_id from users where email='user4@test.pl'));
+INSERT INTO projects( title, project_owner ) VALUES ('Test Project6',(select user_id from users where email='user4@test.pl'));
 
 
 INSERT INTO project_user( joined_user, joined_project)
-VALUES ((select user_id from users where email='user2@test.pl'),(select project_id from projects where title ='Test Projekt1'));
+VALUES ((select user_id from users where email='user2@test.pl'),(select project_id from projects where title ='Test Project1'));
 INSERT INTO project_user( joined_user, joined_project)
-VALUES ((select user_id from users where email='user2@test.pl'),(select project_id from projects where title ='Test Projekt2'));
+VALUES ((select user_id from users where email='user2@test.pl'),(select project_id from projects where title ='Test Project2'));
 INSERT INTO project_user( joined_user, joined_project)
-VALUES ((select user_id from users where email='user3@test.pl'),(select project_id from projects where title ='Test Projekt2'));
+VALUES ((select user_id from users where email='user3@test.pl'),(select project_id from projects where title ='Test Project2'));
 INSERT INTO project_user( joined_user, joined_project)
-VALUES ((select user_id from users where email='user4@test.pl'),(select project_id from projects where title ='Test Projekt2'));
+VALUES ((select user_id from users where email='user4@test.pl'),(select project_id from projects where title ='Test Project2'));
